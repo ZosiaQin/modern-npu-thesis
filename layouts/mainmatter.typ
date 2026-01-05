@@ -142,8 +142,8 @@
         if not skip-on-first-level or cur-heading == none {
           if header-render == auto {
             // 一级标题和二级标题
-            let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 1, loc)) } else { "" }
-            let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 { heading-display(active-heading(level: 2, prev: false, loc)) } else { "" }
+            let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 1)) } else { "" }
+            let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 1 { heading-display(active-heading(level: 2, prev: false)) } else { "" }
             set text(font: fonts.楷体, size: 字号.五号)
             stack(
               first-level-heading + h(1fr) + second-level-heading,
