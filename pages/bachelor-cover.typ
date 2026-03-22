@@ -1,7 +1,7 @@
 #import "../utils/datetime-display.typ": datetime-display
 #import "../utils/style.typ": 字号, 字体
 
-// 本科生封面
+// 西北工业大学本科生封面
 #let bachelor-cover(
   // documentclass 传入的参数
   anonymous: false,
@@ -13,8 +13,8 @@
   min-title-lines: 2,
   info-inset: (x: 0pt, bottom: 1pt),
   info-key-width: 72pt,
-  info-key-font: "楷体",
-  info-value-font: "楷体",
+  info-key-font: "宋体",
+  info-value-font: "宋体",
   column-gutter: -3pt,
   row-gutter: 11.5pt,
   anonymous-info-keys: ("grade", "student-id", "author", "supervisor", "supervisor-ii"),
@@ -25,7 +25,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "西北工业大学毕业论文"),
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
@@ -54,7 +54,7 @@
       inset: info-inset,
       stroke: none,
       text(
-        font: fonts.at(info-key-font, default: "楷体"),
+        font: fonts.at(info-key-font, default: "宋体"),
         size: 字号.三号,
         body
       ),
@@ -100,10 +100,10 @@
       }
     )
   }
-  
+
 
   // 4.  正式渲染
-  
+
   pagebreak(weak: true, to: if twoside { "odd" })
 
   // 居中对齐
@@ -111,27 +111,24 @@
 
   // 匿名化处理去掉封面标识
   if anonymous {
-    v(52pt)
+    v(80pt)
   } else {
-    // 封面图标
-    v(6pt)
-    image("../assets/vi/nju-emblem.svg", width: 2.38cm)
-    v(22pt)
-    // 调整一下左边的间距
-    pad(image("../assets/vi/nju-name.svg", width: 10.5cm), left: 0.4cm)
-    v(2pt)
+    // 西北工业大学校名（暂用文字代替，后续可替换为校徽图片）
+    v(40pt)
+    text(size: 字号.一号, font: fonts.宋体, weight: "bold")[西 北 工 业 大 学]
+    v(10pt)
   }
 
-  // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
-  text(size: 字号.一号, font: fonts.宋体, spacing: 200%, weight: "bold")[本 科 毕 业 论 文]
-  
+  // 论文类型标题
+  text(size: 字号.一号, font: fonts.宋体, spacing: 200%, weight: "bold")[本科毕业设计（论文）]
+
   if anonymous {
-    v(155pt)
+    v(180pt)
   } else {
-    v(67pt)
+    v(100pt)
   }
 
-  block(width: 318pt, grid(
+  block(width: 340pt, grid(
     columns: (info-key-width, 1fr, info-key-width, 1fr),
     column-gutter: column-gutter,
     row-gutter: row-gutter,

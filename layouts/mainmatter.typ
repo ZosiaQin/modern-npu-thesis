@@ -18,12 +18,12 @@
   text-args: auto,
   // 标题字体与字号
   heading-font: auto,
-  heading-size: (字号.四号,),
-  heading-weight: ("regular",),
-  heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
-  heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
-  heading-pagebreak: (true, false),
-  heading-align: (center, auto),
+  heading-size: (字号.三号, 字号.四号, 字号.小四),
+  heading-weight: ("regular", "regular", "regular"),
+  heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
+  heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
+  heading-pagebreak: (true, false, false),
+  heading-align: (center, auto, auto),
   // 页眉
   header-render: auto,
   header-vspace: 0em,
@@ -167,14 +167,6 @@
       }
     )
   }))
-  context {
-  if calc.even(here().page()){
-    set page(numbering: "I",header: none)
-    // counter(page).update(1)
-  pagebreak() + " "
-}
-}
-  counter(page).update(1)
 
   it
 }

@@ -1,37 +1,51 @@
-#import "@preview/modern-nju-thesis:0.4.0": documentclass
+#import "../lib.typ": documentclass
 
 // 你首先应该安装 https://github.com/nju-lug/modern-nju-thesis/tree/main/fonts/FangZheng 里的所有字体，
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
 
 #let (
   // 布局函数
-  twoside, doc, preface, mainmatter, appendix,
+  twoside,
+  doc,
+  preface,
+  mainmatter,
+  appendix,
   // 页面函数
-  fonts-display-page, cover, decl-page, abstract, abstract-en, bilingual-bibliography,
-  outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
+  fonts-display-page,
+  cover,
+  decl-page,
+  abstract,
+  abstract-en,
+  bilingual-bibliography,
+  outline-page,
+  list-of-figures,
+  list-of-tables,
+  notation,
+  acknowledgement,
+  academic-achievements,
 ) = documentclass(
-  // doctype: "bachelor",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为本科生 bachelor
+  doctype: "master", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为本科生 bachelor
   // degree: "academic",  // "academic" | "professional", 学位类型，默认为学术型 academic
   // anonymous: true,  // 盲审模式
-  twoside: true,  // 双面模式，会加入空白页，便于打印
-  // 你会发现 Typst 有许多警告，这是因为 modern-nju-thesis 加入了很多不必要的 fallback 字体
+  twoside: true, // 双面模式，会加入空白页，便于打印
+  // 你会发现 Typst 有许多警告，这是因为模板加入了很多不必要的 fallback 字体
   // 你可以自定义字体消除警告，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   // fonts: (楷体: (name: "Times New Roman", covers: "latin-in-cjk"), "FZKai-Z03S")),
   info: (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "西北工业大学学位论文"),
     title-en: "My Title in English",
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
-    author-en: "Ming Xing",
+    author-en: "Zhang San",
     department: "某学院",
-    department-en: "School of Chemistry and Chemical Engineering",
+    department-en: "School of XX",
     major: "某专业",
-    major-en: "Chemistry",
+    major-en: "XX Major",
     supervisor: ("李四", "教授"),
-    supervisor-en: "Professor My Supervisor",
+    supervisor-en: "Professor Li Si",
     // supervisor-ii: ("王五", "副教授"),
-    // supervisor-ii-en: "Professor My Supervisor",
+    // supervisor-ii-en: "Professor Wang Wu",
     submit-date: datetime.today(),
   ),
   // 参考文献源
@@ -56,16 +70,16 @@
 
 // 中文摘要
 #abstract(
-  keywords: ("我", "就是", "测试用", "关键词")
+  keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
 )[
-  中文摘要
+  中文摘要内容。中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
 ]
 
 // 英文摘要
 #abstract-en(
-  keywords: ("Dummy", "Keywords", "Here", "It Is")
+  keywords: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
 )[
-  English abstract
+  English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
 ]
 
 
@@ -84,12 +98,26 @@
 // 符号表
 // #notation[
 //   / DFT: 密度泛函理论 (Density functional theory)
-//   / DMRG: 密度矩阵重正化群密度矩阵重正化群密度矩阵重正化群 (Density-Matrix Reformation-Group)
+//   / DMRG: 密度矩阵重正化群 (Density-Matrix Reformation-Group)
 // ]
 
-= 导　论
+= 第一章 绪论
 
-== 列表
+== 1.1 研究背景
+
+=== 1.1.1 研究意义
+
+研究意义内容。
+
+=== 1.1.2 研究现状
+
+研究现状内容。
+
+== 1.2 研究内容
+
+研究内容概述。
+
+== 1.3 列表测试
 
 === 无序列表
 
@@ -110,44 +138,46 @@
 / 术语一: 术语解释
 / 术语二: 术语解释
 
-== 图表
+== 1.4 图表测试
 
-引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:nju-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
+引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:test。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
-#align(center, (stack(dir: ltr)[
-  #figure(
-    table(
-      align: center + horizon,
-      columns: 4,
-      [t], [1], [2], [3],
-      [y], [0.3s], [0.4s], [0.8s],
-    ),
-    caption: [常规表],
-  ) <timing>
-][
-  #h(50pt)
-][
-  #figure(
-    table(
-      columns: 4,
-      stroke: none,
-      table.hline(),
-      [t], [1], [2], [3],
-      table.hline(stroke: .5pt),
-      [y], [0.3s], [0.4s], [0.8s],
-      table.hline(),
-    ),
-    caption: [三线表],
-  ) <timing-tlt>
-]))
+#align(center, (
+  stack(dir: ltr)[
+    #figure(
+      table(
+        align: center + horizon,
+        columns: 4,
+        [t], [1], [2], [3],
+        [y], [0.3s], [0.4s], [0.8s],
+      ),
+      caption: [常规表],
+    ) <timing>
+  ][
+    #h(50pt)
+  ][
+    #figure(
+      table(
+        columns: 4,
+        stroke: none,
+        table.hline(),
+        [t], [1], [2], [3],
+        table.hline(stroke: .5pt),
+        [y], [0.3s], [0.4s], [0.8s],
+        table.hline(),
+      ),
+      caption: [三线表],
+    ) <timing-tlt>
+  ]
+))
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
+  rect(width: 100pt, height: 50pt, fill: blue.lighten(80%), [测试图片]),
   caption: [图片测试],
-) <nju-logo>
+) <test>
 
 
-== 数学公式
+== 1.5 数学公式
 
 可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：
 
@@ -165,11 +195,11 @@ $ y = integral_1^2 x^2 dif x $ <->
 
 $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
-== 参考文献
+== 1.6 参考文献
 
 可以像这样引用参考文献：图书#[@蒋有绪1998]和会议#[@中国力学学会1990]。
 
-== 代码块
+== 1.7 代码块
 
 代码块支持语法高亮。引用时需要加上 `lst:` @lst:code
 
@@ -178,17 +208,19 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
   def add(x, y):
     return x + y
   ```,
-  caption:[代码块],
+  caption: [代码块],
 ) <code>
 
 
-= 正　文
+= 第二章 研究方法
 
-== 正文子标题
+== 2.1 方法概述
 
-=== 正文子子标题
+方法概述内容。
 
-正文内容
+== 2.2 实验设计
+
+实验设计内容。
 
 
 // 手动分页
@@ -196,14 +228,24 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
   pagebreak() + " "
 }
 
-// 中英双语参考文献
-// 默认使用 gb-7714-2015-numeric 样式
+// 参考文献
 #bilingual-bibliography(full: true)
 
 // 致谢
 #acknowledgement[
-  感谢 NJU-LUG，感谢 NJUThesis LaTeX 模板。
+  致谢内容。感谢导师的悉心指导，感谢同学们的帮助。
 ]
+
+// 学术成果页（研究生使用）
+// #academic-achievements[
+//   一、发表的学术论文
+//
+//   [1] 作者. 论文标题[J]. 期刊名, 年份, 卷(期): 页码.
+//
+//   二、参加的科研项目
+//
+//   [1] 项目名称，项目编号，起止时间。
+// ]
 
 // 手动分页
 #if twoside {
@@ -223,6 +265,6 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 附录内容，这里也可以加入图片，例如@fig:appendix-img。
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
+  rect(width: 100pt, height: 50pt, fill: green.lighten(80%), [测试图片]),
   caption: [图片测试],
 ) <appendix-img>

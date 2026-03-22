@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字号, 字体
 
-// 本科生声明页
+// 西北工业大学本科生声明页
 #let bachelor-decl-page(
   anonymous: false,
   twoside: false,
@@ -15,7 +15,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "西北工业大学毕业论文"),
   ) + info
 
   // 2.  对参数进行处理
@@ -28,19 +28,15 @@
   // 3.  正式渲染
   pagebreak(weak: true, to: if twoside { "odd" })
 
-  v(6pt)
-
-  align(center, image("../assets/vi/nju-emblem-purple.svg", width: 1.95cm))
-
-  v(-12pt)
+  v(30pt)
 
   align(
     center,
     text(
       font: fonts.黑体,
-      size: 字号.小一,
+      size: 字号.三号,
       weight: "bold",
-      "南京大学本科毕业论文（设计）\n诚信承诺书",
+      "西北工业大学本科毕业论文（设计）诚信承诺书",
     ),
   )
 
@@ -59,8 +55,8 @@
     columns: (1fr, 150pt),
     [],
     align(left)[
-      #set text(font: fonts.黑体, size: 字号.小三)
-      
+      #set text(font: fonts.宋体, size: 字号.小三)
+
       作者签名：
 
       学号：

@@ -19,17 +19,20 @@
 )
 
 #let 字体 = (
-  // 宋体，属于「有衬线字体」，一般可以等同于英文中的 Serif Font
-  // 这一行分别是「新罗马体（有衬线英文字体）」、「思源宋体（简体）」、「思源宋体」、「宋体（Windows）」、「宋体（MacOS）」
-  宋体: ((name: "Times New Roman", covers: "latin-in-cjk"), "Source Han Serif SC", "Source Han Serif", "Noto Serif CJK SC", "SimSun", "Songti SC", "STSongti"),
-  // 黑体，属于「无衬线字体」，一般可以等同于英文中的 Sans Serif Font
-  // 这一行分别是「Arial（无衬线英文字体）」、「思源黑体（简体）」、「思源黑体」、「黑体（Windows）」、「黑体（MacOS）」
-  黑体: ((name: "Arial", covers: "latin-in-cjk"), "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "SimHei", "Heiti SC", "STHeiti"),
-  // 楷体
-  楷体: ((name: "Times New Roman", covers: "latin-in-cjk"), "KaiTi", "Kaiti SC", "STKaiti", "FZKai-Z03S"),
+  // 宋体 - 使用系统已有的字体
+  // Noto Serif CJK SC 是思源宋体简体，NSimSun 是新宋体
+  宋体: ("Noto Serif CJK SC", "NSimSun", "CESI_SS_GB18030", "SimSun", "Songti SC"),
+
+  // 黑体 - 使用系统已有的字体
+  // STXihei 是华文细黑，Noto Sans CJK SC 是思源黑体简体
+  黑体: ("Noto Sans CJK SC", "STXihei", "SimHei", "Heiti SC", "STHeiti"),
+
+  // 楷体 - STKaiti 是华文楷体
+  楷体: ("STKaiti", "CESI_KT_GB18030", "KaiTi", "Kaiti SC"),
+
   // 仿宋
-  仿宋: ((name: "Times New Roman", covers: "latin-in-cjk"), "FangSong", "FangSong SC", "STFangSong", "FZFangSong-Z02S"),
-  // 等宽字体，用于代码块环境，一般可以等同于英文中的 Monospaced Font
-  // 这一行分别是「Courier New（Windows 等宽英文字体）」、「思源等宽黑体（简体）」、「思源等宽黑体」、「黑体（Windows）」、「黑体（MacOS）」
-  等宽: ((name: "Courier New", covers: "latin-in-cjk"), (name: "Menlo", covers: "latin-in-cjk"), (name: "IBM Plex Mono", covers: "latin-in-cjk"), "Source Han Sans HW SC", "Source Han Sans HW", "Noto Sans Mono CJK SC", "SimHei", "Heiti SC", "STHeiti"),
+  仿宋: ("FangSong", "STFangSong"),
+
+  // 等宽字体 - 用于代码块
+  等宽: ("Noto Sans Mono CJK SC", "Source Han Sans HW SC", "SimHei"),
 )

@@ -1,10 +1,10 @@
-# 南京大学学位论文 modern-nju-thesis
+# 西北工业大学学位论文 modern-npu-thesis
 
-南京大学毕业论文（设计）的 Typst 模板，能够简洁、快速、持续生成 PDF 格式的毕业论文。[Typst Universe](https://typst.app/universe/package/modern-nju-thesis)
+西北工业大学毕业论文（设计）的 Typst 模板，能够简洁、快速、持续生成 PDF 格式的毕业论文。
+
+> 本模板基于 [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) 开发，感谢南京大学 Typst 社区的贡献。
 
 Typst 非官方中文交流群：793548390
-
-南京大学 Typst 交流群：943622984
 
 ![Typst editor interface showing thesis editing](imgs/editor.png)
 
@@ -12,9 +12,6 @@ Typst 非官方中文交流群：793548390
 
 - Typst 是一门新生的排版标记语言，还做不到像 Word 或 LaTeX 一样成熟稳定。
 - 该模板并非官方模板，而是民间模板，**存在不被认可的风险**。
-
-
-## 优势
 
 Typst 是可用于出版的可编程标记语言，拥有变量、函数与包管理等现代编程语言的特性，注重于科学写作 (science writing)，定位与 LaTeX 相似。可以阅读我的 [一篇知乎文章](https://zhuanlan.zhihu.com/p/669097092) 进一步了解 Typst 的优势。
 

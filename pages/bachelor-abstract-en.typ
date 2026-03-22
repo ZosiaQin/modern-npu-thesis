@@ -1,9 +1,8 @@
 #import "../utils/custom-cuti.typ": fakebold
 #import "../utils/style.typ": 字号, 字体
-#import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
 
-// 本科生英文摘要页
+// 西北工业大学本科生英文摘要页
 #let bachelor-abstract-en(
   // documentclass 传入的参数
   anonymous: false,
@@ -22,9 +21,9 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title-en: "NJU Thesis Template for Typst",
+    title-en: "NPU Thesis Template for Typst",
     author-en: "Zhang San",
-    department-en: "XX Department",
+    department-en: "XX School",
     major-en: "XX Major",
     supervisor-en: "Professor Li Si",
   ) + info
@@ -35,47 +34,36 @@
     info.title-en = info.title-en.split("\n")
   }
 
-  // 3.  内置辅助函数
-  let info-value(key, body) = {
-    if not anonymous or (key not in anonymous-info-keys) {
-      body
-    }
-  }
-
-  // 4.  正式渲染
+  // 3.  正式渲染
   [
     #pagebreak(weak: true, to: if twoside { "odd" })
 
-    #set text(font: fonts.楷体, size: 字号.小四)
+    #set text(font: fonts.宋体, size: 字号.小四)
     #set par(leading: leading, justify: true, spacing: spacing)
 
     // 标记一个不可见的标题用于目录生成
     #invisible-heading(level: 1, outlined: outlined, outline-title)
 
     #align(center)[
-      #set text(size: 字号.小二, weight: "bold")
+      #set text(size: 字号.三号, font: fonts.黑体, weight: "bold")
 
-      #v(1em)
+      #v(2em)
 
-      #double-underline[#fakebold[南京大学本科生毕业论文（设计、作品）英文摘要]]
+      ABSTRACT
     ]
-
-    #v(2pt)
-
-    THESIS: #info-value("title-en", (("",)+ info.title-en).sum())
-
-    DEPARTMENT: #info-value("department-en", info.department-en)
-
-    SPECIALIZATION: #info-value("major-en", info.major-en)
-
-    UNDERGRADUATE: #info-value("author-en", info.author-en)
-
-    MENTOR: #info-value("supervisor-en", info.supervisor-en) #(if info.supervisor-ii-en != "" [#h(1em) #info-value("supervisor-ii-en", info.supervisor-ii-en)])
-
-    ABSTRACT: #body
 
     #v(1em)
 
-    KEYWORDS: #(("",)+ keywords.intersperse("; ")).sum()
+    #[
+      #set par(first-line-indent: (amount: 2em, all: true))
+
+      #body
+    ]
+
+    #v(1em)
+
+    #text(font: fonts.宋体, size: 字号.小四)[
+      KEY WORDS: #(("",)+ keywords.intersperse(", ")).sum()
+    ]
   ]
 }

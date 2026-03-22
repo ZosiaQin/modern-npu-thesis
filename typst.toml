@@ -1,15 +1,15 @@
 [package]
-name = "modern-nju-thesis"
-version = "0.4.0"
+name = "modern-npu-thesis"
+version = "0.1.0"
 entrypoint = "lib.typ"
-authors = ["OrangeX4"]
+authors = ["OrangeX4", "yjy"]
 license = "MIT"
-description = "南京大学学位论文模板。Modern Nanjing University Thesis."
-repository = "https://github.com/nju-lug/modern-nju-thesis"
-keywords = ["Nanjing University", "thesis"]
+description = "西北工业大学学位论文模板。Modern Northwestern Polytechnical University Thesis."
+repository = "https://github.com/npu-lug/modern-npu-thesis"
+keywords = ["Northwestern Polytechnical University", "NPU", "thesis"]
 categories = ["thesis"]
 exclude = ["imgs"]
-compiler = "0.13.0"
+compiler = "0.14.2"
 
 [template]
 path = "template"
