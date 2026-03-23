@@ -13,29 +13,41 @@
 ) = {
   fonts = 字体 + fonts
 
+  // 1. 设置页码逻辑
+  // 注意：pagebreak 放在 set page 之前
   pagebreak(weak: true, to: if twoside { "odd" })
   counter(page).update(1)
-  set page(numbering: "I", number-align: center)
 
-  if display-header {
+  // 2. 页面全局设置
+  set page(
+    numbering: "I",
+    number-align: center,
+  )
+
+  // 3. 页眉设置
+  // 我们直接在这里针对 it 应用 show rule，或者直接 set page
+  show: it => {
     set page(
       header: context {
+        if not display-header { return none }
+        
         let loc = here()
-        let is-graduate = doctype == "master" or doctype == "doctor"
-        // 页眉内容
-        let header-content = if twoside and calc.rem(loc.page(), 2) == 0 and is-graduate {
-          // 偶数页：显示论文标题
-          graduate-header-title(doctype)
-        } else {
-          // 奇数页或单面打印：显示当前标题
-          heading-display(active-heading(level: 1, prev: false))
+        let is-graduate = (doctype == "master" or doctype == "doctor")
+        
+        // 默认显示当前章节
+        let header-content = heading-display(active-heading(level: 1, prev: false))
+        
+        // 双面模式下的偶数页替换为校名
+        if twoside and calc.rem(loc.page(), 2) == 0 and is-graduate {
+          header-content = graduate-header-title(doctype)
         }
-        // 使用统一的页眉渲染
-        if header-content != none {
+        
+        if is-graduate {
           header-render(header-content, fonts: fonts)
         }
       }
     )
+    it
   }
 
   it

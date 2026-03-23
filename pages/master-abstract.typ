@@ -31,7 +31,7 @@
     info.title = info.title.split("\n")
   }
 
-  set page(header: header-render([摘　要], fonts: fonts))
+
 
   [
     #set par(leading: leading, spacing: spacing, justify: true)

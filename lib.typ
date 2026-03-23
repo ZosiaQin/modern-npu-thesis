@@ -121,13 +121,14 @@
         info: info + args.named().at("info", default: (:)),
       )
     },
-    preface: (..args) => {
+    preface: (it, ..args) => {
       preface(
         twoside: twoside,
         doctype: doctype,
         display-header: (doctype == "master" or doctype == "doctor"),
-        ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
+        ..args,
+        it,
       )
     },
     mainmatter: (..args) => {

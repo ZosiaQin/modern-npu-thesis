@@ -99,7 +99,7 @@
   pagebreak(weak: true, to: if is-graduate { "odd" })
 
   // 页眉
-  set page(header: header-render([目　录], fonts: fonts))
+
 
   // 默认显示的字体
   set text(font: reference-font, size: reference-size)

@@ -33,7 +33,7 @@
   }
 
   pagebreak(weak: true, to: if twoside { "odd" })
-  set page(header: header-render([Abstract], fonts: fonts))
+
 
   [
     #set par(leading: leading, spacing: spacing, justify: true)
