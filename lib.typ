@@ -114,6 +114,7 @@
       doc(
         ..args,
         doctype: doctype,
+        twoside: twoside,
         info: info + args.named().at("info", default: (:)),
       )
     },
@@ -127,6 +128,7 @@
       if doctype == "master" or doctype == "doctor" {
         mainmatter(
           twoside: twoside,
+          doctype: doctype,
           display-header: true,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
@@ -250,6 +252,7 @@
     outline-page: (..args) => {
       bachelor-outline-page(
         twoside: twoside,
+        doctype: doctype,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )

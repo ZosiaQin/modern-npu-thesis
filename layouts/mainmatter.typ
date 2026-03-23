@@ -3,11 +3,12 @@
 #import "../utils/custom-numbering.typ": custom-numbering
 #import "../utils/custom-heading.typ": heading-display, active-heading, current-heading
 #import "../utils/unpairs.typ": unpairs
-#import "../utils/header.typ": header-render
+#import "../utils/header.typ": header-render, graduate-header-title
 
 #let mainmatter(
   // documentclass 传入参数
   twoside: false,
+  doctype: "bachelor",
   fonts: (:),
   // 其他参数
   leading: 1.5 * 15.6pt - 0.7em,
@@ -142,20 +143,28 @@
         // 5.2 如果当前页面没有一级标题，则渲染页眉
         if not skip-on-first-level or cur-heading == none {
           if header-render == auto {
-            // 一级标题和二级标题
-            let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 1)) } else { "" }
-            let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 1 { heading-display(active-heading(level: 2, prev: false)) } else { "" }
-            // 使用统一的页眉格式
-            set text(font: fonts.宋体, size: 字号.小五)
-            align(center)[
-              #if first-level-heading != "" and second-level-heading != "" {
+            // 判断是否为研究生
+            let is-graduate = doctype == "master" or doctype == "doctor"
+            // 双面打印时，偶数页显示论文标题
+            let header-content = if twoside and calc.rem(loc.page(), 2) == 0 and is-graduate {
+              graduate-header-title(doctype)
+            } else {
+              // 奇数页或单面打印：显示一级标题和二级标题
+              let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 1 { heading-display(active-heading(level: 1)) } else { "" }
+              let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 2, prev: false)) } else { "" }
+              if first-level-heading != "" and second-level-heading != "" {
                 first-level-heading + h(1fr) + second-level-heading
               } else if first-level-heading != "" {
                 first-level-heading
               } else if second-level-heading != "" {
                 second-level-heading
+              } else {
+                ""
               }
-            ]
+            }
+            // 使用统一的页眉格式
+            set text(font: fonts.宋体, size: 字号.小五)
+            align(center)[#header-content]
             v(-0.5em)
             line(length: 100%, stroke: 3pt + black)
             v(-0.7em)

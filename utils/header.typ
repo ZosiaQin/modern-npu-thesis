@@ -24,3 +24,27 @@
 #let graduate-header-config = (
   header-ascent: 1.5cm - 1.5em,
 )
+
+// 获取研究生论文页眉标题
+#let graduate-header-title(doctype) = {
+  if doctype == "doctor" {
+    "西北工业大学博士学位论文"
+  } else {
+    "西北工业大学硕士学位论文"
+  }
+}
+
+// 添加空白偶数页（带页眉）
+// 用于双面打印时，确保奇数页结束后的偶数页也有页眉
+#let add-blank-even-page(doctype: "master", fonts: (:)) = {
+  fonts = 字体 + fonts
+  context {
+    if calc.rem(here().page(), 2) == 1 {
+      [
+        #pagebreak(to: "even")
+        #set page(header: header-render([#graduate-header-title(doctype)], fonts: fonts))
+        \
+      ]
+    }
+  }
+}

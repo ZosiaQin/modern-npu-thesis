@@ -280,6 +280,15 @@
   // 日期
   text(font: fonts.宋体, size: 字号.三号, info.submit-date.display("[year] 年 [month] 月"))
 
+  // 双面打印时，如果中文内封结束在奇数页，添加空白偶数页
+  if twoside {
+    context {
+      if calc.rem(here().page(), 2) == 1 {
+        pagebreak(to: "even") + " "
+      }
+    }
+  }
+
 
   // ========================================
   // 第三页 - 英文封面
@@ -340,6 +349,15 @@
   [Xi'an, P.R. China]
   v(0pt)
   text(font: "Times New Roman", info.submit-date.display("[month repr:long]/[year]"))
+
+  // 双面打印时，如果英文封面结束在奇数页，添加空白偶数页
+  if twoside {
+    context {
+      if calc.rem(here().page(), 2) == 1 {
+        pagebreak(to: "even") + " "
+      }
+    }
+  }
 
 
   // ========================================

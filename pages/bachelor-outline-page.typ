@@ -1,49 +1,102 @@
 #import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/style.typ": 字号, 字体
-#import "../utils/header.typ": header-render
+#import "../utils/header.typ": header-render, add-blank-even-page
 
-// 本科生目录生成
+// 目录生成页面
 #let bachelor-outline-page(
   // documentclass 传入参数
   twoside: false,
+  doctype: "bachelor",
   fonts: (:),
   // 其他参数
   depth: 4,
-  title: "目　　录",
+  title: auto,
   outlined: false,
   title-vspace: 0pt,
   title-text-args: auto,
   // 引用页数的字体，这里用于显示 Times New Roman
   reference-font: auto,
-  reference-size: 字号.小四,
+  reference-size: auto,
   // 字体与字号
   font: auto,
-  size: (字号.四号, 字号.小四),
+  size: auto,
   // 垂直间距
-  above: (25pt, 14pt),
-  below: (14pt, 14pt),
+  above: auto,
+  below: auto,
   indent: (0pt, 18pt, 28pt),
   // 全都显示点号
   fill: (repeat([.], gap: 0.15em),),
   gap: .3em,
+  // 行间距
+  leading: auto,
   ..args,
 ) = {
   // 1.  默认参数
   fonts = 字体 + fonts
+
+  // 研究生和本科生使用不同的默认格式
+  let is-graduate = doctype == "master" or doctype == "doctor"
+
+  // 标题默认值
+  if title == auto {
+    title = if is-graduate { "目　录" } else { "目　　录" }
+  }
+
   if title-text-args == auto {
-    title-text-args = (font: fonts.宋体, size: 字号.三号, weight: "bold")
+    title-text-args = if is-graduate {
+      (font: fonts.黑体, size: 字号.三号)
+    } else {
+      (font: fonts.宋体, size: 字号.三号, weight: "bold")
+    }
   }
   // 引用页数的字体，这里用于显示 Times New Roman
   if reference-font == auto {
     reference-font = fonts.宋体
   }
+  if reference-size == auto {
+    reference-size = 字号.小四
+  }
   // 字体与字号
   if font == auto {
-    font = (fonts.黑体, fonts.宋体)
+    font = if is-graduate {
+      (fonts.宋体, fonts.宋体)
+    } else {
+      (fonts.黑体, fonts.宋体)
+    }
+  }
+  if size == auto {
+    size = if is-graduate {
+      (字号.小四, 字号.小四)
+    } else {
+      (字号.四号, 字号.小四)
+    }
+  }
+  // 垂直间距
+  if above == auto {
+    above = if is-graduate {
+      (20pt, 6pt)
+    } else {
+      (25pt, 14pt)
+    }
+  }
+  if below == auto {
+    below = if is-graduate {
+      (6pt, 6pt)
+    } else {
+      (14pt, 14pt)
+    }
+  }
+  // 行间距
+  if leading == auto {
+    leading = if is-graduate {
+      14pt
+    } else {
+      1.5em
+    }
   }
 
   // 2.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(weak: true, to: if is-graduate { "odd" })
 
   // 页眉
   set page(header: header-render([目　录], fonts: fonts))
@@ -61,11 +114,11 @@
   v(title-vspace)
 
   // 目录样式
+  set par(leading: leading)
   set outline(indent: level => indent.slice(0, calc.min(level + 1, indent.len())).sum())
-  show outline.entry: entry => block(
-    above: above.at(entry.level - 1, default: above.last()),
-    below: below.at(entry.level - 1, default: below.last()),
-    link(
+  show outline.entry: entry => {
+    // 研究生使用固定行间距，不额外添加 above/below
+    let entry-content = link(
       entry.element.location(),
       entry.indented(
         none,
@@ -86,9 +139,25 @@
         },
         gap: 0pt,
       ),
-    ),
-  )
+    )
+    if is-graduate {
+      // 研究生：固定行间距，每条目占一行
+      entry-content
+    } else {
+      // 本科生：使用 above/below 控制间距
+      block(
+        above: above.at(entry.level - 1, default: above.last()),
+        below: below.at(entry.level - 1, default: below.last()),
+        entry-content,
+      )
+    }
+  }
 
   // 显示目录
   outline(title: none, depth: depth)
+
+  // 双面打印时，如果研究生目录结束在奇数页，添加带页眉的空白偶数页
+  if is-graduate {
+    add-blank-even-page(doctype: doctype, fonts: fonts)
+  }
 }

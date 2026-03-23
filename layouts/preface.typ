@@ -5,10 +5,8 @@
   ..args,
   it,
 ) = {
-  // 分页
-  if twoside {
-    pagebreak() + " "
-  }
+  // 双面打印时确保从奇数页开始
+  pagebreak(weak: true, to: if twoside { "odd" })
   counter(page).update(0)
   set page(numbering: "I")
   it

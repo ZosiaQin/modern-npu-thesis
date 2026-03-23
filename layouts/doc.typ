@@ -11,6 +11,7 @@
   fallback: false, // 字体缺失时使用 fallback，帮助诊断字体问题
   lang: "zh",
   margin: auto,
+  twoside: false,
   it,
 ) = {
   // 1.  默认参数
@@ -32,7 +33,12 @@
   let page-margin = if margin == auto {
     if doctype == "master" or doctype == "doctor" {
       // 研究生：上下2.54cm，左右2.5cm
-      (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm)
+      // 双面打印时，内侧边距稍大用于装订
+      if twoside {
+        (top: 2.54cm, bottom: 2.54cm, inside: 2.8cm, outside: 2.2cm)
+      } else {
+        (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm)
+      }
     } else {
       // 本科生：默认左右边距
       (x: 89pt)
@@ -44,7 +50,9 @@
   // 3.  基本的样式设置
   set text(fallback: fallback, lang: lang)
   set page(
+    paper: "a4",
     margin: page-margin,
+    binding: if twoside { left } else { auto },
     // 研究生设置页眉基础配置
     ..(if doctype == "master" or doctype == "doctor" { graduate-header-config } else { (:) }),
   )

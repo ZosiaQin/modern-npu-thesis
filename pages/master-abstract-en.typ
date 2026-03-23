@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/invisible-heading.typ": invisible-heading
-#import "../utils/header.typ": header-render
+#import "../utils/header.typ": header-render, add-blank-even-page
 
 // 西北工业大学研究生英文摘要页
 #let master-abstract-en(
@@ -71,7 +71,12 @@
     #v(1em)
 
     #text(size: 字号.小四)[
-      Key words: #(("",) + keywords.intersperse("; ")).sum()
+      #strong[Key words:] #(("",) + keywords.intersperse("; ")).sum()
     ]
+
+    // 双面打印时，如果结束在奇数页，添加带页眉的空白偶数页
+    #if twoside {
+      add-blank-even-page(doctype: doctype, fonts: fonts)
+    }
   ]
 }
