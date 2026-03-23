@@ -52,7 +52,7 @@
     [1] 项目名称，项目编号，起止时间。
   ],
   // 声明扫描页（传入 image 对象以解决相对路径问题）
-  scan-declaration: image("声明.pdf", width: 100%, height: 100%),
+  scan-declaration: image("images/声明.pdf", width: 100%, height: 100%),
 )
 
 // ==========================================
