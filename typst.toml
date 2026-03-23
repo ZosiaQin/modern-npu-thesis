@@ -1,11 +1,11 @@
 [package]
-name = "modern-npu-thesis"
+name = "nwputhesis-typst"
 version = "0.1.0"
 entrypoint = "lib.typ"
 authors = ["OrangeX4", "yjy"]
 license = "MIT"
 description = "西北工业大学学位论文模板。Modern Northwestern Polytechnical University Thesis."
-repository = "https://github.com/npu-lug/modern-npu-thesis"
+repository = "https://github.com/npu-lug/nwputhesis-typst"
 keywords = ["Northwestern Polytechnical University", "NPU", "thesis"]
 categories = ["thesis"]
 exclude = ["imgs"]

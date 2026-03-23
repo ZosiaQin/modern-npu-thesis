@@ -1,4 +1,4 @@
-// 西北工业大学学位论文模板 modern-npu-thesis
+// 西北工业大学学位论文模板 nwputhesis-typst
 // Based on: https://github.com/nju-lug/modern-nju-thesis
 // Author: https://github.com/OrangeX4 (original NJU version)
 // 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo

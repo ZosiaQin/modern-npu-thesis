@@ -1,4 +1,4 @@
-# 西北工业大学学位论文 modern-npu-thesis
+# 西北工业大学学位论文 nwputhesis-typst
 
 西北工业大学毕业论文（设计）的 Typst 模板，能够简洁、快速、持续生成 PDF 格式的毕业论文。
 
