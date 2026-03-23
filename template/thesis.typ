@@ -1,33 +1,14 @@
-#import "../lib.typ": documentclass
+#import "../lib.typ": appendix, nwpu-thesis
 
-#let (
-  twoside,
-  doc,
-  preface,
-  mainmatter,
-  appendix,
-  fonts-display-page,
-  cover,
-  decl-page,
-  abstract,
-  abstract-en,
-  bilingual-bibliography,
-  outline-page,
-  list-of-figures,
-  list-of-tables,
-  notation,
-  acknowledgement,
-  academic-achievements,
-  add-blank-even-page,
-) = documentclass(
+#show: nwpu-thesis.with(
   doctype: "master", // "bachelor" | "master" | "doctor",
-  degree: "professional", // "academic" | "professional", 学位类型
+  degree: "professional", // "academic" | "professional",
   anonymous: false, // 是否开启盲审模式
-  colored-cover: true,
+  colored-cover: true, // 是否开启彩色封面封底
   info: (
     title: ("基于 Typst 的", "西北工业大学学位论文"),
     title-en: "My Title in English",
-    student-id: "1234567890",
+    student-id: "2023123456",
     clc: "TP311.1", // 分类号
     author: "航小天",
     author-en: "Xiaotian Hang",
@@ -37,70 +18,46 @@
     supervisor: ("张三", "教授"),
     supervisor-en: "San Zhang",
     submit-date: datetime.today(),
-    // 评阅人名单
-    reviewers: (
-      (name: "张某某", title: "教授", unit: "西北工业大学"),
-      (name: "李某某", title: "教授", unit: "西安交通大学"),
-      (name: "王某某", title: "教授", unit: "西安电子科技大学"),
-    ),
-    // 答辩委员会信息
-    defence-committee: (
-      date: datetime(year: 2024, month: 6, day: 1),
-      members: (
-        (role: "主席", name: "赵某某", title: "教授", unit: "西北工业大学"),
-        (role: "委员", name: "钱某某", title: "教授", unit: "西安交通大学"),
-        (role: "委员", name: "孙某某", title: "教授", unit: "西安电子科技大学"),
-        (role: "委员", name: "周某某", title: "教授", unit: "西北工业大学"),
-        (role: "委员", name: "吴某某", title: "副教授", unit: "西北工业大学"),
-        (role: "秘书", name: "郑某某", title: "讲师", unit: "西北工业大学"),
-      ),
-    ),
   ),
   // 参考文献源
   bibliography: bibliography.with("ref.bib"),
+  // 中文摘要
+  abstract: [
+    中文摘要内容。中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
+  ],
+  keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
+  // 英文摘要
+  abstract-en: [
+    English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
+  ],
+  keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
+  // 附录
+  appendix: [
+    = 附　录
+
+    附录内容。
+  ],
+  // 致谢
+  acknowledgement: [
+    致谢内容。感谢导师的悉心指导，感谢同学们的帮助。
+  ],
+  // 学术成果页（研究生使用）
+  academic-achievements: [
+    一、发表的学术论文
+
+    [1] 作者. 论文标题[J]. 期刊名, 年份, 卷(期): 页码.
+
+    二、参加的科研项目
+
+    [1] 项目名称，项目编号，起止时间。
+  ],
+  // 声明扫描页（传入 image 对象以解决相对路径问题）
+  scan-declaration: image("声明.pdf", width: 100%, height: 100%),
 )
 
-// 文稿设置
-#show: doc
-
-// 封面页
-#cover()
-
-// 前言
-#show: preface
-
-// 中文摘要
-#abstract(
-  keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
-)[
-  中文摘要内容。中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
-]
-
-// 英文摘要
-#abstract-en(
-  keywords: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
-)[
-  English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
-]
-
-
-// 目录
-#outline-page()
-
-// 图目录
-// #list-of-figures()
-
-// 表格目录
-// #list-of-tables()
-
-// 正文
-#show: mainmatter
-
-// 符号表
-// #notation[
-//   / DFT: 密度泛函理论 (Density functional theory)
-//   / DMRG: 密度矩阵重正化群 (Density-Matrix Reformation-Group)
-// ]
+// ==========================================
+// 正文开始
+// ==========================================
 
 = 绪论
 
@@ -222,37 +179,3 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 == 实验设计
 
 实验设计内容。
-
-
-// 正文结束
-#heading(level: 1, numbering: none, outlined: true, [参考文献])
-#bilingual-bibliography(full: true, title: none)
-
-// 附录
-#appendix[
-
-  = 附　录
-
-  附录内容。
-]
-
-// 致谢
-#acknowledgement[
-  致谢内容。感谢导师的悉心指导，感谢同学们的帮助。
-]
-
-// 学术成果页（研究生使用）
-#academic-achievements[
-  一、发表的学术论文
-
-  [1] 作者. 论文标题[J]. 期刊名, 年份, 卷(期): 页码.
-
-  二、参加的科研项目
-
-  [1] 项目名称，项目编号，起止时间。
-]
-
-// 声明页（插入扫描件PDF）
-#page(margin: 0pt)[
-  #image("声明.pdf", width: 100%, height: 100%)
-]

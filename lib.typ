@@ -12,8 +12,6 @@
 #import "pages/fonts-display-page.typ": fonts-display-page
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
-#import "pages/bachelor-decl-page.typ": bachelor-decl-page
-#import "pages/master-decl-page.typ": master-decl-page
 #import "pages/bachelor-abstract.typ": bachelor-abstract
 #import "pages/master-abstract.typ": master-abstract
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
@@ -185,27 +183,7 @@
         )
       }
     },
-    // 声明页，通过 type 分发到不同函数
-    decl-page: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
-        master-decl-page(
-          anonymous: anonymous,
-          twoside: twoside,
-          ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
-        )
-      } else if doctype == "postdoc" {
-        panic("postdoc has not yet been implemented.")
-      } else {
-        bachelor-decl-page(
-          anonymous: anonymous,
-          twoside: twoside,
-          ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
-          info: info + args.named().at("info", default: (:)),
-        )
-      }
-    },
+
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -322,3 +300,108 @@
     },
   )
 }
+
+// ========== 命令行参数支持 ==========
+#let _parse-bool(value, default) = {
+  if value == none { default } else if value == "true" or value == "1" {
+    true
+  } else if value == "false" or value == "0" { false } else { default }
+}
+
+// 主配置函数（借鉴自 pkuthss-typst，提供更简洁的接口）
+#let nwpu-thesis(
+  doctype: "bachelor", // "bachelor" | "master" | "doctor" | "postdoc"
+  degree: "academic", // "academic" | "professional"
+  nl-cover: false,
+  twoside: true,
+  colored-cover: false,
+  anonymous: false,
+  fonts: (:),
+  info: (:),
+  bibliography: none,
+  // 页面控制
+  abstract: none,
+  keywords: (),
+  abstract-en: none,
+  keywords-en: (),
+  acknowledgement: none,
+  academic-achievements: none,
+  notation: none,
+  scan-declaration: none,
+  appendix: none,
+  list-of-figures: false,
+  list-of-tables: false,
+  outline-depth: 3,
+  // 文档内容
+  body,
+) = {
+  // 命令行参数覆盖
+  let anonymous = _parse-bool(sys.inputs.at("anonymous", default: none), anonymous)
+  let twoside = _parse-bool(sys.inputs.at("twoside", default: none), twoside)
+  let colored-cover = _parse-bool(sys.inputs.at("colored-cover", default: none), colored-cover)
+
+  let cls = documentclass(
+    doctype: doctype,
+    degree: degree,
+    nl-cover: nl-cover,
+    twoside: twoside,
+    colored-cover: colored-cover,
+    anonymous: anonymous,
+    fonts: fonts,
+    info: info,
+    bibliography: bibliography,
+  )
+
+  show: cls.doc
+
+  // 1. 封面
+  (cls.cover)()
+
+  // 2. 前置部分（摘要、目录等）
+  show: cls.preface
+  if abstract != none {
+    (cls.abstract)(keywords: keywords)[#abstract]
+  }
+  if abstract-en != none {
+    (cls.abstract-en)(keywords: keywords-en)[#abstract-en]
+  }
+
+  (cls.outline-page)(depth: outline-depth)
+  if list-of-figures { (cls.list-of-figures)() }
+  if list-of-tables { (cls.list-of-tables)() }
+  if notation != none { (cls.notation)(notation) }
+
+  // 3. 正文
+  show: cls.mainmatter
+  body
+
+  // 4. 后置部分
+  // 参考文献
+  if bibliography != none {
+    (cls.bilingual-bibliography)()
+  }
+
+  // 附录
+  if appendix != none {
+    show: cls.appendix
+    appendix
+  }
+
+  // 致谢
+  if acknowledgement != none {
+    (cls.acknowledgement)(acknowledgement)
+  }
+
+  // 学术成果
+  if academic-achievements != none {
+    (cls.academic-achievements)(academic-achievements)
+  }
+
+  // 声明扫描页
+  if scan-declaration != none {
+    page(margin: 0pt)[
+      #scan-declaration
+    ]
+  }
+}
+
