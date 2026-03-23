@@ -262,16 +262,7 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 = 附　录
 
-== 附录子标题
-
-=== 附录子子标题
-
-附录内容，这里也可以加入图片，例如@fig:appendix-img。
-
-#figure(
-  rect(width: 100pt, height: 50pt, fill: green.lighten(80%), [测试图片]),
-  caption: [图片测试],
-) <appendix-img>
+附录内容。
 ]
 
 #pagebreak()
@@ -295,3 +286,8 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 #pagebreak()
 #v(1fr)
+
+// 声明页（插入扫描件PDF）
+#page(margin: 0pt)[
+  #image("声明.pdf", width: 100%, height: 100%)
+]
