@@ -1,6 +1,8 @@
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
-#import "../layouts/preface.typ": preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight
+#import "../layouts/preface.typ": (
+  preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight,
+)
 
 // 目录生成页面
 #let bachelor-outline-page(
@@ -28,7 +30,8 @@
   fill: (repeat([.], gap: 0.15em),),
   gap: .3em,
   // 行间距
-  leading: auto,
+  leading: 1.0em,
+  spacing: 1.0em,
   ..args,
 ) = {
   // 1.  默认参数
@@ -107,11 +110,11 @@
   [
     // 目录标题：字体由 title-text-args 控制，间距使用统一配置
     #show heading.where(level: 1, numbering: none): it => {
-      set align(center)
       set text(..title-text-args, size: preface-heading-size, weight: preface-heading-weight)
-      set block(above: preface-heading-above, below: preface-heading-below)
-      it.body
+      set block(above: 0pt, below: preface-heading-below)
+      align(center, it)
     }
+    #v(preface-heading-above)
     #heading(level: 1, outlined: outlined, title)
 
     #v(title-vspace)

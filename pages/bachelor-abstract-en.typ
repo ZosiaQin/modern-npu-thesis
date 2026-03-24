@@ -43,11 +43,11 @@
 
     // 英文摘要标题，字号和间距使用统一配置
     #show heading.where(level: 1): it => {
-      set align(center)
       set text(size: preface-heading-size, font: fonts.黑体, weight: preface-heading-weight)
-      set block(above: preface-heading-above, below: preface-heading-below)
-      it.body
+      set block(above: 0pt, below: preface-heading-below)
+      align(center, it)
     }
+    #v(preface-heading-above)
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[

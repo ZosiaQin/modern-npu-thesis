@@ -1,7 +1,7 @@
 #import "../utils/custom-cuti.typ": fakebold
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/double-underline.typ": double-underline
-#import "../layouts/preface.typ": preface-heading-style
+#import "../layouts/preface.typ": preface-heading-style, preface-heading-above
 
 // 西北工业大学本科生中文摘要页
 #let bachelor-abstract(
@@ -51,6 +51,7 @@
 
     // 使用统一的一级标题样式
     #show heading.where(level: 1): it => preface-heading-style(it, fonts)
+    #v(preface-heading-above)
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[

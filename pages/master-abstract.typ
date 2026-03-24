@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
-#import "../layouts/preface.typ": preface-heading-style
+#import "../layouts/preface.typ": preface-heading-above, preface-heading-style
 
 #let master-abstract(
   doctype: "master",
@@ -41,6 +41,7 @@
 
     // 使用统一的一级标题样式
     #show heading.where(level: 1): it => preface-heading-style(it, fonts)
+    #v(preface-heading-above)
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[
@@ -49,7 +50,7 @@
       #body
     ]
 
-    #v(1em)
+    #v(1.5em)
     #h(2em)#text(font: fonts.黑体, size: 字号.小四)[关键词：]#text(font: fonts.宋体, size: 字号.小四)[#(
       ("",) + keywords.intersperse("；")
     ).sum()]

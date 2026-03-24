@@ -4,6 +4,7 @@
 #import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
 #import "../utils/header.typ": graduate-header-title, header-render
+#import "../layouts/preface.typ": heading-above as level1-heading-above, heading-below as level1-heading-below
 
 #let mainmatter(
   // documentclass 传入参数
@@ -11,8 +12,8 @@
   doctype: "bachelor",
   fonts: (:),
   // 其他参数
-  leading: 1.5 * 15.6pt - 0.7em,
-  spacing: 1.5 * 15.6pt - 0.7em,
+  leading: 1.0em,
+  spacing: 1.0em,
   justify: true,
   first-line-indent: (amount: 2em, all: true),
   numbering: custom-numbering.with(
@@ -26,8 +27,9 @@
   heading-font: auto,
   heading-size: (字号.三号, 字号.四号, 字号.小四),
   heading-weight: ("regular", "regular", "regular"),
-  heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
-  heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
+  // 一级标题使用统一配置，二三级保持原有值
+  heading-above: (level1-heading-above, 2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
+  heading-below: (level1-heading-below, 1.5 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
   heading-pagebreak: (true, false, false),
   heading-align: (center, auto, auto),
   // 页眉
@@ -115,7 +117,7 @@
   // 5.  处理标题
   // 5.1 设置标题的 Numbering
   set heading(numbering: numbering)
-  // 5.2 设置字体字号并加入假段落模拟首行缩进
+  // 5.2 设置字体、字号、换页及段前段后间距
   show heading: it => {
     set text(
       font: array-at(heading-font, it.level),
@@ -123,29 +125,35 @@
       weight: array-at(heading-weight, it.level),
       ..unpairs(heading-text-args-lists.map(pair => (pair.at(0), array-at(pair.at(1), it.level)))),
     )
-    set block(
-      above: array-at(heading-above, it.level),
-      below: array-at(heading-below, it.level),
-    )
-    it
-  }
-  // 5.3 标题居中与自动换页
-  show heading: it => {
+
+    let needs-pagebreak = false
     if array-at(heading-pagebreak, it.level) {
-      // 如果打上了 no-auto-pagebreak 标签，则不自动换页
       if "label" not in it.fields() or str(it.label) != "no-auto-pagebreak" {
-        if it.level == 1 {
-          // 如果是双面打印，一级标题换页需要跳转到奇数页
-          pagebreak(weak: true, to: if twoside { "odd" })
-        } else {
-          pagebreak(weak: true)
-        }
+        needs-pagebreak = true
       }
     }
+
+    if needs-pagebreak {
+      if it.level == 1 {
+        // 如果是双面打印，一级标题换页需要跳转到奇数页
+        pagebreak(weak: true, to: if twoside { "odd" })
+      } else {
+        pagebreak(weak: true)
+      }
+      // 手动添加页首被忽略的顶部间距
+      v(array-at(heading-above, it.level))
+    }
+
+    // 设置段前段后间距。如果有换页，则 block() 的 above 设为 0pt 防止双倍间距
+    let current-block-above = if needs-pagebreak { 0pt } else { array-at(heading-above, it.level) }
+    let current-block-below = array-at(heading-below, it.level)
+
     if array-at(heading-align, it.level) != auto {
       set align(array-at(heading-align, it.level))
+      set block(above: current-block-above, below: current-block-below)
       it
     } else {
+      set block(above: current-block-above, below: current-block-below)
       it
     }
   }

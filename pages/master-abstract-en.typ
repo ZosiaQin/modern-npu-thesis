@@ -1,6 +1,8 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
-#import "../layouts/preface.typ": preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight
+#import "../layouts/preface.typ": (
+  preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight,
+)
 
 #let master-abstract-en(
   doctype: "master",
@@ -13,8 +15,8 @@
   outline-title: "Abstract",
   outlined: true,
   anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
-  leading: 1.5em,
-  spacing: 1.5em,
+  leading: 1.0em,
+  spacing: 1.0em,
   funding: "The present work is supported by the XXX (Project No.xxx)",
   body,
 ) = {
@@ -42,11 +44,11 @@
 
     // 英文摘要标题使用 Times New Roman，其他样式统一配置
     #show heading.where(level: 1): it => {
-      set align(center)
       set text(font: "Times New Roman", size: preface-heading-size, weight: preface-heading-weight)
-      set block(above: preface-heading-above, below: preface-heading-below)
-      it.body
+      set block(above: 0pt, below: preface-heading-below)
+      align(center, it)
     }
+    #v(preface-heading-above)
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[
@@ -55,7 +57,7 @@
       #body
     ]
 
-    #v(1em)
+    #v(1.5em)
     #text(font: "Times New Roman", size: 字号.小四)[
       #strong[Key words:] #(("",) + keywords.intersperse("; ")).sum()
     ]

@@ -3,13 +3,17 @@
 #import "../utils/custom-heading.typ": active-heading, heading-display
 
 // ============================================
-// 前置部分一级标题统一配置
-// 用于摘要、目录、致谢等页面
+// 一级标题统一配置
+// 用于摘要、目录、致谢、正文章节等所有页面
 // ============================================
 
-// 标题间距
-#let preface-heading-above = 2 * 15.6pt - 0.7em  // 约 31pt
-#let preface-heading-below = 2 * 15.6pt - 0.7em  // 约 31pt
+// 一级标题间距（前置部分和正文部分统一使用）
+#let heading-above = 2 * 14pt - 0.7em  // 标题上方间距，约 31pt
+#let heading-below = 2 * 17pt - 0.7em  // 标题下方间距，约 31pt
+
+// 兼容旧名称的别名
+#let preface-heading-above = heading-above
+#let preface-heading-below = heading-below
 
 // 标题字体配置
 #let preface-heading-font = fonts => fonts.黑体  // 函数，传入 fonts 返回字体
@@ -23,8 +27,11 @@
     size: preface-heading-size,
     weight: preface-heading-weight,
   )
-  set block(above: preface-heading-above, below: preface-heading-below)
-  if centered { align(center, it.body) } else { it.body }
+  set block(above: 0pt, below: preface-heading-below)
+  if centered {
+    set align(center)
+    it
+  } else { it }
 }
 
 // 前言
@@ -72,7 +79,7 @@
         if is-graduate {
           header-render(header-content, fonts: fonts)
         }
-      }
+      },
     )
     it
   }

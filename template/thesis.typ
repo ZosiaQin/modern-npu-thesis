@@ -50,6 +50,7 @@
   // 英文摘要
   abstract-en: [
     English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
+    #lorem(500)
   ],
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
   // 附录
@@ -104,6 +105,44 @@
 - 无序列表项二
   - 无序子列表项一
   - 无序子列表项二
+
+=== 有序列表
+
++ 有序列表项一
++ 有序列表项二
+  + 有序子列表项一
+  + 有序子列表项二
+
+=== 术语列表
+
+/ 术语一: 术语解释
+/ 术语二: 术语解释
+
+=== 有序列表
+
++ 有序列表项一
++ 有序列表项二
+  + 有序子列表项一
+  + 有序子列表项二
+
+=== 有序列表
+
++ 有序列表项一
++ 有序列表项二
+  + 有序子列表项一
+  + 有序子列表项二
+
+=== 术语列表
+
+/ 术语一: 术语解释
+/ 术语二: 术语解释
+
+=== 有序列表
+
++ 有序列表项一
++ 有序列表项二
+  + 有序子列表项一
+  + 有序子列表项二
 
 === 有序列表
 

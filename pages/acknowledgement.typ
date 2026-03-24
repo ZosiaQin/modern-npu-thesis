@@ -1,6 +1,6 @@
 
 #import "../utils/style.typ": 字号, 字体
-#import "../layouts/preface.typ": preface-heading-above, preface-heading-below, preface-heading-font, preface-heading-size, preface-heading-weight
+#import "../layouts/preface.typ": preface-heading-style, preface-heading-above, preface-heading-below, preface-heading-font, preface-heading-size, preface-heading-weight
 
 // 致谢页
 #let acknowledgement(
@@ -22,14 +22,10 @@
       #set text(font: fonts.宋体, size: 字号.小四)
       #set par(leading: 1.5em, justify: true)
 
-      // 使用统一的一级标题样式配置
-      #show heading.where(level: 1, numbering: none): it => {
-        set align(center)
-        set text(font: preface-heading-font(fonts), size: preface-heading-size, weight: preface-heading-weight)
-        set block(above: preface-heading-above, below: preface-heading-below)
-        it.body
-      }
+      // 使用统一的一级标题样式
+      #show heading.where(level: 1, numbering: none): it => preface-heading-style(it, fonts)
 
+      #v(preface-heading-above)
       #heading(level: 1, numbering: none, outlined: outlined, title) <no-auto-pagebreak>
 
       #body
