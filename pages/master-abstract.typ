@@ -1,5 +1,6 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
+#import "../layouts/preface.typ": preface-heading-style
 
 #let master-abstract(
   doctype: "master",
@@ -38,12 +39,8 @@
   [
     #set par(leading: leading, spacing: spacing, justify: true)
 
-    // 使用标准 heading，间距由 preface.typ 统一控制
-    #show heading.where(level: 1): it => {
-      set align(center)
-      set text(font: fonts.黑体, size: 字号.三号)
-      it.body
-    }
+    // 使用统一的一级标题样式
+    #show heading.where(level: 1): it => preface-heading-style(it, fonts)
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[

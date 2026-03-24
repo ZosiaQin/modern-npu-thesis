@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/header.typ": header-render
-#import "../layouts/preface.typ": preface-heading-above, preface-heading-below
+#import "../layouts/preface.typ": preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight
 
 // 目录生成页面
 #let bachelor-outline-page(
@@ -105,10 +105,10 @@
   set text(font: reference-font, size: reference-size)
 
   [
-    // 使用标准 heading，间距由 preface-heading-above/below 统一控制
+    // 目录标题：字体由 title-text-args 控制，间距使用统一配置
     #show heading.where(level: 1, numbering: none): it => {
       set align(center)
-      set text(..title-text-args)
+      set text(..title-text-args, size: preface-heading-size, weight: preface-heading-weight)
       set block(above: preface-heading-above, below: preface-heading-below)
       it.body
     }

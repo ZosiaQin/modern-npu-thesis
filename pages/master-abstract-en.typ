@@ -1,5 +1,6 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
+#import "../layouts/preface.typ": preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight
 
 #let master-abstract-en(
   doctype: "master",
@@ -39,10 +40,11 @@
   [
     #set par(leading: leading, spacing: spacing, justify: true)
 
-    // 使用标准 heading，间距由 preface.typ 统一控制
+    // 英文摘要标题使用 Times New Roman，其他样式统一配置
     #show heading.where(level: 1): it => {
       set align(center)
-      set text(font: "Times New Roman", size: 字号.三号, weight: "bold")
+      set text(font: "Times New Roman", size: preface-heading-size, weight: preface-heading-weight)
+      set block(above: preface-heading-above, below: preface-heading-below)
       it.body
     }
     #heading(level: 1, outlined: outlined, outline-title)

@@ -113,7 +113,6 @@
         doctype: doctype,
         degree: degree,
         colored-cover: colored-cover,
-        twoside: twoside,
         info: info + args.named().at("info", default: (:)),
       )
     },

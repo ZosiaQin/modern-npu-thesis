@@ -2,20 +2,29 @@
 #import "../utils/header.typ": graduate-header-title, header-render
 #import "../utils/custom-heading.typ": active-heading, heading-display
 
-// 前置部分一级标题间距配置（摘要、目录、致谢等页面使用）
-// 使用 Typst 官方推荐的 block 方式控制间距
+// ============================================
+// 前置部分一级标题统一配置
+// 用于摘要、目录、致谢等页面
+// ============================================
+
+// 标题间距
 #let preface-heading-above = 2 * 15.6pt - 0.7em  // 约 31pt
 #let preface-heading-below = 2 * 15.6pt - 0.7em  // 约 31pt
 
-// 前置部分一级标题样式
-// 注意：此样式仅对前置部分（摘要、目录等）生效，正文部分由 mainmatter.typ 控制
-#let preface-heading-style(it, fonts, center: true) = {
-  set text(font: fonts.黑体, size: 字号.三号)
+// 标题字体配置
+#let preface-heading-font = fonts => fonts.黑体  // 函数，传入 fonts 返回字体
+#let preface-heading-size = 字号.三号
+#let preface-heading-weight = "regular"  // "regular" 不加粗, "bold" 加粗
+
+// 标题样式函数 - 供各页面调用
+#let preface-heading-style(it, fonts, centered: true) = {
+  set text(
+    font: preface-heading-font(fonts),
+    size: preface-heading-size,
+    weight: preface-heading-weight,
+  )
   set block(above: preface-heading-above, below: preface-heading-below)
-  if center {
-    set align(center)
-  }
-  it.body
+  if centered { align(center, it.body) } else { it.body }
 }
 
 // 前言

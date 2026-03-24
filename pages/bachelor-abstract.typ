@@ -1,6 +1,7 @@
 #import "../utils/custom-cuti.typ": fakebold
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/double-underline.typ": double-underline
+#import "../layouts/preface.typ": preface-heading-style
 
 // 西北工业大学本科生中文摘要页
 #let bachelor-abstract(
@@ -48,12 +49,8 @@
     #set text(font: fonts.宋体, size: 字号.小四)
     #set par(leading: leading, justify: true, spacing: spacing)
 
-    // 使用标准 heading，间距由 preface.typ 统一控制
-    #show heading.where(level: 1): it => {
-      set align(center)
-      set text(font: fonts.黑体, size: 字号.三号)
-      it.body
-    }
+    // 使用统一的一级标题样式
+    #show heading.where(level: 1): it => preface-heading-style(it, fonts)
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[
