@@ -286,7 +286,7 @@
       rows: (1.45cm, 1.45cm),
       stroke: none,
       inset: (x: 0pt, y: 4pt),
-      align: (center + horizon, center + horizon),
+      align: (center + bottom, center + bottom),
       // 第一行：题目 + 题目第一行
       [题目：], table.cell(stroke: (bottom: stroke-width), [#info.title.at(0, default: "")]),
       // 第二行：空 + 题目第二行

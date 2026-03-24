@@ -1,5 +1,4 @@
 #import "../utils/style.typ": 字体, 字号
-#import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/header.typ": header-render
 
 #let master-abstract-en(
@@ -39,15 +38,14 @@
 
   [
     #set par(leading: leading, spacing: spacing, justify: true)
-    #invisible-heading(level: 1, outlined: outlined, outline-title)
 
-    #align(center)[
-      #set text(font: "Times New Roman", size: 字号.三号, weight: "bold")
-      #v(2em)
-      Abstract
-    ]
-
-    #v(1em)
+    // 使用标准 heading，间距由 preface.typ 统一控制
+    #show heading.where(level: 1): it => {
+      set align(center)
+      set text(font: "Times New Roman", size: 字号.三号, weight: "bold")
+      it.body
+    }
+    #heading(level: 1, outlined: outlined, outline-title)
 
     #[
       #set text(font: "Times New Roman", size: 字号.小四)

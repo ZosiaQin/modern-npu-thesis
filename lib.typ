@@ -9,7 +9,6 @@
 #import "layouts/appendix.typ": appendix
 #import "utils/header.typ": add-blank-even-page
 #import "utils/header.typ": break-to-odd-page
-#import "pages/fonts-display-page.typ": fonts-display-page
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
 #import "pages/bachelor-abstract.typ": bachelor-abstract
@@ -17,9 +16,6 @@
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/bachelor-outline-page.typ": bachelor-outline-page
-#import "pages/list-of-figures.typ": list-of-figures
-#import "pages/list-of-tables.typ": list-of-tables
-#import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement
 #import "pages/academic-achievements.typ": academic-achievements
 #import "utils/custom-cuti.typ": *
@@ -153,14 +149,6 @@
         ..args,
       )
     },
-    // 字体展示页
-    fonts-display-page: (..args) => {
-      fonts-display-page(
-        twoside: twoside,
-        ..args,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-      )
-    },
     // 封面页，通过 type 分发到不同函数
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -245,29 +233,6 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-    // 插图目录页
-    list-of-figures: (..args) => {
-      list-of-figures(
-        twoside: twoside,
-        ..args,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-      )
-    },
-    // 表格目录页
-    list-of-tables: (..args) => {
-      list-of-tables(
-        twoside: twoside,
-        ..args,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-      )
-    },
-    // 符号表页
-    notation: (..args) => {
-      notation(
-        twoside: twoside,
-        ..args,
-      )
-    },
     // 参考文献页
     bilingual-bibliography: (..args) => {
       bilingual-bibliography(
@@ -330,11 +295,8 @@
   keywords-en: (),
   acknowledgement: none,
   academic-achievements: none,
-  notation: none,
   scan-declaration: none,
   appendix: none,
-  list-of-figures: false,
-  list-of-tables: false,
   outline-depth: 3,
   // 文档内容
   body,
@@ -371,9 +333,6 @@
   }
 
   (cls.outline-page)(depth: outline-depth)
-  if list-of-figures { (cls.list-of-figures)() }
-  if list-of-tables { (cls.list-of-tables)() }
-  if notation != none { (cls.notation)(notation) }
 
   // 3. 正文
   show: cls.mainmatter

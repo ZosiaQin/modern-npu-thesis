@@ -1,5 +1,4 @@
 #import "../utils/style.typ": 字体, 字号
-#import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/header.typ": header-render
 
 #let master-abstract(
@@ -38,27 +37,14 @@
 
   [
     #set par(leading: leading, spacing: spacing, justify: true)
-    #invisible-heading(level: 1, outlined: outlined, outline-title)
 
-    #block[
-      #set text(font: fonts.宋体, size: 字号.小四)
-      #set par(leading: 3.6pt)
-      #v(15.6pt, weak: false)
-    ]
-
-    #block(width: 100%, above: 8pt, below: 0pt)[
-      #align(center)[
-        #set text(font: fonts.黑体, size: 字号.三号)
-        #set par(leading: 4pt)
-        摘　要
-      ]
-    ]
-
-    #block[
-      #set text(font: fonts.宋体, size: 字号.小四)
-      #set par(leading: 3.6pt)
-      #v(15.6pt, weak: false)
-    ]
+    // 使用标准 heading，间距由 preface.typ 统一控制
+    #show heading.where(level: 1): it => {
+      set align(center)
+      set text(font: fonts.黑体, size: 字号.三号)
+      it.body
+    }
+    #heading(level: 1, outlined: outlined, outline-title)
 
     #[
       #set text(font: fonts.宋体, size: 字号.小四)

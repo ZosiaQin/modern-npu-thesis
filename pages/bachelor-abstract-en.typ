@@ -1,6 +1,5 @@
 #import "../utils/custom-cuti.typ": fakebold
 #import "../utils/style.typ": 字号, 字体
-#import "../utils/invisible-heading.typ": invisible-heading
 
 // 西北工业大学本科生英文摘要页
 #let bachelor-abstract-en(
@@ -41,18 +40,13 @@
     #set text(font: fonts.宋体, size: 字号.小四)
     #set par(leading: leading, justify: true, spacing: spacing)
 
-    // 标记一个不可见的标题用于目录生成
-    #invisible-heading(level: 1, outlined: outlined, outline-title)
-
-    #align(center)[
-      #set text(size: 字号.三号, font: fonts.黑体, weight: "bold")
-
-      #v(2em)
-
-      ABSTRACT
-    ]
-
-    #v(1em)
+    // 使用标准 heading，间距由 preface.typ 统一控制
+    #show heading.where(level: 1): it => {
+      set align(center)
+      set text(size: 字号.三号, font: fonts.黑体, weight: "bold")
+      it.body
+    }
+    #heading(level: 1, outlined: outlined, outline-title)
 
     #[
       #set par(first-line-indent: (amount: 2em, all: true))

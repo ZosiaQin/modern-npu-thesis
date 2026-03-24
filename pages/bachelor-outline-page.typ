@@ -1,6 +1,6 @@
-#import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/header.typ": header-render
+#import "../layouts/preface.typ": preface-heading-above, preface-heading-below
 
 // 目录生成页面
 #let bachelor-outline-page(
@@ -105,12 +105,14 @@
   set text(font: reference-font, size: reference-size)
 
   [
-    #{
+    // 使用标准 heading，间距由 preface-heading-above/below 统一控制
+    #show heading.where(level: 1, numbering: none): it => {
       set align(center)
-      text(..title-text-args, title)
-      // 标记一个不可见的标题用于目录生成
-      invisible-heading(level: 1, outlined: outlined, title)
+      set text(..title-text-args)
+      set block(above: preface-heading-above, below: preface-heading-below)
+      it.body
     }
+    #heading(level: 1, outlined: outlined, title)
 
     #v(title-vspace)
 
