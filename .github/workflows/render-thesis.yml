@@ -10,7 +10,6 @@ on:
       - "fonts/**"
       - "template.typ"
       - "thesis.typ"
-      - "lib.typ"
       - "typst.toml"
   pull_request:
     paths:
@@ -21,7 +20,6 @@ on:
       - "fonts/**"
       - "template.typ"
       - "thesis.typ"
-      - "lib.typ"
       - "typst.toml"
   workflow_dispatch:
 
@@ -29,7 +27,7 @@ permissions:
   contents: read
 
 env:
-  PACKAGE_NAME: nwputhesis-typst
+  PACKAGE_NAME: modern-npu-thesis
   PACKAGE_VERSION: 0.1.0
 
 jobs:
