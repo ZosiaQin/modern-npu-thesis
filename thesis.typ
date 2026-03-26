@@ -50,7 +50,7 @@
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
   // 附录
   appendix: [
-    = 
+    =
     附录是学位论文主体的补充，并不是必需的。
     附录编号依次编为附录A、附录B。附录标题各占一行，按一级标题编排。每一个附录一般应另起一页编排，如果有多个较短的附录，也可接排。
   ],
@@ -98,10 +98,10 @@
     table(
       columns: (1fr, 1fr, 1fr, 1fr),
       stroke: none,
-      inset: 0.3em,
+      inset: (x: 0.3em, y: 0.4em),
       align: center + horizon,
 
-      table.hline(y: 0, stroke: 0.5pt),
+      table.hline(y: 0, stroke: 1.5pt),
 
       table.header([t], [1], [2], [3]),
 
@@ -109,7 +109,7 @@
 
       [y], [0.3s], [0.4s], [0.8s],
 
-      table.hline(y: 2, stroke: 0.5pt),
+      table.hline(y: 2, stroke: 1.5pt),
     ),
     caption: [三线表],
   ) <timing-tlt>

@@ -102,10 +102,10 @@
     table(
       columns: (1fr, 1fr, 1fr, 1fr),
       stroke: none,
-      inset: 0.3em,
+      inset: (x: 0.3em, y: 0.55em),
       align: center + horizon,
 
-      table.hline(y: 0, stroke: 0.5pt),
+      table.hline(y: 0, stroke: 1.5pt),
 
       table.header([t], [1], [2], [3]),
 
@@ -113,7 +113,7 @@
 
       [y], [0.3s], [0.4s], [0.8s],
 
-      table.hline(y: 2, stroke: 0.5pt),
+      table.hline(y: 2, stroke: 1.5pt),
     ),
     caption: [三线表],
   ) <timing-tlt>
