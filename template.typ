@@ -79,15 +79,17 @@
       // 答辩委员会信息
       defence-committee: (
         date: datetime.today(),
-        // 委员会成员，每人包含 role、name、title、unit
+        // 固定主席
+        chairman: (name: "", title: "", unit: ""),
+        // 委员列表，每人包含 name、title、unit
         members: (
-          (role: "主席", name: "", title: "", unit: ""),
-          (role: "委员", name: "", title: "", unit: ""),
-          (role: "委员", name: "", title: "", unit: ""),
-          (role: "委员", name: "", title: "", unit: ""),
-          (role: "委员", name: "", title: "", unit: ""),
-          (role: "秘书", name: "", title: "", unit: ""),
+          (name: "", title: "", unit: ""),
+          (name: "", title: "", unit: ""),
+          (name: "", title: "", unit: ""),
+          (name: "", title: "", unit: ""),
         ),
+        // 固定秘书
+        secretary: (name: "", title: "", unit: ""),
       ),
     )
       + info

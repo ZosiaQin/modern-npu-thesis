@@ -485,6 +485,45 @@
   } else {
     info.defence-committee.date
   }
+  let defence-committee = info.defence-committee
+  let defence-members = {
+    let chairman = defence-committee.at("chairman", default: none)
+    let secretary = defence-committee.at("secretary", default: none)
+    let members = defence-committee.at("members", default: ())
+
+    if chairman != none or secretary != none {
+      let chairman-row = if chairman != none {
+        ((
+          role: "主席",
+          name: chairman.at("name", default: ""),
+          title: chairman.at("title", default: ""),
+          unit: chairman.at("unit", default: ""),
+        ),)
+      } else {
+        ()
+      }
+      let member-rows = members.map(member => (
+        role: "委员",
+        name: member.at("name", default: ""),
+        title: member.at("title", default: ""),
+        unit: member.at("unit", default: ""),
+      ))
+      let secretary-row = if secretary != none {
+        ((
+          role: "秘书",
+          name: secretary.at("name", default: ""),
+          title: secretary.at("title", default: ""),
+          unit: secretary.at("unit", default: ""),
+        ),)
+      } else {
+        ()
+      }
+
+      chairman-row + member-rows + secretary-row
+    } else {
+      members
+    }
+  }
   
   align(center)[
     #set text(font: fonts.宋体, size: 字号.小四)
@@ -497,9 +536,7 @@
       align: center,
       [*答辩日期*], table.cell(colspan: 3, [#defence-date-display]),
       [*答辩委员会*], [*姓名*], [*职称*], [*工作单位*],
-      ..info
-        .defence-committee
-        .members
+      ..defence-members
         .map(m => ([*#m.role*], [#anonymous-text("reviewer", m.name)], [#m.title], [#m.unit]))
         .flatten(),
     )
