@@ -429,6 +429,7 @@
     bilingual-bibliography: (..args) => {
       bilingual-bibliography(
         bibliography: bibliography,
+        doctype: doctype,
         twoside: twoside,
         ..args,
       )

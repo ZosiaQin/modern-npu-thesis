@@ -2,6 +2,7 @@
 // Tested only on GB-7714-2015-Numeric
 #let bilingual-bibliography(
   bibliography: none,
+  doctype: "master",
   twoside: false,
   title: "参考文献",
   full: false,
@@ -66,7 +67,7 @@
 
   let render-content(text, hanging-indent: content-hanging-indent) = {
     par(
-      first-line-indent: (amount: content-shift, all: true),
+      first-line-indent: if doctype == "bachelor" { 0pt } else { (amount: content-shift, all: true) },
       hanging-indent: hanging-indent,
     )[#text]
   }
@@ -87,7 +88,7 @@
     let label-width = measure(it).width
     [
       #label-widths.update(widths => widths + (label-width,))
-      #move(dx: label-shift, dy: 0em, it)
+      #move(dx: if doctype == "bachelor" { 0pt } else { label-shift }, dy: 0em, it)
     ]
   }
   show grid.cell.where(x: 1): it => context {
@@ -102,8 +103,8 @@
     } else {
       1
     }
-    let content-dx = label-shift - (max-label-width - current-label-width - label-gap)
-    let hanging-indent = resolve-hanging-indent(current-label-digits)
+    let content-dx = if doctype == "bachelor" { 0pt } else { label-shift - (max-label-width - current-label-width - label-gap) }
+    let hanging-indent = if doctype == "bachelor" { 0pt } else { resolve-hanging-indent(current-label-digits) }
 
     // 后续的操作是对 string 进行的。
     let ittext = to-string(it)

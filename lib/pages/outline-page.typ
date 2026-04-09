@@ -1,7 +1,7 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
 #import "../layouts/preface.typ": (
-  preface-heading-style,
+  preface-heading-style, preface-heading-above, preface-heading-below,
 )
 
 // 目录生成页面
@@ -70,13 +70,13 @@
     }
   }
   if title-leading == auto {
-    title-leading = leading
+    title-leading = if is-graduate { 0.9em } else { leading }
   }
   if title-above == auto {
-    title-above = 0pt
+    title-above = if is-graduate { preface-heading-above } else { 0pt }
   }
   if title-below == auto {
-    title-below = 0pt
+    title-below = if is-graduate { preface-heading-below } else { 0pt }
   }
   // 引用页数的字体，这里用于显示 Times New Roman
   if reference-font == auto {
