@@ -111,7 +111,7 @@
     fill = if is-graduate {
       (repeat([.], gap: 0.15em),)
     } else {
-      (repeat([#text(size: 0.6em)[·]], gap: 0.05em),)
+      (repeat([#move(dy: -0.1em, text(size: 0.4em)[·])], gap: -0.1em),)
     }
   }
   // 行间距
@@ -158,6 +158,11 @@
       } else {
         entry.prefix()
       }
+      let prefix-gap = if not is-graduate and is-appendix-entry and entry.level == 1 {
+        0pt
+      } else {
+        gap
+      }
       // 研究生使用固定行间距，不额外添加 above/below
       let entry-content = link(
         entry.element.location(),
@@ -171,7 +176,7 @@
               {
                 if prefix not in (none, []) {
                   prefix
-                  h(gap)
+                  h(prefix-gap)
                 }
                 entry.body()
               },

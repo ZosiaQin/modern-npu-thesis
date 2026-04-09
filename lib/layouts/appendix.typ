@@ -29,13 +29,21 @@
 
     let appendix-numbering = if appendix-headings.len() > 1 {
       custom-numbering.with(
-        first-level: n => [#appendix-label#numbering("A", n)#h(0.7em)],
+        first-level: n => if doctype == "bachelor" {
+          [#appendix-label#numbering("A", n)]
+        } else {
+          [#appendix-label#numbering("A", n)]
+        },
         depth: 4,
         "A.1 ",
       )
     } else {
       custom-numbering.with(
-        first-level: n => [#appendix-label#h(0.7em)],
+        first-level: n => if doctype == "bachelor" {
+          [#appendix-label]
+        } else {
+          [#appendix-label#numbering("A", n)]
+        },
         depth: 4,
         "1 ",
       )

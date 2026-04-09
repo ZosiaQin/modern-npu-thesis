@@ -5,9 +5,9 @@
 // ============================================
 // 直接对齐 LaTeX 模板中的 geometry/fancyhdr 参数
 #let graduate_header_ascent = 0.93cm
-#let bachelor_header_ascent = 0.2cm
+#let bachelor_header_ascent = 0.4cm
 #let graduate_headsep = 0.11cm
-#let bachelor_headsep = -0.1cm
+#let bachelor_headsep = 0.04cm
 #let bachelor_headrule = 0.8pt
 #let graduate_headrule_thick = 3.4pt
 #let graduate_headrule_thin = 0.6pt
@@ -45,6 +45,7 @@
 
 #let bachelor-header-render() = {
   [
+    #set par(leading: 0pt, spacing: 0pt)
     #align(center)[
       #image("../../template/images/nwpuheader.png", width: 7cm)
     ]
