@@ -1,53 +1,20 @@
-﻿#import "@preview/modern-npu-thesis:0.1.0": algorithm, algorithm-ref, nwpu-thesis
+﻿#import "/template.typ": algorithm, algorithm-ref, bachelor-thesis-config, nwpu-thesis
 
-#let thesis-config = (
-  doctype: "master", // "bachelor" | "master" | "doctor",
-  degree: "professional", // "academic" | "professional",
-  anonymous: false, // 是否开启盲审模式
-  colored-cover: true, // 是否开启彩色封面封底
-  info: (
-    title: ("基于 Typst 的", "西北工业大学学位论文"),
-    title-en: "First Line 
-              Second Line",
-    student-id: "2023123456",
-    clc: "TP311.1", // 分类号
-    author: "航小天",
-    author-en: "Xiaotian Hang",
-    department: "计算机学院",
-    major: "计算机科学与技术",
-    major-en: "Computer Science and Technology",
-    supervisor: ("张三", "教授"),
-    supervisor-en: "San Zhang",
-    submit-date: (year: 2026, month: 3),
-    // 评阅人名单
-    reviewers: (
-      (name: "xxx", title: "教授", unit: "西北工业大学（明评示例）"),
-      (name: "全盲评阅", title: "无", unit: "无（盲评示例）"),
-    ),
-    // 答辩委员会信息
-    defence-committee: (
-      date: datetime(year: 2026, month: 3, day: 9),
-      chairman: (name: "赵某某", title: "教授", unit: "西北工业大学"),
-      members: (
-        (name: "钱某某", title: "教授", unit: "西安交通大学"),
-        (name: "孙某某", title: "教授", unit: "西安电子科技大学"),
-        (name: "周某某", title: "教授", unit: "西北工业大学"),
-        (name: "吴某某", title: "副教授", unit: "西北工业大学"),
-      ),
-      secretary: (name: "郑某某", title: "讲师", unit: "西北工业大学"),
-    ),
-  ),
+#let thesis-config = bachelor-thesis-config(
+  title: ("基于 Typst 的", "西北工业大学毕业论文"),
+  author: "航小天",
+  major: "计算机科学与技术",
+  supervisor: ("张三", "教授"),
+  submit-date: (year: 2026, month: 3),
   bibliography: bibliography.with("ref.bib"),
   abstract: [
     中文摘要内容。中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
   ],
   keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
-  funding: "本研究得到某某基金（编号：   ）资助。",
   abstract-en: [
     English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
   ],
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
-  funding-en: "The present work is supported by the XXX（Project No.xxx）",
   appendix: [
     =
     附录是学位论文主体的补充，并不是必需的。
@@ -57,10 +24,9 @@
   acknowledgement: [
     致谢是作者对该文章的形成作过贡献的组织或个人予以感谢的文字记载，语言要诚恳、恰当、简短。致谢内容可以包括但不限于：国家科学基金、资助研究工作的奖学金基金、合同单位、资助或支持的企业、组织或个人；协助完成研究工作和提供便利条件的组织或个人；在研究工作中提出建议和提供帮助的人；给予转载和引用权的资料、图片、文献、研究和调查的所有者；其他应感谢的组织和个人。
   ],
-  academic-achievements: [
-    不同类型的成果列表书写格式与参考文献相同。对于学术论文，如已发表的被EI或SCI收录，应标明收录号；SCI论文一般应标注发表当年的影响因子；对已录用但尚未发表的学术论文，请注明是否EI或SCI刊源。
+  design_summary: [
+    本文在导师的指导下，围绕本科毕业设计论文模板的实现与版式对齐工作，完成了本科论文封面、摘要、目录、页眉页脚及后置部分的适配与修正。通过对照 LaTeX 模板逐项调整，最终使 Typst 模板的本科版式更加接近学校要求。
   ],
-  scan-declaration: image("images/声明.pdf"),
 )
 
 #let thesis-body = [
@@ -102,7 +68,7 @@
     ),
     caption: [三线表],
   ) <timing-tlt>
-  
+
   #figure(
     table(
       columns: (1.25fr, 1fr, 1fr, 1fr, 1fr),
@@ -143,32 +109,6 @@
       align(center)[
         #image("images/博士论文封底.jpg", width: 60%)
         (b) 第二个子图说明
-      ],
-    ),
-    caption: [总图标题],
-  ) <fig-main>
-
-  #figure(
-    grid(
-      columns: (1fr, 1fr),
-      rows: (200pt, 200pt),
-      gutter: 1em,
-      align(center)[
-        #image("images/专硕论文封面.jpg", width: 50%)
-        (a) 第一个子图说明
-      ],
-      align(center)[
-        #image("images/专硕论文封底.jpg", width: 50%)
-        (b) 第二个子图说明
-      ],
-
-      align(center)[
-        #image("images/学硕论文封面.jpg", width: 50%)
-        (c) 第三个子图说明
-      ],
-      align(center)[
-        #image("images/学硕论文封底.jpg", width: 50%)
-        (d) 第四个子图说明
       ],
     ),
     caption: [总图标题],
@@ -218,16 +158,6 @@
   == 参考文献
 
   可以像这样引用参考文献@蒋有绪1998，引用两个以上的文献时，文献之间用逗号分隔，如@WHO1970 @张志祥1998，引用三个以上的文献 @河北绿洲2001 @李炳穆2000 @丁文祥2000。
-
-  = 研究方法
-
-  == 方法概述
-
-  方法概述内容。
-
-  == 实验设计
-
-  实验设计内容。
 ]
 
 #show: nwpu-thesis.with(..thesis-config)
