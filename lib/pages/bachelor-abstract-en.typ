@@ -42,16 +42,16 @@
   [
     #pagebreak(weak: true, to: if twoside { "odd" })
 
-    #set text(font: fonts.宋体, size: 字号.小四)
+    #set text(font: "Times New Roman", size: 字号.小四)
     #set par(leading: leading, justify: true, spacing: spacing)
 
     // 英文摘要标题，字号和间距使用统一配置
-    #show heading.where(level: 1): it => preface-heading-style(
-      it,
-      fonts,
-      leading: title-leading,
-      below: title-below,
-    )
+    #show heading.where(level: 1): it => {
+      set text(font: "Times New Roman", size: 字号.三号, weight: "regular")
+      set par(leading: title-leading, spacing: 0pt)
+      set block(above: 0pt, below: title-below)
+      align(center, it)
+    }
     #v(title-above)
     #heading(level: 1, outlined: outlined, outline-title)
 
@@ -63,7 +63,7 @@
 
     #v(1em)
 
-    #text(font: fonts.宋体, size: 字号.小四)[
+    #text(font: "Times New Roman", size: 字号.小四)[
       #text(weight: "bold")[KEY WORDS]：#(("",)+ keywords.intersperse(", ")).sum()
     ]
   ]

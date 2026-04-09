@@ -31,11 +31,11 @@
 }
 
 #let bachelor_style_defaults = (
-  leading: 10pt,
+  leading: 11pt,
   spacing: 10pt,
-  heading_leading: (10pt, 10pt, 10pt),
-  heading_above: (28pt, 10pt, 10pt),
-  heading_below: (28pt, 10pt, 10pt),
+  heading_leading: (11pt, 11pt, 11pt),
+  heading_above: (28pt, 12pt, 12pt),
+  heading_below: (28pt, 12pt, 12pt),
 )
 
 #let bachelor-thesis-config(

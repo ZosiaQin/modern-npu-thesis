@@ -188,7 +188,7 @@
       } else {
         // 本科生：各级目录项使用统一段间距
         block(
-          above: 1.1em,
+          above: if entry.level == 1 { 1.5em } else { 1em },
           below: 0.1em,
           entry-content,
         )
