@@ -425,6 +425,7 @@
       outline-page(
         twoside: twoside,
         doctype: doctype,
+        english-writing: english-writing,
         leading: if doctype == "bachelor" { bachelor_leading } else { auto },
         spacing: if doctype == "bachelor" { bachelor_spacing } else { 0pt },
         title-leading: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_leading) } else { auto },
@@ -440,6 +441,7 @@
         bibliography: bibliography,
         doctype: doctype,
         twoside: twoside,
+        english-writing: english-writing,
         ..args,
       )
     },
@@ -449,6 +451,7 @@
         anonymous: anonymous,
         twoside: twoside,
         doctype: doctype,
+        english-writing: english-writing,
         leading: bachelor_leading,
         spacing: bachelor_spacing,
         title-leading: bachelor-first-level-value(bachelor_heading_leading),
@@ -463,6 +466,7 @@
       academic-achievements(
         anonymous: anonymous,
         twoside: twoside,
+        english-writing: english-writing,
         fonts: fonts + args.named().at("fonts", default: (:)),
         ..args,
       )
@@ -610,6 +614,7 @@
     if design_summary != none {
       design-summary-page(
         twoside: effective_twoside,
+        english-writing: english-writing,
         fonts: fonts,
         leading: bachelor_leading,
         spacing: bachelor_spacing,

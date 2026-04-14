@@ -20,7 +20,13 @@
     let appendix-headings = query(
       selector(heading.where(level: 1)).after(selector(<appendix-start>)).before(selector(<appendix-end>)),
     )
-    let appendix-label = if doctype == "bachelor" { "附 录" } else { "附录" }
+    let appendix-label = if english-writing {
+      "Appendix "
+    } else if doctype == "bachelor" {
+      "附 录"
+    } else {
+      "附录"
+    }
     let has-appendix = appendix-headings.len() > 0
     let appendix-prefix = if has-appendix {
       numbering("A", 1)

@@ -6,13 +6,21 @@
   // documentclass 传入参数
   anonymous: false,
   twoside: false,
+  english-writing: false,
   fonts: (:),
   // 其他参数
-  title: "在学期间取得的学术成果和参加科研情况",
+  title: auto,
   outlined: true,
   body,
 ) = {
   fonts = 字体 + fonts
+  if title == auto {
+    title = if english-writing {
+      "Academic Achievements and Research Experience"
+    } else {
+      "在学期间取得的学术成果和参加科研情况"
+    }
+  }
 
   if not anonymous {
     pagebreak(weak: true, to: if twoside { "odd" })

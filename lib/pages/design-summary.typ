@@ -4,6 +4,7 @@
 // 本科毕业设计小结页
 #let design-summary(
   twoside: false,
+  english-writing: false,
   fonts: (:),
   leading: 2.4pt,
   spacing: 0pt,
@@ -11,10 +12,13 @@
   title-above: 0pt,
   title-below: 0pt,
   outlined: true,
-  title: "毕业设计小结",
+  title: auto,
   body,
 ) = {
   fonts = 字体 + fonts
+  if title == auto {
+    title = if english-writing { "Design Summary" } else { "毕业设计小结" }
+  }
 
   pagebreak(weak: true, to: if twoside { "odd" })
   [

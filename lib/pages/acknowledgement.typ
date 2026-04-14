@@ -8,6 +8,7 @@
   anonymous: false,
   twoside: false,
   doctype: "master",
+  english-writing: false,
   leading: 2.4pt,
   spacing: 0pt,
   title-leading: 2.4pt,
@@ -21,7 +22,13 @@
 ) = {
   fonts = 字体 + fonts
   if title == auto {
-    title = if doctype == "bachelor" { "致 谢" } else { "致　谢" }
+    title = if english-writing {
+      "Acknowledgements"
+    } else if doctype == "bachelor" {
+      "致 谢"
+    } else {
+      "致　谢"
+    }
   }
 
   if not anonymous {

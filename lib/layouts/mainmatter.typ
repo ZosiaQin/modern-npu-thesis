@@ -82,7 +82,13 @@
     }
   }
   if numbering == auto {
-    numbering = if is-graduate {
+    numbering = if english-writing {
+      custom-numbering.with(
+        first-level: n => [Chapter #n#h(0.7em)],
+        depth: 4,
+        "1.1 ",
+      )
+    } else if is-graduate {
       custom-numbering.with(
         first-level: n => [第 #n 章#h(0.7em)],
         depth: 4,

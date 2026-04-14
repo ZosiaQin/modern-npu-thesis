@@ -9,6 +9,7 @@
   // documentclass 传入参数
   twoside: false,
   doctype: "bachelor",
+  english-writing: false,
   fonts: (:),
   // 其他参数
   depth: 4,
@@ -59,7 +60,13 @@
 
   // 标题默认值
   if title == auto {
-    title = if is-graduate { "目　录" } else { "目 录" }
+    title = if english-writing {
+      "Contents"
+    } else if is-graduate {
+      "目　录"
+    } else {
+      "目 录"
+    }
   }
 
   if title-text-args == auto {
