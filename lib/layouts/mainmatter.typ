@@ -56,6 +56,7 @@
   // 1.  默认参数（提前初始化 fonts）
   fonts = 字体 + fonts
   let is-graduate = doctype == "master" or doctype == "doctor"
+  let table-kinds = (table, "i-figured-table")
   let chinese_chapter_number(n) = {
     let digits = ("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
     if n <= 10 {
@@ -172,6 +173,7 @@
   show figure: i-figured.show-figure.with(numbering: "1-1")
   set figure(supplement: if english-writing { [Figure] } else { [图] })
   show figure.where(kind: table): set figure(supplement: if english-writing { [Table] } else { [表] })
+  show figure.where(kind: "i-figured-table"): set figure(supplement: if english-writing { [Table] } else { [表] })
   // 4.4 设置 equation 的编号和假段落首行缩进
   set math.equation(supplement: if english-writing { [Equation] } else { [式] })
   show math.equation.where(block: true): show-equation
@@ -179,11 +181,24 @@
   show figure.where(
     kind: table,
   ): set figure.caption(position: top)
+  show figure.where(
+    kind: "i-figured-table",
+  ): set figure.caption(position: top)
   set figure.caption(separator: separator)
   show figure.caption: caption-style
-  show figure.caption: set text(font: fonts.宋体, size: 字号.五号)
-  // figure 内部文本（如子图标题）使用宋体五号
-  show figure: set text(font: fonts.宋体, size: 字号.五号)
+  show figure.caption: it => {
+    if not is-graduate and it.kind in table-kinds {
+      text(font: fonts.黑体, size: 字号.五号)[
+        #it.supplement
+        #h(0.08em)
+        #context it.counter.display(it.numbering)
+        #h(0.28em)
+        #it.body
+      ]
+    } else {
+      text(font: fonts.宋体, size: 字号.五号)[#it]
+    }
+  }
   // 表格内容使用五号字体
   show table: set text(font: fonts.宋体, size: 字号.五号)
   // 4.6 优化列表显示
@@ -201,7 +216,7 @@
 
     // 无编号一级标题（如致谢、参考文献、成果页等）不应继续沿用正文标题版式，
     // 否则会把正文的段前距和换页规则叠加到后置部分页面上。
-    if it.level == 1 and it.numbering == none {
+    if is-graduate and it.level == 1 and it.numbering == none {
       return it
     }
 
