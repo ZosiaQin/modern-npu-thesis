@@ -37,6 +37,13 @@
 
 仓库已提供工作区配置 [.vscode/settings.json](.vscode/settings.json)，会为 Tinymist 默认追加 `--font-path fonts`，因此在不同系统下都会优先使用仓库内自带的 Windows 字体文件。
 
+### 模板更新迁移指南
+
+如果你已经基于本仓库开始写论文，后续想同步模板更新，通常只需要：
+
+1. 保留你自己的 [template](template) 目录。
+2. 用新版本仓库中的其他文件替换当前项目内对应文件。
+
 > 本模板基于 [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) 开发，设计过程中还参考了 [pkuthss-typst](https://github.com/pku-typst/pkuthss-typst) 的实现。
 > 
 ## License
