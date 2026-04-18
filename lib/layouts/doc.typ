@@ -9,6 +9,7 @@
   doctype: "bachelor",
   degree: "academic",
   colored-cover: false,
+  graduate_header_ascent: 0.93cm,
   fonts: (:),
   // 其他参数
   fallback: false, // 字体缺失时使用 fallback，帮助诊断字体问题
@@ -53,7 +54,7 @@
     margin: page-margin,
     ..(
       if doctype == "master" or doctype == "doctor" {
-        graduate-header-config
+        (header-ascent: graduate_header_ascent)
       } else {
         bachelor-header-config
       }

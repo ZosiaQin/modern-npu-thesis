@@ -58,6 +58,11 @@
   doctype: "master",
   fonts: (:),
   display-header: true,
+  graduate_headsep: -0.1cm,
+  graduate_headrule_offset: 0.3cm,
+  graduate_headrule_thick: 3.2pt,
+  graduate_headrule_thin: 0.6pt,
+  graduate_headrule_gap: 0.35em,
   ..args,
   it,
 ) = {
@@ -95,7 +100,15 @@
         }
 
         if is-graduate {
-          header-render(header-content, fonts: fonts)
+          header-render(
+            header-content,
+            fonts: fonts,
+            graduate_headsep: graduate_headsep,
+            graduate_headrule_offset: graduate_headrule_offset,
+            graduate_headrule_thick: graduate_headrule_thick,
+            graduate_headrule_thin: graduate_headrule_thin,
+            graduate_headrule_gap: graduate_headrule_gap,
+          )
         } else {
           bachelor-header-render()
         }

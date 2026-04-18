@@ -41,6 +41,11 @@
   display-header: false,
   stroke-width: 0.5pt,
   reset-footnote: true,
+  graduate_headsep: -0.1cm,
+  graduate_headrule_offset: 0.3cm,
+  graduate_headrule_thick: 3.2pt,
+  graduate_headrule_thin: 0.6pt,
+  graduate_headrule_gap: 0.35em,
   // caption 的 separator
   separator: "  ",
   // caption 样式（宋体五号不加粗）
@@ -282,7 +287,15 @@
           }
           // 使用统一的页眉格式
           if is-graduate {
-            header-render(header-content, fonts: fonts)
+            header-render(
+              header-content,
+              fonts: fonts,
+              graduate_headsep: graduate_headsep,
+              graduate_headrule_offset: graduate_headrule_offset,
+              graduate_headrule_thick: graduate_headrule_thick,
+              graduate_headrule_thin: graduate_headrule_thin,
+              graduate_headrule_gap: graduate_headrule_gap,
+            )
           } else {
             bachelor-header-render()
           }

@@ -40,6 +40,12 @@
 )
 
 #let graduate_style_defaults = (
+  header_ascent: 0.9cm,
+  headsep: -0.22cm,
+  headrule_offset: 0.4cm,
+  headrule_thick: 3.2pt,
+  headrule_thin: 0.6pt,
+  headrule_gap: 0.32em,
   heading_leading: (0.9em, 0.9em, 0.9em),
   heading_above: (22pt, 15pt, 12pt),
   heading_below: (22pt, 12pt, 10pt),
@@ -111,6 +117,12 @@
   colored-cover: false,
   graduate_leading: 0.9em,
   graduate_spacing: 1.0em,
+  graduate_header_ascent: graduate_style_defaults.header_ascent,
+  graduate_headsep: graduate_style_defaults.headsep,
+  graduate_headrule_offset: graduate_style_defaults.headrule_offset,
+  graduate_headrule_thick: graduate_style_defaults.headrule_thick,
+  graduate_headrule_thin: graduate_style_defaults.headrule_thin,
+  graduate_headrule_gap: graduate_style_defaults.headrule_gap,
   graduate_heading_leading: graduate_style_defaults.heading_leading,
   graduate_heading_above: graduate_style_defaults.heading_above,
   graduate_heading_below: graduate_style_defaults.heading_below,
@@ -165,6 +177,12 @@
     colored-cover: colored-cover,
     graduate_leading: graduate_leading,
     graduate_spacing: graduate_spacing,
+    graduate_header_ascent: graduate_header_ascent,
+    graduate_headsep: graduate_headsep,
+    graduate_headrule_offset: graduate_headrule_offset,
+    graduate_headrule_thick: graduate_headrule_thick,
+    graduate_headrule_thin: graduate_headrule_thin,
+    graduate_headrule_gap: graduate_headrule_gap,
     graduate_heading_leading: graduate_heading_leading,
     graduate_heading_above: graduate_heading_above,
     graduate_heading_below: graduate_heading_below,
@@ -209,6 +227,12 @@
   english-writing: false, // 是否使用英文论文标签
   graduate_leading: 0.9em, // 研究生摘要与正文统一行距
   graduate_spacing: 1.0em, // 研究生摘要与正文统一段间距
+  graduate_header_ascent: graduate_style_defaults.header_ascent, // 研究生页眉高度
+  graduate_headsep: graduate_style_defaults.headsep, // 研究生页眉标题与双线之间的垂直间距
+  graduate_headrule_offset: graduate_style_defaults.headrule_offset, // 研究生页眉双线整体垂直偏移
+  graduate_headrule_thick: graduate_style_defaults.headrule_thick, // 研究生页眉粗线线宽
+  graduate_headrule_thin: graduate_style_defaults.headrule_thin, // 研究生页眉细线线宽
+  graduate_headrule_gap: graduate_style_defaults.headrule_gap, // 研究生页眉粗细线之间的垂直间距
   graduate_heading_leading: graduate_style_defaults.heading_leading, // 研究生正文各级标题行距
   graduate_heading_above: graduate_style_defaults.heading_above, // 研究生正文各级标题段前距
   graduate_heading_below: graduate_style_defaults.heading_below, // 研究生正文各级标题段后距
@@ -292,6 +316,12 @@
     english-writing: english-writing,
     graduate_leading: graduate_leading,
     graduate_spacing: graduate_spacing,
+    graduate_header_ascent: graduate_header_ascent,
+    graduate_headsep: graduate_headsep,
+    graduate_headrule_offset: graduate_headrule_offset,
+    graduate_headrule_thick: graduate_headrule_thick,
+    graduate_headrule_thin: graduate_headrule_thin,
+    graduate_headrule_gap: graduate_headrule_gap,
     graduate_heading_leading: graduate_heading_leading,
     graduate_heading_above: graduate_heading_above,
     graduate_heading_below: graduate_heading_below,
@@ -310,6 +340,7 @@
         doctype: doctype,
         degree: degree,
         colored-cover: colored-cover,
+        graduate_header_ascent: graduate_header_ascent,
         info: info + args.named().at("info", default: (:)),
       )
     },
@@ -318,6 +349,11 @@
           twoside: twoside,
           doctype: doctype,
           display-header: true,
+          graduate_headsep: graduate_headsep,
+          graduate_headrule_offset: graduate_headrule_offset,
+          graduate_headrule_thick: graduate_headrule_thick,
+          graduate_headrule_thin: graduate_headrule_thin,
+          graduate_headrule_gap: graduate_headrule_gap,
           fonts: fonts + args.named().at("fonts", default: (:)),
           ..args,
           it,
@@ -334,6 +370,11 @@
           heading_leading: graduate_heading_leading,
           heading-above: graduate_heading_above,
           heading-below: graduate_heading_below,
+          graduate_headsep: graduate_headsep,
+          graduate_headrule_offset: graduate_headrule_offset,
+          graduate_headrule_thick: graduate_headrule_thick,
+          graduate_headrule_thin: graduate_headrule_thin,
+          graduate_headrule_gap: graduate_headrule_gap,
           display-header: true,
           bachelor_leading: bachelor_leading,
           bachelor_spacing: bachelor_spacing,
@@ -353,6 +394,11 @@
           heading_leading: graduate_heading_leading,
           heading-above: graduate_heading_above,
           heading-below: graduate_heading_below,
+          graduate_headsep: graduate_headsep,
+          graduate_headrule_offset: graduate_headrule_offset,
+          graduate_headrule_thick: graduate_headrule_thick,
+          graduate_headrule_thin: graduate_headrule_thin,
+          graduate_headrule_gap: graduate_headrule_gap,
           display-header: true,
           bachelor_leading: bachelor_leading,
           bachelor_spacing: bachelor_spacing,
@@ -540,6 +586,12 @@
   english-writing: false,
   graduate_leading: 0.9em,
   graduate_spacing: 1.0em,
+  graduate_header_ascent: graduate_style_defaults.header_ascent,
+  graduate_headsep: graduate_style_defaults.headsep,
+  graduate_headrule_offset: graduate_style_defaults.headrule_offset,
+  graduate_headrule_thick: graduate_style_defaults.headrule_thick,
+  graduate_headrule_thin: graduate_style_defaults.headrule_thin,
+  graduate_headrule_gap: graduate_style_defaults.headrule_gap,
   graduate_heading_leading: graduate_style_defaults.heading_leading,
   graduate_heading_above: graduate_style_defaults.heading_above,
   graduate_heading_below: graduate_style_defaults.heading_below,
@@ -598,6 +650,12 @@
     english-writing: english-writing,
     graduate_leading: graduate_leading,
     graduate_spacing: graduate_spacing,
+    graduate_header_ascent: graduate_header_ascent,
+    graduate_headsep: graduate_headsep,
+    graduate_headrule_offset: graduate_headrule_offset,
+    graduate_headrule_thick: graduate_headrule_thick,
+    graduate_headrule_thin: graduate_headrule_thin,
+    graduate_headrule_gap: graduate_headrule_gap,
     graduate_heading_leading: graduate_heading_leading,
     graduate_heading_above: graduate_heading_above,
     graduate_heading_below: graduate_heading_below,
@@ -738,7 +796,15 @@
     let back-margin = (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm)
     let parity-blank-page = page(
       margin: back-margin,
-      header: header-render(graduate-header-title(doctype), fonts: cls.fonts),
+      header: header-render(
+        graduate-header-title(doctype),
+        fonts: cls.fonts,
+        graduate_headsep: cls.graduate_headsep,
+        graduate_headrule_offset: cls.graduate_headrule_offset,
+        graduate_headrule_thick: cls.graduate_headrule_thick,
+        graduate_headrule_thin: cls.graduate_headrule_thin,
+        graduate_headrule_gap: cls.graduate_headrule_gap,
+      ),
       footer: context align(center)[
         #set text(size: 字号.小五)
         #counter(page).display("1")

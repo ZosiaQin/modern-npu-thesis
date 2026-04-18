@@ -23,7 +23,15 @@
 )
 
 // 页眉渲染函数
-#let header-render(content, fonts: (:)) = {
+#let header-render(
+  content,
+  fonts: (:),
+  graduate_headsep: graduate_headsep,
+  graduate_headrule_offset: graduate_headrule_offset,
+  graduate_headrule_thick: graduate_headrule_thick,
+  graduate_headrule_thin: graduate_headrule_thin,
+  graduate_headrule_gap: 0.35em,
+) = {
   fonts = 字体 + fonts
   [
     #set par(leading: 0pt, spacing: 0pt)
@@ -32,7 +40,7 @@
     #v(graduate_headsep)
     #move(dy: graduate_headrule_offset)[
       #line(length: 100%, stroke: graduate_headrule_thick + black)
-      #v(0.35em)
+      #v(graduate_headrule_gap)
       #line(length: 100%, stroke: graduate_headrule_thin + black)
     ]
   ]
