@@ -46,6 +46,7 @@
   headrule_thick: 3.2pt,
   headrule_thin: 0.6pt,
   headrule_gap: 0.32em,
+  keywords_above: 1.3em,
   heading_leading: (0.9em, 0.9em, 0.9em),
   heading_above: (22pt, 15pt, 12pt),
   heading_below: (24pt, 12pt, 10pt),
@@ -123,6 +124,7 @@
   graduate_headrule_thick: graduate_style_defaults.headrule_thick,
   graduate_headrule_thin: graduate_style_defaults.headrule_thin,
   graduate_headrule_gap: graduate_style_defaults.headrule_gap,
+  graduate_keywords_above: graduate_style_defaults.keywords_above,
   graduate_heading_leading: graduate_style_defaults.heading_leading,
   graduate_heading_above: graduate_style_defaults.heading_above,
   graduate_heading_below: graduate_style_defaults.heading_below,
@@ -183,6 +185,7 @@
     graduate_headrule_thick: graduate_headrule_thick,
     graduate_headrule_thin: graduate_headrule_thin,
     graduate_headrule_gap: graduate_headrule_gap,
+    graduate_keywords_above: graduate_keywords_above,
     graduate_heading_leading: graduate_heading_leading,
     graduate_heading_above: graduate_heading_above,
     graduate_heading_below: graduate_heading_below,
@@ -233,6 +236,7 @@
   graduate_headrule_thick: graduate_style_defaults.headrule_thick, // 研究生页眉粗线线宽
   graduate_headrule_thin: graduate_style_defaults.headrule_thin, // 研究生页眉细线线宽
   graduate_headrule_gap: graduate_style_defaults.headrule_gap, // 研究生页眉粗细线之间的垂直间距
+  graduate_keywords_above: graduate_style_defaults.keywords_above, // 研究生摘要正文与关键词之间的垂直间距
   graduate_heading_leading: graduate_style_defaults.heading_leading, // 研究生正文各级标题行距
   graduate_heading_above: graduate_style_defaults.heading_above, // 研究生正文各级标题段前距
   graduate_heading_below: graduate_style_defaults.heading_below, // 研究生正文各级标题段后距
@@ -322,6 +326,7 @@
     graduate_headrule_thick: graduate_headrule_thick,
     graduate_headrule_thin: graduate_headrule_thin,
     graduate_headrule_gap: graduate_headrule_gap,
+    graduate_keywords_above: graduate_keywords_above,
     graduate_heading_leading: graduate_heading_leading,
     graduate_heading_above: graduate_heading_above,
     graduate_heading_below: graduate_heading_below,
@@ -458,6 +463,7 @@
           title-leading: bachelor-first-level-value(graduate_heading_leading),
           title-above: bachelor-first-level-value(graduate_heading_above),
           title-below: bachelor-first-level-value(graduate_heading_below),
+          keywords-above: graduate_keywords_above,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -492,6 +498,7 @@
           title-leading: bachelor-first-level-value(graduate_heading_leading),
           title-above: bachelor-first-level-value(graduate_heading_above),
           title-below: bachelor-first-level-value(graduate_heading_below),
+          keywords-above: graduate_keywords_above,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -604,6 +611,7 @@
   graduate_headrule_thick: graduate_style_defaults.headrule_thick,
   graduate_headrule_thin: graduate_style_defaults.headrule_thin,
   graduate_headrule_gap: graduate_style_defaults.headrule_gap,
+  graduate_keywords_above: graduate_style_defaults.keywords_above,
   graduate_heading_leading: graduate_style_defaults.heading_leading,
   graduate_heading_above: graduate_style_defaults.heading_above,
   graduate_heading_below: graduate_style_defaults.heading_below,
@@ -668,6 +676,7 @@
     graduate_headrule_thick: graduate_headrule_thick,
     graduate_headrule_thin: graduate_headrule_thin,
     graduate_headrule_gap: graduate_headrule_gap,
+    graduate_keywords_above: graduate_keywords_above,
     graduate_heading_leading: graduate_heading_leading,
     graduate_heading_above: graduate_heading_above,
     graduate_heading_below: graduate_heading_below,

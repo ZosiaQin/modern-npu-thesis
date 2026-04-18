@@ -18,6 +18,7 @@
   title-leading: 2.4pt,
   title-above: preface-heading-above,
   title-below: preface-heading-below,
+  keywords-above: preface-keywords-above,
   funding: none,
   body,
 ) = {
@@ -54,7 +55,7 @@
       #body
     ]
 
-#v(preface-keywords-above)
+#v(keywords-above)
 #h(2em)#text(font: fonts.黑体, size: 字号.小四)[关键词：]#text(font: fonts.宋体, size: 字号.小四)[#(
   ("",) + keywords.intersperse("；")
 ).sum()]

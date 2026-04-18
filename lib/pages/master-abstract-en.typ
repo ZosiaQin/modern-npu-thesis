@@ -21,6 +21,7 @@
   title-leading: 2.4pt,
   title-above: preface-heading-above,
   title-below: preface-heading-below,
+  keywords-above: preface-keywords-above,
   funding: none,
   body,
 ) = {
@@ -67,7 +68,7 @@
       #body
     ]
 
-#v(preface-keywords-above)
+#v(keywords-above)
 #text(font: "Times New Roman", size: 字号.小四)[
   #strong[Key words]#text(font: fonts.黑体, weight: "bold")[：]#(("",) + keywords.intersperse("; ")).sum()
 ]
