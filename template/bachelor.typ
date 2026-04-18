@@ -131,11 +131,6 @@
 
   $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
-  如果需要在公式下方给出变量含义说明，可以使用统一的辅助宏：
-
-  $ E = m c^2 $
-  #equation-note[$E$ 为能量，$m$ 为质量，$c$ 为光速。]
-
   == 算法示例
 
   下面给出采用单独算法编号的三线表风格算法示例，见#algorithm-ref(<alg:binary-search>)。
