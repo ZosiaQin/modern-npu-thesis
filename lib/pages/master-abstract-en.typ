@@ -59,8 +59,9 @@
       )
     }
     #v(title-above)
-    <__nwpu_master_abstract_en_heading_start__>
-    #heading(level: 1, outlined: outlined, outline-title)<__nwpu_master_abstract_en_heading_end__>
+    #metadata(none) <__nwpu_master_abstract_en_heading_start__>
+    #heading(level: 1, outlined: outlined, outline-title)
+    #metadata(none) <__nwpu_master_abstract_en_heading_end__>
 
     #[
       #set text(font: "Times New Roman", size: 字号.小四)
