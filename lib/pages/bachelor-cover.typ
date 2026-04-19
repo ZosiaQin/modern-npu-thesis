@@ -59,8 +59,6 @@
 
   // 4.  正式渲染
 
-  pagebreak(weak: true, to: if twoside { "odd" })
-
   // 居中对齐
   set align(center)
 

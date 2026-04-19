@@ -18,6 +18,7 @@
 #import "pages/design-summary.typ": design-summary as design-summary-page
 #import "pages/academic-achievements.typ": academic-achievements
 #import "utils/custom-cuti.typ": *
+#import "@preview/gb7714-bilingual:0.2.3": init-gb7714
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
 #import "utils/custom-heading.typ": active-heading, current-heading, heading-display
@@ -53,23 +54,25 @@
 
 #let render-graduate-appendices(legacy-appendix: none, appendices: none) = {
   let items = normalize-graduate-appendix-items(legacy-appendix: legacy-appendix, appendices: appendices)
-  items.map(item => {
-    let appendix-title = auto
-    let appendix-body = item
-    if type(item) == dictionary {
-      appendix-title = item.at("title", default: auto)
-      appendix-body = item.at("body", default: [])
-    }
+  items
+    .map(item => {
+      let appendix-title = auto
+      let appendix-body = item
+      if type(item) == dictionary {
+        appendix-title = item.at("title", default: auto)
+        appendix-body = item.at("body", default: [])
+      }
 
-    [
-      #heading(level: 1)[
-        #if appendix-title != auto {
-          appendix-title
-        }
+      [
+        #heading(level: 1)[
+          #if appendix-title != auto {
+            appendix-title
+          }
+        ]
+        #appendix-body
       ]
-      #appendix-body
-    ]
-  }).join()
+    })
+    .join()
 }
 
 #let bachelor_style_defaults = (
@@ -94,12 +97,11 @@
 )
 
 #let default-bibliography(doctype) = {
-  let source = if doctype == "bachelor" {
+  if doctype == "bachelor" {
     "../template/bib/bachelor.bib"
   } else {
     "../template/bib/graduate.bib"
   }
-  bibliography.with(source)
 }
 
 #let bachelor-thesis-config(
@@ -129,33 +131,37 @@
   config_extra: (:),
 ) = {
   (
-    doctype: "bachelor",
-    degree: degree,
-    anonymous: anonymous,
-    english-writing: english-writing,
-    colored-cover: false,
-    fonts: fonts,
-    info: (
-      title: title,
-      author: author,
-      major: major,
-      supervisor: supervisor,
-      submit-date: submit-date,
-    ) + info_extra,
-    abstract: abstract,
-    keywords: keywords,
-    abstract-en: abstract-en,
-    keywords-en: keywords-en,
-    acknowledgement: acknowledgement,
-    appendix: appendix,
-    design_summary: design_summary,
-    outline-depth: outline-depth,
-    bachelor_leading: bachelor_leading,
-    bachelor_spacing: bachelor_spacing,
-    bachelor_heading_leading: bachelor_heading_leading,
-    bachelor_heading_above: bachelor_heading_above,
-    bachelor_heading_below: bachelor_heading_below,
-  ) + config_extra
+    (
+      doctype: "bachelor",
+      degree: degree,
+      anonymous: anonymous,
+      english-writing: english-writing,
+      colored-cover: false,
+      fonts: fonts,
+      info: (
+        title: title,
+        author: author,
+        major: major,
+        supervisor: supervisor,
+        submit-date: submit-date,
+      )
+        + info_extra,
+      abstract: abstract,
+      keywords: keywords,
+      abstract-en: abstract-en,
+      keywords-en: keywords-en,
+      acknowledgement: acknowledgement,
+      appendix: appendix,
+      design_summary: design_summary,
+      outline-depth: outline-depth,
+      bachelor_leading: bachelor_leading,
+      bachelor_spacing: bachelor_spacing,
+      bachelor_heading_leading: bachelor_heading_leading,
+      bachelor_heading_above: bachelor_heading_above,
+      bachelor_heading_below: bachelor_heading_below,
+    )
+      + config_extra
+  )
 }
 
 #let graduate-thesis-config(
@@ -220,53 +226,57 @@
   config_extra: (:),
 ) = {
   (
-    doctype: doctype,
-    degree: degree,
-    anonymous: anonymous,
-    english-writing: english-writing,
-    colored-cover: colored-cover,
-    graduate_leading: graduate_leading,
-    graduate_spacing: graduate_spacing,
-    graduate_header_ascent: graduate_header_ascent,
-    graduate_headsep: graduate_headsep,
-    graduate_headrule_offset: graduate_headrule_offset,
-    graduate_headrule_thick: graduate_headrule_thick,
-    graduate_headrule_thin: graduate_headrule_thin,
-    graduate_headrule_gap: graduate_headrule_gap,
-    graduate_keywords_above: graduate_keywords_above,
-    graduate_heading_leading: graduate_heading_leading,
-    graduate_heading_above: graduate_heading_above,
-    graduate_heading_below: graduate_heading_below,
-    fonts: fonts,
-    info: (
-      title: title,
-      title-en: title-en,
-      student-id: student-id,
-      clc: clc,
-      author: author,
-      author-en: author-en,
-      department: department,
-      major: major,
-      major-en: major-en,
-      supervisor: supervisor,
-      supervisor-en: supervisor-en,
-      submit-date: submit-date,
-      reviewers: reviewers,
-      defence-committee: defence-committee,
-    ) + info_extra,
-    abstract: abstract,
-    keywords: keywords,
-    funding: funding,
-    abstract-en: abstract-en,
-    keywords-en: keywords-en,
-    funding-en: funding-en,
-    acknowledgement: acknowledgement,
-    academic-achievements: academic-achievements,
-    appendix: appendix,
-    appendices: appendices,
-    scan-declaration: scan-declaration,
-    outline-depth: outline-depth,
-  ) + config_extra
+    (
+      doctype: doctype,
+      degree: degree,
+      anonymous: anonymous,
+      english-writing: english-writing,
+      colored-cover: colored-cover,
+      graduate_leading: graduate_leading,
+      graduate_spacing: graduate_spacing,
+      graduate_header_ascent: graduate_header_ascent,
+      graduate_headsep: graduate_headsep,
+      graduate_headrule_offset: graduate_headrule_offset,
+      graduate_headrule_thick: graduate_headrule_thick,
+      graduate_headrule_thin: graduate_headrule_thin,
+      graduate_headrule_gap: graduate_headrule_gap,
+      graduate_keywords_above: graduate_keywords_above,
+      graduate_heading_leading: graduate_heading_leading,
+      graduate_heading_above: graduate_heading_above,
+      graduate_heading_below: graduate_heading_below,
+      fonts: fonts,
+      info: (
+        title: title,
+        title-en: title-en,
+        student-id: student-id,
+        clc: clc,
+        author: author,
+        author-en: author-en,
+        department: department,
+        major: major,
+        major-en: major-en,
+        supervisor: supervisor,
+        supervisor-en: supervisor-en,
+        submit-date: submit-date,
+        reviewers: reviewers,
+        defence-committee: defence-committee,
+      )
+        + info_extra,
+      abstract: abstract,
+      keywords: keywords,
+      funding: funding,
+      abstract-en: abstract-en,
+      keywords-en: keywords-en,
+      funding-en: funding-en,
+      acknowledgement: acknowledgement,
+      academic-achievements: academic-achievements,
+      appendix: appendix,
+      appendices: appendices,
+      scan-declaration: scan-declaration,
+      outline-depth: outline-depth,
+    )
+      + config_extra
+  )
 }
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
@@ -402,18 +412,18 @@
       )
     },
     preface: (it, ..args) => {
-        preface(
-          twoside: twoside,
-          doctype: doctype,
-          display-header: true,
-          graduate_headsep: graduate_headsep,
-          graduate_headrule_offset: graduate_headrule_offset,
-          graduate_headrule_thick: graduate_headrule_thick,
-          graduate_headrule_thin: graduate_headrule_thin,
-          graduate_headrule_gap: graduate_headrule_gap,
-          fonts: fonts + args.named().at("fonts", default: (:)),
-          ..args,
-          it,
+      preface(
+        twoside: twoside,
+        doctype: doctype,
+        display-header: true,
+        graduate_headsep: graduate_headsep,
+        graduate_headrule_offset: graduate_headrule_offset,
+        graduate_headrule_thick: graduate_headrule_thick,
+        graduate_headrule_thin: graduate_headrule_thin,
+        graduate_headrule_gap: graduate_headrule_gap,
+        fonts: fonts + args.named().at("fonts", default: (:)),
+        ..args,
+        it,
       )
     },
     mainmatter: (..args) => {
@@ -501,7 +511,6 @@
         )
       }
     },
-
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -580,9 +589,15 @@
         english-writing: english-writing,
         leading: if doctype == "bachelor" { bachelor_leading } else { auto },
         spacing: if doctype == "bachelor" { bachelor_spacing } else { 0pt },
-        title-leading: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_leading) } else { bachelor-first-level-value(graduate_heading_leading) },
-        title-above: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_above) } else { bachelor-first-level-value(graduate_heading_above) },
-        title-below: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_below) } else { bachelor-first-level-value(graduate_heading_below) },
+        title-leading: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_leading) } else {
+          bachelor-first-level-value(graduate_heading_leading)
+        },
+        title-above: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_above) } else {
+          bachelor-first-level-value(graduate_heading_above)
+        },
+        title-below: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_below) } else {
+          bachelor-first-level-value(graduate_heading_below)
+        },
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
@@ -612,9 +627,15 @@
         english-writing: english-writing,
         leading: if doctype == "bachelor" { bachelor_leading } else { graduate_leading },
         spacing: if doctype == "bachelor" { bachelor_spacing } else { graduate_spacing },
-        title-leading: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_leading) } else { bachelor-first-level-value(graduate_heading_leading) },
-        title-above: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_above) } else { bachelor-first-level-value(graduate_heading_above) },
-        title-below: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_below) } else { bachelor-first-level-value(graduate_heading_below) },
+        title-leading: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_leading) } else {
+          bachelor-first-level-value(graduate_heading_leading)
+        },
+        title-above: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_above) } else {
+          bachelor-first-level-value(graduate_heading_above)
+        },
+        title-below: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_below) } else {
+          bachelor-first-level-value(graduate_heading_below)
+        },
         fonts: fonts + args.named().at("fonts", default: (:)),
         ..args,
       )
@@ -763,6 +784,8 @@
   // 1. 封面
   (cls.cover)()
 
+  show: init-gb7714.with(read(bibliography), style: "numeric", version: "2015")
+
   // 2. 前置部分（摘要、目录等）
   show: cls.preface
   if abstract != none {
@@ -780,25 +803,21 @@
   with-english-writing(english-writing, body)
 
   // 4. 后置部分
-  // 参考文献
   if bibliography != none {
     (cls.bilingual-bibliography)()
     close-backmatter-section(
       if doctype == "bachelor" {
         (
-          acknowledgement != none
-          or design_summary != none
-          or appendix != none
-          or scan-declaration != none
+          acknowledgement != none or design_summary != none or appendix != none or scan-declaration != none
         )
       } else {
         (
           has-graduate-appendices
-          or acknowledgement != none
-          or academic-achievements != none
-          or scan-declaration != none
+            or acknowledgement != none
+            or academic-achievements != none
+            or scan-declaration != none
         )
-      }
+      },
     )
   }
 
@@ -831,34 +850,27 @@
       close-backmatter-section(scan-declaration != none)
     }
   } else {
-    // 附录
     if has-graduate-appendices {
       show: cls.appendix
       render-graduate-appendices(legacy-appendix: appendix, appendices: appendices)
       close-backmatter-section(
-        acknowledgement != none
-          or academic-achievements != none
-          or scan-declaration != none,
+        acknowledgement != none or academic-achievements != none or scan-declaration != none,
       )
     }
 
-    // 致谢
     if acknowledgement != none {
       (cls.acknowledgement)(acknowledgement)
       close-backmatter-section(
-        academic-achievements != none
-          or scan-declaration != none,
+        academic-achievements != none or scan-declaration != none,
       )
     }
 
-    // 学术成果
     if academic-achievements != none {
       (cls.academic-achievements)(academic-achievements)
       close-backmatter-section(scan-declaration != none)
     }
   }
 
-  // 声明扫描页
   if scan-declaration != none and doctype != "bachelor" {
     page(
       margin: 0pt,
