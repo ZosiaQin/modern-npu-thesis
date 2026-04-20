@@ -301,7 +301,10 @@
     title: none,
     full: full,
     full-control: entries => {
-      set par(hanging-indent: 2em, first-line-indent: 0em)
+      set par(
+        hanging-indent: 0em,
+        first-line-indent: if is-graduate { (amount: 2em, all: true) } else { (amount: 0em, all: true) },
+      )
       for entry in entries {
         if entry.entry-type == "patent" {
           [[#entry.order]#h(0.5em)#render-custom-patent(entry)]
