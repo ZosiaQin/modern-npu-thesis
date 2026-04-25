@@ -9,7 +9,7 @@
   english-writing: false,
   fonts: (:),
   // 其他参数
-  depth: 4,
+  depth: 3,
   title: auto,
   outlined: false,
   title-vspace: 0pt,
@@ -26,7 +26,7 @@
   // 目录字体与字号
   font: auto,
   size: auto,
-  indent: (0pt, 20pt, 20pt),
+  indent: (0pt, 24pt, 24pt),
   weight: auto,
   // 默认引导符
   fill: auto,
@@ -117,7 +117,7 @@
       }
       let is-master-abstract-en-entry = (
         query(selector(<__nwpu_master_abstract_en_heading_start__>).before(entry.element.location())).len()
-        > query(selector(<__nwpu_master_abstract_en_heading_end>).before(entry.element.location())).len()
+        > query(selector(<__nwpu_master_abstract_en_heading_end__>).before(entry.element.location())).len()
       )
       let entry-content = link(
         entry.element.location(),
