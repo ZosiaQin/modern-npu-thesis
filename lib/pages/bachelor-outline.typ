@@ -26,7 +26,7 @@
   // 目录字体与字号
   font: auto,
   size: auto,
-  indent: (0pt, 20pt, 20pt),
+  indent: (0pt, 24pt, 18pt),
   weight: auto,
   // 默认引导符
   fill: auto,
@@ -49,8 +49,6 @@
       digits.at(calc.floor(n / 10)) + "十" + digits.at(calc.rem(n, 10))
     }
   }
-
-  if depth > 3 { depth = 3 }
 
   // 标题默认值
   if title == auto {
