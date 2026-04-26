@@ -479,7 +479,7 @@
     #set text(font: fonts.宋体, size: 字号.小四)
     #text(font: fonts.黑体, size: 字号.四号)[学位论文评阅人名单]
     
-    #v(6pt)
+    #v(-5pt)
     
     #table(
       columns: (3.71cm, 2.83cm, 8.73cm),
@@ -547,6 +547,8 @@
   align(center)[
     #set text(font: fonts.宋体, size: 字号.小四)
     #text(font: fonts.黑体, size: 字号.四号)[答辩委员会名单]
+
+    #v(-5pt)
     
     #table(
       columns: (3.76cm, 2.68cm, 2.25cm, 6.75cm),
