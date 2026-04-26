@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字号, 字体
 #import "../format.typ": body-format, heading-format
-#import "../layouts/preface.typ": preface-heading-style
+#import "../layouts/preface.typ": preface-heading-style, bachelor-body-first-line-indent
 
 // 西北工业大学本科生中文摘要页
 #let bachelor-abstract(
@@ -48,7 +48,7 @@
     #heading(level: 1, outlined: outlined, outline-title)
 
     #[
-      #set par(first-line-indent: (amount: 26pt, all: true))
+      #set par(first-line-indent: bachelor-body-first-line-indent)
 
       #body
     ]

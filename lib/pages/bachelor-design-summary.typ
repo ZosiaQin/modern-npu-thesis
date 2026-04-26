@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字号, 字体
 #import "../format.typ": body-format, heading-format
-#import "../layouts/preface.typ": preface-heading-style
+#import "../layouts/preface.typ": preface-heading-style, bachelor-body-first-line-indent
 
 // 本科毕业设计小结页
 #let design-summary(
@@ -33,7 +33,7 @@
   pagebreak(weak: true, to: if twoside { "odd" })
   [
     #set text(font: body-font, size: body-size)
-    #set par(leading: leading, justify: true, spacing: spacing, first-line-indent: (amount: 26pt, all: true))
+    #set par(leading: leading, justify: true, spacing: spacing, first-line-indent: bachelor-body-first-line-indent)
 
     #show heading.where(level: 1, numbering: none): it => preface-heading-style(
       it,

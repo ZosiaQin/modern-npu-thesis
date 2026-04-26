@@ -1,6 +1,6 @@
 
 #import "../utils/style.typ": 字号, 字体
-#import "../layouts/preface.typ": preface-heading-style, preface-heading-above, preface-heading-below, preface-heading-leading, preface-body-leading, preface-body-spacing, preface-body-first-line-indent
+#import "../layouts/preface.typ": preface-heading-style, preface-heading-above, preface-heading-below, preface-heading-leading, preface-body-leading, preface-body-spacing, preface-body-first-line-indent, bachelor-body-first-line-indent
 
 // 致谢页
 #let acknowledgement(
@@ -57,7 +57,7 @@
       leading: leading,
       spacing: spacing,
       justify: true,
-      first-line-indent: if doctype == "bachelor" { (amount: 26pt, all: true) } else { preface-body-first-line-indent },
+      first-line-indent: if doctype == "bachelor" { bachelor-body-first-line-indent } else { preface-body-first-line-indent },
     )
 
     // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距

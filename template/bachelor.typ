@@ -8,13 +8,17 @@
   supervisor: ("张三", "教授"),
   submit-date: (year: 2026, month: 3),
   abstract: [
-    中文摘要内容。
+    听觉虚拟又可称为可听化，是近年来随着声学仿真技术的发展而出现的新概念，即通过对包含单个（或多个）声源的声场进行物理或数学建模，以达到模拟空间听音效果的目的。若考虑双耳效应，则可称为双耳听觉虚拟（Binaural Modeling）。
+
+    ……
   ],
-  keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
+  keywords: ("听觉虚拟", "HRTF", "神经网络"),
   abstract-en: [
-    English abstract content.
+    Virtual auditory technology is also called auralization. It is brought forward as a new concept with the development of acoustic simulation techniques in recent years and can be implemented by establishing the physical or mathematical models of a sound field to achieve sound effects simulation. If we consider the binaural effect, it can be called binaural virtual auditory.
+
+    ……..
   ],
-  keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
+  keywords-en: ("virtual auditory", "HRTF", "neural network"),
   appendix: [
     附录内容……
   ],

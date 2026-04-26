@@ -50,9 +50,9 @@
     first-line-indent: (amount: 2em, all: true),
   ),
   bachelor: (
-    leading: 10pt,
-    spacing: 10pt,
-    first-line-indent: (amount: 26pt, all: true),
+    leading: 11pt,
+    spacing: 11pt,
+    first-line-indent: (amount: 24pt, all: true),
   ),
 )
 
@@ -70,7 +70,7 @@
   bachelor: (
     size: (字号.三号, 字号.四号, 字号.小四),
     weight: ("regular", "regular", "regular"),
-    leading: (10pt, 10pt, 10pt),
+    leading: (11pt, 11pt, 11pt),
     above: (28pt, 12pt, 12pt),
     below: (28pt, 12pt, 12pt),
   ),

@@ -1,5 +1,5 @@
 #import "../utils/datetime-display.typ": (
-  datetime-display, datetime-en-display, datetime-year-month, datetime-year-month-en,
+  datetime-display, datetime-year-month, datetime-year-month-en,
 )
 #import "../utils/style.typ": 字体, 字号
 
@@ -34,7 +34,6 @@
     "reviewer",
   ),
   datetime-display: datetime-display,
-  datetime-en-display: datetime-en-display,
 ) = {
   // 1.  默认参数
   fonts = 字体 + fonts

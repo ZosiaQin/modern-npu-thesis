@@ -96,9 +96,9 @@
   }
   if first-line-indent == auto {
     first-line-indent = if is-graduate {
-      (amount: 2em, all: true)
+      body-format.graduate.first-line-indent
     } else {
-      (amount: 26pt, all: true)
+      body-format.bachelor.first-line-indent
     }
   }
   if heading-numbering == auto {

@@ -15,6 +15,7 @@
 #let graduate-body-leading = body-format.graduate.leading
 #let graduate-body-spacing = body-format.graduate.spacing
 #let graduate-body-first-line-indent = body-format.graduate.first-line-indent
+#let bachelor-body-first-line-indent = body-format.bachelor.first-line-indent
 #let graduate-keywords-above = 2.2em
 
 // 兼容旧名称的别名

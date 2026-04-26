@@ -3,12 +3,6 @@
   str(date.year()) + " 年 " + str(date.month()) + " 月 " + str(date.day()) + " 日"
 }
 
-// 显示英文日期
-#let datetime-en-display(date) = {
-  let months = ("Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec.")
-  months.at(date.month() - 1) + " " + str(date.day()) + ", " + str(date.year())
-}
-
 // 显示年月（无前导零）
 #let datetime-year-month(date) = {
   str(date.year()) + " 年 " + str(date.month()) + " 月"
