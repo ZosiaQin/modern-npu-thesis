@@ -20,6 +20,7 @@
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-heading.typ": active-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
+#import "@preview/cap-able:0.0.1": captab, captnote, captab-style
 #import "utils/style.typ": 字体, 字号
 #import "format.typ": body-format, heading-format, header-format
 

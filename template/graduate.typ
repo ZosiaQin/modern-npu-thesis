@@ -1,4 +1,4 @@
-﻿#import "/template.typ": algorithm, algorithm-ref, appendix, appendices, equation-note, graduate-thesis-config, nwpu-thesis, subfigure-caption
+﻿#import "/template.typ": algorithm, algorithm-ref, appendix, appendices, captab, equation-note, graduate-thesis-config, nwpu-thesis, subfigure-caption
 #import "@preview/gb7714-bilingual:0.2.3": multicite
 
 #let thesis-config = graduate-thesis-config(
@@ -85,39 +85,31 @@
 
   == 图表测试
 
-  引用@tbl:timing-tlt，以及@fig:test。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
+  引用@timing-tlt，以及@fig:test。使用 `captab()` 创建三线表时，引用直接使用标签名；图片仍需 `fig:` 前缀。
 
-  #figure(
-    table(
-      columns: (1fr, 1fr, 1fr, 1fr),
-
-      table.hline(y: 0, stroke: 1.5pt),
-      table.header([t], [1], [2], [3]),
-      table.hline(y: 1, stroke: 0.5pt),
-      [y], [0.3s], [0.4s], [0.8s],
-      table.hline(y: 2, stroke: 1.5pt),
-    ),
+  #captab(
     caption: [三线表],
-  ) <timing-tlt>
+    label: <timing-tlt>,
+  )[
+    | t   | 1    | 2    | 3    |
+    | --- | ---- | ---- | ---- |
+    | y   | 0.3s | 0.4s | 0.8s |
+  ]
 
-  #figure(
-    table(
-      columns: (1.25fr, 1fr, 1fr, 1fr, 1fr),
-
-      table.hline(y: 0, stroke: 1.5pt),
-      table.cell(rowspan: 2)[材料],
-      table.cell(colspan: 2)[碳/环氧],
-      table.cell(colspan: 2)[玻璃/环氧],
-      table.hline(y: 1, start: 1, stroke: 0.5pt),
-      [纵向], [横向], [纵向], [横向],
-      table.hline(y: 2, stroke: 0.5pt),
-      [模量，GPa], [181], [10.3], [38.6], [8.3],
-      [压缩强度，MPa], [1500], [246], [610], [118],
-      [拉伸强度，MPa], [1500], [40], [1062], [31],
-      table.hline(y: 5, stroke: 1.5pt),
+  #captab(
+    caption: [复杂三线表示例：聚合物基复合材料的性能（captab 渲染）],
+    label: <composite-performance>,
+    cols: (1.25fr, 1fr, 1fr, 1fr, 1fr),
+    hlines: (
+      (row: 2, stroke: 0.5pt),
     ),
-    caption: [复杂三线表示例：聚合物基复合材料的性能],
-  ) <composite-performance>
+  )[
+    | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
+    | ^              | 纵向    | 横向 | 纵向      | 横向 |
+    | 模量，GPa      | 181     | 10.3 | 38.6      | 8.3  |
+    | 压缩强度，MPa  | 1500    | 246  | 610       | 118  |
+    | 拉伸强度，MPa  | 1500    | 40   | 1062      | 31   |
+  ]
 
   #figure(
     image("figures/博士论文封面.jpg", width: 45%),

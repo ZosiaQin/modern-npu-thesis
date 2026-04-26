@@ -1,4 +1,5 @@
 #import "@preview/i-figured:0.2.4"
+#import "@preview/cap-able:0.0.1": captab-style
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
 #import "../utils/custom-heading.typ": active-heading, heading-display
@@ -194,11 +195,16 @@
   show heading: i-figured.reset-counters
   let figure-show-handler = i-figured.show-figure.with(numbering: "1-1")
   show figure: it => {
-    let rendered = figure-show-handler(it)
-    if is-graduate {
-      rendered
+    // 研究生跳过表格类 figure，由 cap-able 的 captab() 处理表格编号
+    if is-graduate and it.kind == table {
+      it
     } else {
-      block(above: bachelor-figure-gap, below: bachelor-figure-gap)[#rendered]
+      let rendered = figure-show-handler(it)
+      if is-graduate {
+        rendered
+      } else {
+        block(above: bachelor-figure-gap, below: bachelor-figure-gap)[#rendered]
+      }
     }
   }
   set figure(supplement: if english-writing { [Figure] } else { [图] })
@@ -340,6 +346,22 @@
       )
     }
   ))
+
+  // 研究生使用 cap-able 配置三线表全局样式
+  if is-graduate {
+    show: captab-style.with(
+      numbering-format: "1-1",
+      use-chapter: true,
+      supplement: "表",
+      caption-size: caption-size,
+      caption-weight: "regular",
+      body-size: 字号.五号,
+      cell-inset: (x: 0.3em, y: 0.5em),
+      enable-english-caption: false,
+      pre-supplement-number-spacing: 0em,
+      number-title-spacing: [\u{3000}],
+    )
+  }
 
   it
 }
