@@ -159,7 +159,7 @@
   graduate_headrule_thick: header-format.graduate.headrule-thick,
   graduate_headrule_thin: header-format.graduate.headrule-thin,
   graduate_headrule_gap: header-format.graduate.headrule-gap,
-  graduate_keywords_above: 2.2em,
+  graduate_keywords_above: body-format.graduate.keywords-above,
   graduate_heading_leading: heading-format.graduate.leading,
   graduate_heading_above: heading-format.graduate.above,
   graduate_heading_below: heading-format.graduate.below,
@@ -278,7 +278,7 @@
   graduate_headrule_thick: header-format.graduate.headrule-thick, // 研究生页眉粗线线宽
   graduate_headrule_thin: header-format.graduate.headrule-thin, // 研究生页眉细线线宽
   graduate_headrule_gap: header-format.graduate.headrule-gap, // 研究生页眉粗细线之间的垂直间距
-  graduate_keywords_above: 2.2em, // 研究生摘要正文与关键词之间的垂直间距
+  graduate_keywords_above: body-format.graduate.keywords-above, // 研究生摘要正文与关键词之间的垂直间距
   graduate_heading_leading: heading-format.graduate.leading, // 研究生正文各级标题行距
   graduate_heading_above: heading-format.graduate.above, // 研究生正文各级标题段前距
   graduate_heading_below: heading-format.graduate.below, // 研究生正文各级标题段后距
@@ -689,7 +689,7 @@
   graduate_headrule_thick: header-format.graduate.headrule-thick,
   graduate_headrule_thin: header-format.graduate.headrule-thin,
   graduate_headrule_gap: header-format.graduate.headrule-gap,
-  graduate_keywords_above: 2.2em,
+  graduate_keywords_above: body-format.graduate.keywords-above,
   graduate_heading_leading: heading-format.graduate.leading,
   graduate_heading_above: heading-format.graduate.above,
   graduate_heading_below: heading-format.graduate.below,

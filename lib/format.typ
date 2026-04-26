@@ -45,9 +45,10 @@
 // =========================================================
 #let body-format = (
   graduate: (
-    leading: 10pt,
-    spacing: 10pt,
+    leading: 12pt,
+    spacing: 12pt,
     first-line-indent: (amount: 2em, all: true),
+    keywords-above: 1.2em,
   ),
   bachelor: (
     leading: 11pt,
@@ -63,7 +64,7 @@
   graduate: (
     size: (字号.三号, 字号.四号, 字号.小四),
     weight: ("regular", "regular", "regular"),
-    leading: (10pt, 10pt, 10pt),
+    leading: (12pt, 12pt, 12pt),
     above: (2 * 14pt - 0.7em, 16pt, 16pt),
     below: (2 * 17pt - 0.7em, 12pt, 12pt),
   ),
