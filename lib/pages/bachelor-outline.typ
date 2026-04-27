@@ -1,11 +1,9 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../format.typ": body-format, heading-format
-#import "../layouts/preface.typ": preface-heading-style
 
 // 本科生目录页
 #let bachelor-outline(
   // documentclass 传入参数
-  twoside: false,
   english-writing: false,
   fonts: (:),
   // 其他参数
@@ -14,15 +12,9 @@
   outlined: false,
   title-vspace: 0pt,
   title-text-args: auto,
-  title-leading: auto,
-  title-above: auto,
-  title-below: auto,
   // 引用页数的字体
   reference-font: auto,
   reference-size: auto,
-  // 正文字体
-  body-font: auto,
-  body-size: auto,
   // 目录字体与字号
   font: auto,
   size: auto,
@@ -33,7 +25,6 @@
   gap: .3em,
   // 行间距
   leading: auto,
-  spacing: 0pt,
 ) = {
   fonts = 字体 + fonts
 
@@ -57,21 +48,12 @@
   if title-text-args == auto {
     title-text-args = (font: fonts.黑体, size: 字号.三号, weight: "bold")
   }
-  if title-leading == auto {
-    title-leading = heading-format.bachelor.leading.first()
-  }
-  if title-above == auto {
-    title-above = heading-format.bachelor.above.first()
-  }
-  if title-below == auto {
-    title-below = heading-format.bachelor.below.first()
-  }
   // 引用页数字体
   if reference-font == auto {
-    reference-font = if body-font != auto { body-font } else { fonts.宋体 }
+    reference-font = fonts.宋体
   }
   if reference-size == auto {
-    reference-size = if body-size != auto { body-size } else { 字号.小四 }
+    reference-size = 字号.小四
   }
   // 目录字体与字号
   if font == auto {
@@ -91,39 +73,30 @@
     leading = body-format.bachelor.leading
   }
 
-  // 正式渲染
-  pagebreak(weak: true)
-
   set text(font: reference-font, size: reference-size)
 
   [
     // 目录标题
     #show heading.where(level: 1, numbering: none): it => {
       set text(..title-text-args)
-      preface-heading-style(
-        it,
-        fonts,
-        leading: title-leading,
-        below: title-below,
-      )
+      it
     }
-    #v(title-above)
     #heading(level: 1, outlined: outlined, title)
 
     #v(title-vspace)
 
     // 目录样式
-    #set par(leading: leading, spacing: spacing)
+    #set par(leading: leading, spacing: 0pt)
     #set outline(indent: level => indent.slice(0, calc.min(level + 1, indent.len())).sum())
     #show outline.entry: entry => {
       let in-mainmatter-or-later = query(
-        selector(<__nwpu_mainmatter_start__>).before(entry.element.location()),
+        selector(label("__nwpu_mainmatter_start__")).before(entry.element.location()),
       ).len() > 0
       let entry-page-number = counter(page).at(entry.element.location()).first()
       let entry-page-display = text(font: reference-font, size: reference-size)[#numbering("1", entry-page-number)]
       let is-appendix-entry = (
-        query(selector(<appendix-start>).before(entry.element.location())).len()
-        > query(selector(<appendix-end>).before(entry.element.location())).len()
+        query(selector(label("appendix-start")).before(entry.element.location())).len()
+        > query(selector(label("appendix-end")).before(entry.element.location())).len()
       )
       let prefix = if entry.level == 1 and entry.prefix() not in (none, []) and not is-appendix-entry {
         let nums = counter(heading).at(entry.element.location())

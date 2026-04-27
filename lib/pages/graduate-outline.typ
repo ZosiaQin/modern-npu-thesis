@@ -1,11 +1,9 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../format.typ": body-format, heading-format
-#import "../layouts/preface.typ": preface-heading-style
 
 // 研究生目录页
 #let graduate-outline(
   // documentclass 传入参数
-  twoside: false,
   english-writing: false,
   fonts: (:),
   // 其他参数
@@ -14,15 +12,9 @@
   outlined: false,
   title-vspace: 0pt,
   title-text-args: auto,
-  title-leading: auto,
-  title-above: auto,
-  title-below: auto,
   // 引用页数的字体
   reference-font: auto,
   reference-size: auto,
-  // 正文字体
-  body-font: auto,
-  body-size: auto,
   // 目录字体与字号
   font: auto,
   size: auto,
@@ -44,21 +36,12 @@
   if title-text-args == auto {
     title-text-args = (font: fonts.黑体, size: 字号.三号)
   }
-  if title-leading == auto {
-    title-leading = heading-format.graduate.leading.first()
-  }
-  if title-above == auto {
-    title-above = heading-format.graduate.above.first()
-  }
-  if title-below == auto {
-    title-below = heading-format.graduate.below.first()
-  }
   // 引用页数字体
   if reference-font == auto {
-    reference-font = if body-font != auto { body-font } else { fonts.宋体 }
+    reference-font = fonts.宋体
   }
   if reference-size == auto {
-    reference-size = if body-size != auto { body-size } else { 字号.小四 }
+    reference-size = 字号.小四
   }
   // 目录字体与字号
   if font == auto {
@@ -81,23 +64,14 @@
     spacing = body-format.graduate.spacing
   }
 
-  // 正式渲染
-  pagebreak(weak: true, to: "odd")
-
   set text(font: reference-font, size: reference-size)
 
   [
     // 目录标题
     #show heading.where(level: 1, numbering: none): it => {
       set text(..title-text-args)
-      preface-heading-style(
-        it,
-        fonts,
-        leading: title-leading,
-        below: title-below,
-      )
+      it
     }
-    #v(title-above)
     #heading(level: 1, outlined: outlined, title)
 
     #v(title-vspace)
@@ -107,7 +81,7 @@
     #set outline(indent: level => indent.slice(0, calc.min(level + 1, indent.len())).sum())
     #show outline.entry: entry => {
       let in-mainmatter-or-later = query(
-        selector(<__nwpu_mainmatter_start__>).before(entry.element.location()),
+        selector(label("__nwpu_mainmatter_start__")).before(entry.element.location()),
       ).len() > 0
       let entry-page-number = counter(page).at(entry.element.location()).first()
       let entry-page-display = if not in-mainmatter-or-later {
@@ -116,8 +90,8 @@
         text(font: reference-font, size: reference-size)[#numbering("1", entry-page-number)]
       }
       let is-master-abstract-en-entry = (
-        query(selector(<__nwpu_master_abstract_en_heading_start__>).before(entry.element.location())).len()
-        > query(selector(<__nwpu_master_abstract_en_heading_end__>).before(entry.element.location())).len()
+        query(selector(label("__nwpu_master_abstract_en_heading_start__")).before(entry.element.location())).len()
+        > query(selector(label("__nwpu_master_abstract_en_heading_end__")).before(entry.element.location())).len()
       )
       let entry-content = link(
         entry.element.location(),

@@ -1,61 +1,32 @@
 #import "../utils/style.typ": 字号, 字体
-#import "../format.typ": body-format, heading-format
-#import "../layouts/preface.typ": preface-heading-style, bachelor-body-first-line-indent
 
 // 西北工业大学本科生英文摘要页
 #let bachelor-abstract-en(
-  // documentclass 传入的参数
-  twoside: false,
   fonts: (:),
-  // 其他参数
   keywords: (),
   outline-title: "ABSTRACT",
   outlined: false,
-  leading: auto,
-  spacing: auto,
-  body-font: auto,
-  body-size: auto,
-  title-leading: auto,
-  title-above: auto,
-  title-below: auto,
   body,
 ) = {
-  // 1.  默认参数
   fonts = 字体 + fonts
-  if body-font == auto { body-font = "Times New Roman" }
-  if body-size == auto { body-size = 字号.小四 }
-  if leading == auto { leading = body-format.bachelor.leading }
-  if spacing == auto { spacing = body-format.bachelor.spacing }
-  if title-leading == auto { title-leading = heading-format.bachelor.leading.first() }
-  if title-above == auto { title-above = heading-format.bachelor.above.first() }
-  if title-below == auto { title-below = heading-format.bachelor.below.first() }
 
-  // 3.  正式渲染
+  // 英文摘要标题覆盖字体为 Times New Roman，其余由 mainmatter 处理
+  show heading.where(level: 1): it => {
+    set text(font: "Times New Roman")
+    it
+  }
+
+  heading(level: 1, outlined: outlined, outline-title)
+
   [
-    #pagebreak(weak: true, to: if twoside { "odd" })
+    #set text(font: "Times New Roman")
+    #body
+  ]
 
-    #set text(font: body-font, size: body-size)
-    #set par(leading: leading, justify: true, spacing: spacing)
-
-    // 英文摘要标题，字号和间距使用统一配置
-    #show heading.where(level: 1): it => {
-      set text(font: "Times New Roman", size: 字号.三号, weight: "regular")
-      set par(leading: title-leading, spacing: 0pt)
-      set block(above: 0pt, below: title-below)
-      align(center, it)
-    }
-    #v(title-above)
-    #heading(level: 1, outlined: outlined, outline-title)
-
-    #[
-      #set par(first-line-indent: bachelor-body-first-line-indent)
-
-      #body
-    ]
-
-    #v(1em)
-
-    #text(font: body-font, size: body-size)[
+  v(1em)
+  [
+    #set par(first-line-indent: 0pt)
+    #text(font: "Times New Roman", size: 字号.小四)[
       #text(weight: "bold")[KEY WORDS]#text(font: fonts.宋体)[：]#(("",)+ keywords.intersperse(", ")).sum()
     ]
   ]

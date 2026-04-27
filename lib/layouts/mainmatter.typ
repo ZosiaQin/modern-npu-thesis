@@ -10,7 +10,7 @@
 // 一级标题间距，用于二级三级标题间距计算
 #let level1-heading-above = heading-format.graduate.above.first()
 #let level1-heading-below = heading-format.graduate.below.first()
-
+#let first-numbered-level1-seen = state("nwpu-first-numbered-level1-seen", false)
 #let mainmatter(
   // documentclass 传入参数
   twoside: false,
@@ -66,6 +66,7 @@
 ) = {
   // 1.  默认参数（提前初始化 fonts）
   fonts = 字体 + fonts
+  first-numbered-level1-seen.update(false)
   let is-graduate = doctype == "master" or doctype == "doctor"
   let table-kinds = (table, "i-figured-table")
   let show-equation-handler = if is-graduate {
@@ -155,11 +156,7 @@
     }
   }
 
-  // 双面打印时确保正文从奇数页开始
-  pagebreak(weak: true, to: if twoside { "odd" })
-
-  // 重置页码为阿拉伯数字从1开始
-  counter(page).update(1)
+  // 重置页码为阿拉伯数字从1开始（由调用方在正文开始位置处理 pagebreak 和 counter reset）
   set page(
     footer: context align(center)[
       #set text(size: 字号.小五)
@@ -188,9 +185,7 @@
     first-line-indent: first-line-indent,
     spacing: spacing,
   )
-  // 4.2 脚注样式
-  show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
-  // 4.3 设置 figure 的编号
+  // 4.2 设置 figure 的编号
   show heading: i-figured.reset-counters
   let figure-show-handler = i-figured.show-figure.with(numbering: "1-1")
   show figure: it => {
@@ -267,8 +262,14 @@
 
     // 所有符合 heading-pagebreak 配置的一级标题统一换页（包括无编号标题）
     let needs-pagebreak = false
+    let is-first-numbered-level1 = it.level == 1 and it.numbering != none and not first-numbered-level1-seen.get()
+    if it.level == 1 and it.numbering != none {
+      first-numbered-level1-seen.update(true)
+    }
     if array-at(heading-pagebreak, it.level) {
-      if "label" not in it.fields() or str(it.label) != "no-auto-pagebreak" {
+      let is-no-auto-pagebreak = "label" in it.fields() and str(it.label) == "no-auto-pagebreak"
+      let can-auto-pagebreak = (not is-no-auto-pagebreak) and (not is-first-numbered-level1)
+      if can-auto-pagebreak {
         needs-pagebreak = true
       }
     }

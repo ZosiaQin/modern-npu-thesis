@@ -1,7 +1,6 @@
 #import "layouts/doc.typ": doc
 #import "utils/algorithm.typ": algorithm, algorithm-ref, with-english-writing, indent, no-number, pseudocode-list
 #import "utils/equation-note.typ": equation-note
-#import "layouts/preface.typ": preface
 #import "layouts/mainmatter.typ": mainmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
 #import "utils/header.typ": graduate-header-title, header-render
@@ -409,21 +408,6 @@
         info: info + args.named().at("info", default: (:)),
       )
     },
-    preface: (it, ..args) => {
-      preface(
-        twoside: twoside,
-        doctype: doctype,
-        display-header: true,
-        graduate_headsep: graduate_headsep,
-        graduate_headrule_offset: graduate_headrule_offset,
-        graduate_headrule_thick: graduate_headrule_thick,
-        graduate_headrule_thin: graduate_headrule_thin,
-        graduate_headrule_gap: graduate_headrule_gap,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-        ..args,
-        it,
-      )
-    },
     mainmatter: (..args) => {
       if doctype == "master" or doctype == "doctor" {
         mainmatter(
@@ -503,30 +487,12 @@
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
         master-abstract(
-          doctype: doctype,
-          degree: degree,
-          twoside: twoside,
-          leading: graduate_leading,
-          spacing: graduate_spacing,
-          body-font: graduate_body_font,
-          body-size: graduate_body_size,
-          title-leading: bachelor-first-level-value(graduate_heading_leading),
-          title-above: bachelor-first-level-value(graduate_heading_above),
-          title-below: bachelor-first-level-value(graduate_heading_below),
           keywords-above: graduate_keywords_above,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         bachelor-abstract(
-          twoside: twoside,
-          leading: bachelor_leading,
-          spacing: bachelor_spacing,
-          body-font: bachelor_body_font,
-          body-size: bachelor_body_size,
-          title-leading: bachelor-first-level-value(bachelor_heading_leading),
-          title-above: bachelor-first-level-value(bachelor_heading_above),
-          title-below: bachelor-first-level-value(bachelor_heading_below),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
@@ -536,26 +502,12 @@
     abstract-en: (..args) => {
       if doctype == "master" or doctype == "doctor" {
         master-abstract-en(
-          doctype: doctype,
-          degree: degree,
-          twoside: twoside,
-          leading: graduate_leading,
-          spacing: graduate_spacing,
-          title-leading: bachelor-first-level-value(graduate_heading_leading),
-          title-above: bachelor-first-level-value(graduate_heading_above),
-          title-below: bachelor-first-level-value(graduate_heading_below),
           keywords-above: graduate_keywords_above,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         bachelor-abstract-en(
-          twoside: twoside,
-          leading: bachelor_leading,
-          spacing: bachelor_spacing,
-          title-leading: bachelor-first-level-value(bachelor_heading_leading),
-          title-above: bachelor-first-level-value(bachelor_heading_above),
-          title-below: bachelor-first-level-value(bachelor_heading_below),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
@@ -565,27 +517,13 @@
     outline-page: (..args) => {
       if doctype == "bachelor" {
         bachelor-outline(
-          twoside: twoside,
           english-writing: english-writing,
-          body-font: bachelor_body_font,
-          body-size: bachelor_body_size,
-          leading: bachelor_leading,
-          spacing: bachelor_spacing,
-          title-leading: bachelor-first-level-value(bachelor_heading_leading),
-          title-above: bachelor-first-level-value(bachelor_heading_above),
-          title-below: bachelor-first-level-value(bachelor_heading_below),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         graduate-outline(
-          twoside: twoside,
           english-writing: english-writing,
-          body-font: graduate_body_font,
-          body-size: graduate_body_size,
-          title-leading: bachelor-first-level-value(graduate_heading_leading),
-          title-above: bachelor-first-level-value(graduate_heading_above),
-          title-below: bachelor-first-level-value(graduate_heading_below),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
@@ -595,15 +533,7 @@
     bilingual-bibliography: (..args) => {
       bilingual-bibliography(
         doctype: doctype,
-        twoside: twoside,
         english-writing: english-writing,
-        body-font: if doctype == "bachelor" { bachelor_body_font } else { graduate_body_font },
-        body-size: if doctype == "bachelor" { bachelor_body_size } else { graduate_body_size },
-        leading: if doctype == "bachelor" { bachelor_leading } else { graduate_leading },
-        spacing: if doctype == "bachelor" { bachelor_spacing } else { graduate_spacing },
-        title-leading: if doctype == "bachelor" { auto } else { bachelor-first-level-value(graduate_heading_leading) },
-        title-above: if doctype == "bachelor" { auto } else { bachelor-first-level-value(graduate_heading_above) },
-        title-below: if doctype == "bachelor" { auto } else { bachelor-first-level-value(graduate_heading_below) },
         fonts: fonts + args.named().at("fonts", default: (:)),
         ..args,
       )
@@ -611,12 +541,6 @@
     // 致谢页
     acknowledgement: (..args) => {
       backmatter-page(
-        twoside: twoside,
-        doctype: doctype,
-        english-writing: english-writing,
-        body-font: if doctype == "bachelor" { bachelor_body_font } else { graduate_body_font },
-        body-size: if doctype == "bachelor" { bachelor_body_size } else { graduate_body_size },
-        fonts: fonts + args.named().at("fonts", default: (:)),
         title: if english-writing {
           "Acknowledgements"
         } else if doctype == "bachelor" {
@@ -630,12 +554,6 @@
     // 学术成果页（西工大研究生特有）
     academic-achievements: (..args) => {
       backmatter-page(
-        twoside: twoside,
-        doctype: "master",
-        english-writing: english-writing,
-        body-font: graduate_body_font,
-        body-size: graduate_body_size,
-        fonts: fonts + args.named().at("fonts", default: (:)),
         title: if english-writing {
           "Academic Achievements and Research Experience"
         } else {
@@ -773,28 +691,42 @@
 
   show: init-gb7714.with(read(bibliography), style: "numeric", version: "2015")
 
-  // 2. 前置部分（摘要、目录等）
-  show: cls.preface
-  if abstract != none {
-    if doctype == "bachelor" {
-      (cls.abstract)(keywords: keywords)[#abstract]
-    } else {
-      (cls.abstract)(keywords: keywords, funding: funding)[#abstract]
-    }
-  }
-  if abstract-en != none {
-    if doctype == "bachelor" {
-      (cls.abstract-en)(keywords: keywords-en)[#abstract-en]
-    } else {
-      (cls.abstract-en)(keywords: keywords-en, funding: funding-en)[#abstract-en]
-    }
-  }
+  // mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
+  show: cls.mainmatter
 
-  (cls.outline-page)(depth: outline-depth)
+  // 2. 前置部分（摘要、目录）：覆盖页码和标题编号
+  [
+    #set page(footer: context align(center)[
+      #set text(size: 字号.小五)
+      #counter(page).display("I")
+    ])
+    #set heading(numbering: none)
+    #counter(page).update(1)
+    #if abstract != none {
+      if doctype == "bachelor" {
+        (cls.abstract)(keywords: keywords)[#abstract]
+      } else {
+        (cls.abstract)(keywords: keywords, funding: funding)[#abstract]
+      }
+    }
+    #if abstract-en != none {
+      if doctype == "bachelor" {
+        (cls.abstract-en)(keywords: keywords-en)[#abstract-en]
+      } else {
+        (cls.abstract-en)(keywords: keywords-en, funding: funding-en)[#abstract-en]
+      }
+    }
+
+    #(cls.outline-page)(depth: outline-depth)
+  ]
+
+  // 正文起始：换页 + 重置页码
+  counter(page).update(1)
+  pagebreak(weak: true, to: if effective_twoside { "odd" })
+  counter(page).update(1)
+  [#box(width: 0pt, height: 0pt) <__nwpu_mainmatter_start__>]
 
   // 3. 正文
-  [#box(width: 0pt, height: 0pt) <__nwpu_mainmatter_start__>]
-  show: cls.mainmatter
   with-english-writing(english-writing, body)
 
   // 4. 后置部分
@@ -824,12 +756,6 @@
 
     if design_summary != none {
       backmatter-page(
-        twoside: effective_twoside,
-        doctype: "bachelor",
-        english-writing: english-writing,
-        fonts: fonts,
-        body-font: cls.bachelor_body_font,
-        body-size: cls.bachelor_body_size,
         title: if english-writing { "Design Summary" } else { "毕业设计小结" },
       )[#design_summary]
       close-backmatter-section(appendix != none or scan-declaration != none)
