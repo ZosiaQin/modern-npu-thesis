@@ -1,5 +1,5 @@
 #import "@preview/i-figured:0.2.4"
-#import "@preview/cap-able:0.0.1": captab-style, capfig-style
+#import "@preview/cap-able:0.0.2": captab-style, capfig-style
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
 #import "../utils/custom-heading.typ": active-heading, heading-display
@@ -347,6 +347,7 @@
       enable-english-caption: false,
       pre-supplement-number-spacing: 0em,
       number-title-spacing: [\u{3000}],
+      middle-rule: (paint: black, thickness: 1pt),
     )
   }
 

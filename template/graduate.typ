@@ -104,7 +104,7 @@
     label: <composite-performance>,
     cols: (1.25fr, 1fr, 1fr, 1fr, 1fr),
     hlines: (
-      (row: 2, stroke: 0.5pt),
+      (row: 2, stroke: 1pt),
     ),
   )[
     | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
