@@ -6,10 +6,7 @@
 #import "utils/header.typ": graduate-header-title, header-render
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/graduate-cover.typ": master-cover
-#import "pages/bachelor-abstract.typ": bachelor-abstract
-#import "pages/graduate-abstract.typ": master-abstract
-#import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
-#import "pages/graduate-abstract-en.typ": master-abstract-en
+#import "pages/abstract.typ": abstract as abstract-page
 #import "pages/bachelor-outline.typ": bachelor-outline
 #import "pages/graduate-outline.typ": graduate-outline
 #import "pages/backmatter-page.typ": backmatter-page
@@ -490,14 +487,20 @@
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
-        master-abstract(
+        abstract-page(
           keywords-above: graduate_keywords_above,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
-        bachelor-abstract(
+        abstract-page(
           ..args,
+          keyword-label: "关键词",
+          keyword-sep: "，",
+          keyword-indent: 0pt,
+          outline-title: "摘 要",
+          outlined: false,
+          funding: none,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       }
@@ -505,14 +508,26 @@
     // 英文摘要页，通过 type 分发到不同函数
     abstract-en: (..args) => {
       if doctype == "master" or doctype == "doctor" {
-        master-abstract-en(
+        abstract-page(
           keywords-above: graduate_keywords_above,
+          keyword-label: "Key words",
+          keyword-weight: "bold",
+          keyword-sep: "; ",
+          outline-title: "Abstract",
+          heading-metadata: true,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
-        bachelor-abstract-en(
+        abstract-page(
           ..args,
+          keyword-label: "KEY WORDS",
+          keyword-weight: "bold",
+          keyword-sep: ", ",
+          keyword-indent: 0pt,
+          outline-title: "ABSTRACT",
+          outlined: false,
+          funding: none,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       }

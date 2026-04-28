@@ -8,7 +8,6 @@
   三号: 16pt,
   小三: 15pt,
   四号: 14pt,
-  中四: 13pt,
   小四: 12pt,
   五号: 10.5pt,
   小五: 9pt,
@@ -22,7 +21,7 @@
     "SimSun",
   ),
   黑体: (
-    (name: "Arial", covers: "latin-in-cjk"),
+    (name: "Times New Roman", covers: "latin-in-cjk"),
     "SimHei",
   ),
 )
