@@ -3,7 +3,6 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": show-equation-handler, figure-show-rule
 #import "../utils/custom-heading.typ": active-heading, heading-display
-#import "../utils/unpairs.typ": unpairs
 #import "../utils/chinese-number.typ": chinese-chapter-number
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
 #import "../format.typ": body-format, heading-format, caption-format, header-format, table-format
@@ -16,13 +15,9 @@
   // 正文段落格式
   leading: body-format.bachelor.leading,
   spacing: body-format.bachelor.spacing,
-  justify: true,
   first-line-indent: body-format.bachelor.first-line-indent,
   heading-numbering: none,
-  // 标题字体与字号
-  heading-font: (字体.黑体,),
-  heading-size: (字号.三号, 字号.四号, 字号.小四),
-  heading-weight: ("regular", "regular", "regular"),
+  // 标题格式
   heading_leading: heading-format.bachelor.leading,
   heading-above: heading-format.bachelor.above,
   heading-below: heading-format.bachelor.below,
@@ -55,13 +50,6 @@
     ],
   )
 
-  // 2.  处理 heading- 开头的其他参数
-  let heading-text-args-lists = args
-    .named()
-    .pairs()
-    .filter(pair => pair.at(0).starts-with("heading-"))
-    .map(pair => (pair.at(0).slice("heading-".len()), pair.at(1)))
-
   // 3.  辅助函数
   let array-at(arr, pos) = {
     arr.at(calc.min(pos, arr.len()) - 1)
@@ -72,7 +60,7 @@
   set align(left)
   set par(
     leading: leading,
-    justify: justify,
+    justify: true,
     first-line-indent: first-line-indent,
     spacing: spacing,
   )
@@ -127,10 +115,9 @@
     }
 
     set text(
-      font: array-at(heading-font, it.level),
-      size: array-at(heading-size, it.level),
-      weight: array-at(heading-weight, it.level),
-      ..unpairs(heading-text-args-lists.map(pair => (pair.at(0), array-at(pair.at(1), it.level)))),
+      font: 字体.黑体,
+      size: (字号.三号, 字号.四号, 字号.小四).at(calc.min(it.level, 3) - 1),
+      weight: ("regular")
     )
     set par(leading: array-at(heading_leading, it.level), spacing: 0pt)
 

@@ -16,10 +16,11 @@
 - **语法简洁**：上手难度与 Markdown 相当，无需记忆繁琐的命令。
 - **极速编译**：采用增量编译，长文档不影响编译速度。
 - **环境搭建简单**：即开即用，无需配置数G的开发环境。
+- **生态蓬勃发展**：国内多所高校已有 Typst 论文模板，详见 [cn-university-typst-thesis-templates](https://github.com/1195343015/cn-university-typst-thesis-templates)。
 
 ### 使用方法
 
-1. 克隆本仓库。
+1. Fork 本仓库到自己的账号下，然后克隆 Fork 后的仓库。（建议优先通过 Fork 使用，方便后续同步模板更新。）
 2. 使用 VS Code 打开项目，并安装 [Tinymist Typst](https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist) 插件。
 3. 打开项目后：
    修改 [template/graduate.typ](template/graduate.typ) 可编辑研究生论文，

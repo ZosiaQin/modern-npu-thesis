@@ -37,7 +37,7 @@
                 entry.prefix()
                 h(0.3em)
               }
-              entry.body()
+              if entry.element.body == [*Abstract*] { [ABSTRACT] } else { entry.body() }
             }
             if weight != none {
               text(weight: weight.at(entry.level - 1, default: weight.last()), inner)

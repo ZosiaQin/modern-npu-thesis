@@ -197,6 +197,7 @@
           keyword-weight: "bold",
           keyword-sep: "; ",
           outline-title: "ABSTRACT",
+          title: [*Abstract*],
         )[#abstract-en]
       } else {
         abstract-page(

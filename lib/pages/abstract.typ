@@ -1,6 +1,8 @@
 #import "../utils/style.typ": 字号, 字体
 
 // 摘要页
+// title: 页面和页眉显示的标题（默认使用 outline-title）
+// outline-title: 目录中显示的标题
 #let abstract(
   keywords: (),
   keyword-label: "关键词",
@@ -8,22 +10,15 @@
   keyword-sep: "；",
   keyword-indent: 2em,
   outline-title: "摘　要",
+  title: none,
   outlined: true,
   keywords-above: 1em,
   funding: none,
   body,
 ) = {
-  [
-    // 目录显示 "ABSTRACT"，页面显示 "Abstract"
-    #show heading.where(level: 1): it => {
-      if it.body == [ABSTRACT] {
-        heading(level: it.level, outlined: false)[Abstract]
-      } else {
-        it
-      }
-    }
-    #heading(level: 1, outlined: outlined, outline-title)
-  ]
+  let page-title = if title != none { title } else { outline-title }
+
+  heading(level: 1, outlined: outlined, page-title)
 
   body
 
