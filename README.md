@@ -11,6 +11,8 @@
 
 > 如果你想使用 LaTeX 模板，请移步 [nwputhesis](https://github.com/1195343015/nwputhesis)。
 
+> **本模板现存问题**：本模板参考文献格式依赖 `gb7714-bilingual` 包，但该包仍有一些问题会影响文献格式，相关问题已向上游作者提交 issue，待上游修复发布后模板会尽快同步调整。
+
 ## 优势与特性
 
 - **语法简洁**：上手难度与 Markdown 相当，无需记忆繁琐的命令。
@@ -45,7 +47,7 @@
 - [`lovelace`](https://typst.app/universe/package/lovelace) `0.3.1` — 伪代码/算法排版
 - [`cap-able`](https://typst.app/universe/package/cap-able) `0.0.2` — 图，三线表
 
-参考文献方面，模板针对西北工业大学本科、研究生论文格式要求做了少量微调。用户通常只需要维护 [template/bib](template/bib) 目录下的 BibTeX 文件，模板会自动处理文献引用和参考文献列表。目前 `gb7714-bilingual` 包仍有一些细节问题会影响个别文献类型的输出效果，相关问题已向上游作者提交 issue，待上游修复发布后模板会尽快同步调整。
+参考文献方面，模板针对西北工业大学本科、研究生论文格式要求做了对应调整。用户通常只需要维护 [template/bib](template/bib) 目录下的 BibTeX 文件，模板会自动处理文献引用和参考文献列表。
 
 > 本模板基于 [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) 开发，设计过程中还参考了 [pkuthss-typst](https://github.com/pku-typst/pkuthss-typst) 的实现。
 
