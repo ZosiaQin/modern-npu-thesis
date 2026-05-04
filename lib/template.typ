@@ -305,11 +305,11 @@
 
   if colored-cover and is-graduate {
     let bg = if degree == "doctor" {
-      "assets/博士论文封底.jpg"
+      "assets/doctor-back-cover.jpg"
     } else if track == "professional" {
-      "assets/专硕论文封底.jpg"
+      "assets/professional-back-cover.jpg"
     } else {
-      "assets/学硕论文封底.jpg"
+      "assets/academic-back-cover.jpg"
     }
     page[
       #box(width: 0pt, height: 0pt)

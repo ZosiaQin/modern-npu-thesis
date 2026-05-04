@@ -13,7 +13,7 @@
   }
 
   v(72pt)
-  image("../assets/nwpulogo.png", width: 9cm)
+  image("../assets/nwpu-logo.png", width: 9cm)
   v(40pt)
   text(size: 字号.初号, weight: "bold")[本科毕业设计（论文）]
   v(150pt)
