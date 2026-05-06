@@ -1,6 +1,5 @@
 // 文稿设置，可以进行一些像页面边距这类的全局设置
 #import "../utils/style.typ": 字体, 字号
-#import "../utils/header.typ": bachelor-header-config, graduate-header-config
 #import "@preview/cuti:0.4.0": show-cn-fakebold
 #import "../format.typ": page-format
 
@@ -28,13 +27,6 @@
   set page(
     paper: "a4",
     margin: page-margin,
-    ..(
-      if graduate {
-        graduate-header-config
-      } else {
-        bachelor-header-config
-      }
-    ),
   )
 
   it

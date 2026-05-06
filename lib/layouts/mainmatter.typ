@@ -1,10 +1,11 @@
 #import "@preview/cap-able:0.0.2": cap-style, capfig-style, captab-style
+#import "@preview/algorithmic:1.0.7": style-algorithm
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": show-equation-handler
-#import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/chinese-number.typ": chinese-chapter-number
+#import "@preview/hydra:0.6.2": hydra
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render, page-footer
-#import "../format.typ": body-format, caption-format, heading-format, table-format
+#import "../format.typ": body-format, caption-format
 
 #let mainmatter(
   graduate: false,
@@ -12,23 +13,27 @@
   english-writing: false,
   leading: body-format.bachelor.leading,
   spacing: body-format.bachelor.spacing,
-  first-line-indent: body-format.bachelor.first-line-indent,
+  heading-above: (),
+  heading-below: (),
   heading-numbering: none,
-  heading_leading: heading-format.bachelor.leading,
-  heading-above: heading-format.bachelor.above,
-  heading-below: heading-format.bachelor.below,
   ..args,
   it,
 ) = {
-  let equation-handler = show-equation-handler("1-1", graduate)
+  // 算法三线表样式
+  show: style-algorithm.with(
+    caption-style: body => text(size: 字号.五号, strong(body)),
+    hlines: (
+      grid.hline(stroke: 1.5pt + black),
+      grid.hline(stroke: 1pt + black),
+      grid.hline(stroke: 1.5pt + black),
+    ),
+  )
 
   // 重置页码为阿拉伯数字从1开始（由调用方在正文开始位置处理 pagebreak 和 counter reset）
-  set page(footer: page-footer("1"))
-
-  // 3.  辅助函数
-  let array-at(arr, pos) = {
-    arr.at(calc.min(pos, arr.len()) - 1)
-  }
+  set page(
+    footer: page-footer("1"),
+    header-ascent: 18%,
+  )
 
   // 4.  设置基本样式
   // 4.1 文本和段落样式
@@ -36,12 +41,12 @@
   set par(
     leading: leading,
     justify: true,
-    first-line-indent: first-line-indent,
+    first-line-indent: (amount: 2em, all: true),
     spacing: spacing,
   )
   // 4.4 设置 equation 的编号和假段落首行缩进
   set math.equation(supplement: if english-writing { [Equation] } else { [式] })
-  show math.equation.where(block: true): equation-handler
+  show math.equation.where(block: true): show-equation-handler(graduate)
   // 4.5 表格样式
   show table: set par(justify: false)
   set table(align: center + horizon)
@@ -63,46 +68,46 @@
       size: (字号.三号, 字号.四号, 字号.小四).at(calc.min(it.level, 3) - 1),
       weight: "regular",
     )
-    set par(leading: array-at(heading_leading, it.level), spacing: 0pt)
+    set par(first-line-indent: (amount: 0pt))
 
-    // 一级标题统一换页
+    let above-extra = if it.level <= heading-above.len() { heading-above.at(it.level - 1) } else { 0pt }
+    let below-extra = if it.level <= heading-below.len() { heading-below.at(it.level - 1) } else { 0pt }
+
+    // 一级标题统一换页并居中
     if it.level == 1 {
       pagebreak(weak: true, to: if graduate { "odd" })
-      v(array-at(heading-above, it.level))
-    }
-
-    let current-block-above = if it.level == 1 { 0pt } else { array-at(heading-above, it.level) }
-    let current-block-below = array-at(heading-below, it.level)
-
-    if it.level == 1 {
-      set align(center)
-      set block(above: current-block-above, below: current-block-below)
-      it
+      v(leading + above-extra)
+      align(center, block(below: leading + below-extra, it))
     } else {
-      set block(above: current-block-above, below: current-block-below)
-      it
+      block(above: leading + above-extra, below: spacing + below-extra, it)
     }
   }
 
   // 6.  处理页眉
+  // hydra 的页眉显示回调：显示编号 + 剥离加粗的标题体
+  let hydra-display(ctx, it) = {
+    if it.has("numbering") and it.numbering != none {
+      numbering(it.numbering, ..counter(heading).at(it.location()))
+      [ ]
+    }
+    show strong: it => it.body
+    it.body
+  }
+
   set page(header: context {
     let loc = here()
-    // 页眉内容
     let header-content = if graduate and calc.rem(loc.page(), 2) == 0 {
-      // 偶数页：显示论文标题
       graduate-header-title(degree)
     } else {
-      // 奇数页或单面打印：显示当前章标题
-      heading-display(active-heading(level: 1, prev: false))
+      hydra(1, display: hydra-display, use-last: true, skip-starting: false)
     }
-    // 使用统一的页眉格式
     if graduate {
       header-render(header-content)
     } else {
       bachelor-header-render()
     }
   })
-  
+
   // cap-able 全局样式（共享参数）
   show: cap-style.with(
     numbering-format: "1-1",

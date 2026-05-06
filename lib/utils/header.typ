@@ -1,19 +1,8 @@
 #import "../utils/style.typ": 字号
-#import "../format.typ": header-format
 
 // ============================================
 // 页眉统一配置
 // ============================================
-// 所有数值来自 format.typ，修改格式请编辑该文件
-
-// 页眉配置（用于 set page）
-#let graduate-header-config = (
-  header-ascent: header-format.graduate.ascent,
-)
-
-#let bachelor-header-config = (
-  header-ascent: header-format.bachelor.ascent,
-)
 
 // 页码渲染函数
 #let page-footer(fmt) = context align(center)[
@@ -21,25 +10,16 @@
   #counter(page).display(fmt)
 ]
 
-// 页眉渲染函数
-#let header-render(
-  content,
-  graduate_headsep: header-format.graduate.headsep,
-  graduate_headrule_offset: header-format.graduate.headrule-offset,
-  graduate_headrule_thick: header-format.graduate.headrule-thick,
-  graduate_headrule_thin: header-format.graduate.headrule-thin,
-  graduate_headrule_gap: header-format.graduate.headrule-gap,
-) = {
+// 研究生页眉渲染函数
+#let header-render(content) = {
   [
     #set par(leading: 0pt, spacing: 0pt)
     #set text(size: 字号.小五)
     #align(center)[#content]
-    #v(graduate_headsep)
-    #move(dy: graduate_headrule_offset)[
-      #line(length: 100%, stroke: graduate_headrule_thick + black)
-      #v(graduate_headrule_gap)
-      #line(length: 100%, stroke: graduate_headrule_thin + black)
-    ]
+    #v(0.5em)
+    #line(length: 100%, stroke: 3.2pt + black)
+    #v(0.32em)
+    #line(length: 100%, stroke: 0.6pt + black)
   ]
 }
 
@@ -53,11 +33,12 @@
 
 #let bachelor-header-render() = {
   [
+    #v(1.5cm)
     #set par(leading: 0pt, spacing: 0pt)
-    #pad(left: header-format.bachelor.offset)[
+    #pad(left: 110pt)[
       #image("../assets/nwpu-header.png", width: 7.5cm)
     ]
-    #v(header-format.bachelor.headsep)
-    #line(length: 100%, stroke: header-format.bachelor.headrule + black)
+    #v(0.04cm)
+    #line(length: 100%, stroke: 0.8pt + black)
   ]
 }

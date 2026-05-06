@@ -12,7 +12,6 @@
   outline-title: "摘　要",
   title: none,
   outlined: true,
-  keywords-above: 1em,
   funding: none,
   body,
 ) = {
@@ -24,7 +23,7 @@
 
   [
     #set par(first-line-indent: 0pt)
-    #v(keywords-above)
+    #v(1em)
     #if keyword-weight == "bold" [
       #text(font: 字体.黑体, weight: "bold")[#keyword-label：]
     ] else [

@@ -3,10 +3,9 @@
 //
 // 参数按排版类别组织，与学校论文格式规范的章节对应：
 //   1. 页面格式 → page-format
-//   2. 页眉格式 → header-format
-//   3. 正文格式 → body-format
-//   4. 标题格式 → heading-format（正文与前置部分共用）
-//   5. 图表标题格式 → caption-format
+//   2. 正文格式 → body-format
+//   3. 标题格式 → heading-format（正文与前置部分共用）
+//   4. 图表标题格式 → caption-format
 
 #import "utils/style.typ": 字号
 
@@ -14,7 +13,6 @@
 // 1. 页面格式
 // =========================================================
 #let page-format = (
-  paper: "a4",
   // 研究生：上下 2.54cm，左右 2.5cm
   graduate-margin: (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm),
   // 本科生：上下 2.54cm，左右 3.18cm
@@ -22,73 +20,39 @@
 )
 
 // =========================================================
-// 2. 页眉格式
-// =========================================================
-#let header-format = (
-  graduate: (
-    ascent: 0.9cm,
-    headsep: -0.22cm,
-    headrule-offset: 0.4cm,
-    headrule-thick: 3.2pt,
-    headrule-thin: 0.6pt,
-    headrule-gap: 0.32em,
-  ),
-  bachelor: (
-    ascent: 0.4cm,
-    headsep: 0.04cm,
-    headrule: 0.8pt,
-    offset: 110pt,
-  ),
-)
-
-// =========================================================
-// 3. 正文格式
+// 2. 正文格式
 // =========================================================
 #let body-format = (
   graduate: (
     leading: 12pt,
     spacing: 12pt,
-    first-line-indent: (amount: 2em, all: true),
-    keywords-above: 1.2em,
   ),
   bachelor: (
     leading: 11pt,
     spacing: 11pt,
-    first-line-indent: (amount: 24pt, all: true),
   ),
 )
 
 // =========================================================
-// 4. 标题格式（正文章节标题，按级别）
+// 3. 标题格式（正文章节标题，按级别）
 // =========================================================
+// above/below 为在 leading/spacing 基础上的额外间距，
+// 按级别排列，超出数组的级别默认 0pt
 #let heading-format = (
   graduate: (
-    size: (字号.三号, 字号.四号, 字号.小四),
-    weight: ("regular", "regular", "regular"),
-    leading: (12pt, 12pt, 12pt),
-    above: (16pt, 16pt, 16pt),
-    below: (22pt, 12pt, 12pt),
+    above: (0pt, 7pt, 5pt),
+    below: (16pt, 0pt, 0pt),
   ),
   bachelor: (
-    size: (字号.三号, 字号.四号, 字号.小四),
-    weight: ("regular", "regular", "regular"),
-    leading: (11pt, 11pt, 11pt),
-    above: (28pt, 12pt, 12pt),
-    below: (28pt, 12pt, 12pt),
+    above: (16pt, 0pt, 0pt),
+    below: (16pt, 2pt, 0pt),
   ),
 )
 
 // =========================================================
-// 5. 图表标题格式
+// 4. 图表标题格式
 // =========================================================
 #let caption-format = (
   size: 字号.五号,
-  separator: "  ",
 )
 
-// =========================================================
-// 6. 表格格式
-// =========================================================
-#let table-format = (
-  leading: 15pt,
-)

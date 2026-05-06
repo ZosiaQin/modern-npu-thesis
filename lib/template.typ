@@ -1,5 +1,6 @@
 #import "layouts/doc.typ": doc
-#import "utils/algorithm.typ": algorithm, algorithm-ref, indent, no-number, pseudocode-list, with-english-writing
+#import "utils/algorithm.typ": algorithm, with-english-writing
+#import "@preview/algorithmic:1.0.7": If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate
 #import "utils/equation-note.typ": equation-note
 #import "layouts/mainmatter.typ": mainmatter, frontmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
@@ -137,7 +138,8 @@
     english-writing: english-writing,
     leading: if graduate { body-format.graduate.leading } else { body-format.bachelor.leading },
     spacing: if graduate { body-format.graduate.spacing } else { body-format.bachelor.spacing },
-    first-line-indent: if graduate { body-format.graduate.first-line-indent } else { body-format.bachelor.first-line-indent },
+    heading-above: if graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
+    heading-below: if graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
     heading-numbering: (..nums) => {
       let nums = nums.pos()
       if nums.len() == 1 {
@@ -152,9 +154,6 @@
         numbering("1.1", ..nums)
       }
     },
-    heading_leading: if graduate { heading-format.graduate.leading } else { heading-format.bachelor.leading },
-    heading-above: if graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
-    heading-below: if graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
   )
 
   // 4. 前置部分（摘要、目录）
@@ -164,7 +163,6 @@
         abstract-page(
           keywords: keywords,
           funding: funding,
-          keywords-above: body-format.graduate.keywords-above,
         )[#abstract]
       } else {
         abstract-page(
@@ -183,7 +181,6 @@
         abstract-page(
           keywords: keywords-en,
           funding: funding-en,
-          keywords-above: body-format.graduate.keywords-above,
           keyword-label: "Key words",
           keyword-weight: "bold",
           keyword-sep: "; ",

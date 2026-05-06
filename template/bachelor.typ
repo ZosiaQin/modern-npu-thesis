@@ -1,4 +1,4 @@
-#import "/template.typ": algorithm, algorithm-ref, capfig, capsubfig, captab, equation-note, indent, multicite, nwpu-thesis
+#import "/template.typ": algorithm, capfig, capsubfig, captab, equation-note, multicite, nwpu-thesis, Assign, While, IfElseChain, Return
 
 #show: nwpu-thesis.with(
   anonymous: false, // 是否开启盲审模式
@@ -122,26 +122,28 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 == 算法示例
 
-下面给出采用单独算法编号的三线表风格算法示例，见#algorithm-ref(<alg:binary-search>)。
+下面给出采用单独算法编号的三线表风格算法示例，见@alg:binary-search。
 
 #algorithm(
   title: [二分查找算法],
-  input: [有序数组 $A$，目标值 target。],
-  output: [目标值下标，不存在则返回 -1。],
-  [left := 0],
-  [right := len(A) - 1],
-  [*while* left <= right *do*],
-  indent(
-    [mid := floor((left + right) / 2)],
-    [*if* A.at(mid) == target *then*],
-    indent([return mid]),
-    [*else if* A.at(mid) < target *then*],
-    indent([left := mid + 1]),
-    [*else*],
-    indent([right := mid - 1]),
-    [*end*],
-  ),
-  [return -1],
+  {
+    Assign[left][$0$]
+    Assign[right][len(A) - 1]
+    While(
+      [$"left" <= "right"$],
+      {
+        Assign[mid][$floor(("left" + "right") / 2)$]
+        IfElseChain(
+          [$A_"mid" = "target"$],
+          { Return[mid] },
+          [$A_"mid" < "target"$],
+          { Assign[left][$"mid" + 1$] },
+          { Assign[right][$"mid" - 1$] },
+        )
+      },
+    )
+    Return[$-1$]
+  },
 ) <alg:binary-search>
 
 == 参考文献

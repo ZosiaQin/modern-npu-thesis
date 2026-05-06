@@ -1,5 +1,4 @@
-#import "@preview/cap-able:0.0.2": captab-style, capfig-style
-#import "../utils/custom-numbering.typ": show-equation-handler
+#import "../utils/custom-numbering.typ": with-numbering-format
 
 // 附录布局
 #let appendix(
@@ -29,9 +28,7 @@
   })
   counter(heading).update(0)
 
-  show: captab-style.with(numbering-format: "A-1")
-  show: capfig-style.with(numbering-format: "A-1")
-  show math.equation.where(block: true): show-equation-handler("A-1", graduate)
+  show: with-numbering-format.with("A-1")
 
   it
 }

@@ -47,7 +47,7 @@
 本模板依赖以下 Typst 包，具体用法有疑惑可直接查阅相关文档：
 
 - [`gb7714-bilingual`](https://typst.app/universe/package/gb7714-bilingual) `0.2.3` — GB/T 7714 双语参考文献格式
-- [`lovelace`](https://typst.app/universe/package/lovelace) `0.3.1` — 伪代码/算法排版
+- [`algorithmic`](https://typst.app/universe/package/algorithmic) `1.0.7` — 伪代码/算法排版
 - [`cap-able`](https://typst.app/universe/package/cap-able) `0.0.2` — 图/表
 
 参考文献方面，模板针对西北工业大学本科、研究生论文格式要求做了对应调整。用户通常只需要维护 [template/bib](template/bib) 目录下的 BibTeX 文件，模板会自动处理文献引用和参考文献列表。
