@@ -1,5 +1,4 @@
-#import "../cap-able/lib.typ": cap-style
-#import "@preview/i-figured:0.2.4"
+#import "../deps.typ": cap-style, i-figured
 #import "style.typ": 字号
 
 // 统一编号格式状态：正文 "1-1"，附录 "A-1"

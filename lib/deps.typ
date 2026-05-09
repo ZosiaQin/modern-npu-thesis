@@ -1,0 +1,20 @@
+// 外部依赖集中管理
+// 所有 @preview 包和本地拷贝的包统一在此引入，其他文件从这里 re-export
+
+// cap-able（本地拷贝，dev 分支）
+#import "cap-able/lib.typ": cap-style, capfig, capfig-style, capsubfig, captab, captab-style, captnote, set-table-width
+
+// gb7714-bilingual（本地拷贝，基于 main 分支修改版）
+#import "gb7714-bilingual/lib.typ": init-gb7714, multicite, gb7714-bibliography, format-authors
+
+// algorithmic（伪代码/算法排版）
+#import "@preview/algorithmic:1.0.7": algorithm as algo-render, style-algorithm, If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate
+
+// hydra（页眉标题追踪）
+#import "@preview/hydra:0.6.2": hydra
+
+// i-figured（公式/图表编号）
+#import "@preview/i-figured:0.2.4"
+
+// cuti（中文伪粗体）
+#import "@preview/cuti:0.4.0": show-cn-fakebold

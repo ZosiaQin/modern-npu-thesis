@@ -1,6 +1,6 @@
 // 文稿设置，可以进行一些像页面边距这类的全局设置
+#import "../deps.typ": show-cn-fakebold
 #import "../utils/style.typ": 字体, 字号
-#import "@preview/cuti:0.4.0": show-cn-fakebold
 #import "../format.typ": page-format
 
 #let doc(

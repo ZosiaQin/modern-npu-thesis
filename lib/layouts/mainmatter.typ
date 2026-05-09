@@ -1,10 +1,8 @@
-#import "../cap-able/lib.typ": cap-style, capfig-style, captab-style, set-table-width
-#import "@preview/algorithmic:1.0.7": style-algorithm
+#import "../deps.typ": cap-style, capfig-style, captab-style, set-table-width, style-algorithm, hydra
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": show-equation-handler
 #import "../utils/chinese-number.typ": chinese-chapter-number
-#import "@preview/hydra:0.6.2": hydra
-#import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render, page-footer
+#import "header.typ": bachelor-header-render, graduate-header-title, header-render, page-footer
 #import "../format.typ": body-format, caption-format
 
 #let mainmatter(

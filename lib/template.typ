@@ -1,6 +1,10 @@
+#import "deps.typ": (
+  init-gb7714, multicite,
+  capfig, capfig-style, capsubfig, captab, captab-style, captnote,
+  If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate,
+)
 #import "layouts/doc.typ": doc
 #import "utils/algorithm.typ": algorithm, with-english-writing
-#import "@preview/algorithmic:1.0.7": If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate
 #import "utils/equation-note.typ": equation-note
 #import "layouts/mainmatter.typ": mainmatter, frontmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
@@ -9,9 +13,7 @@
 #import "pages/abstract.typ": abstract as abstract-page
 #import "pages/outline.typ": outline-page
 #import "pages/backmatter-page.typ": backmatter-page
-#import "gb7714-bilingual/lib.typ": init-gb7714, multicite
 #import "pages/references.typ": bilingual-bibliography
-#import "cap-able/lib.typ": capfig, capfig-style, capsubfig, captab, captab-style, captnote
 #import "format.typ": body-format, heading-format
 #import "utils/chinese-number.typ": chinese-chapter-number
 #import "utils/cover-utils.typ": blind-review

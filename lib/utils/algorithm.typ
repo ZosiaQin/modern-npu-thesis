@@ -1,4 +1,4 @@
-#import "@preview/algorithmic:1.0.7": algorithm as _algo-render
+#import "../deps.typ": algo-render
 #import "style.typ": 字号
 #import "custom-numbering.typ": numbering-format
 
@@ -32,7 +32,7 @@
     outlined: false,
     {
       set text(size: 字号.五号)
-      _algo-render(
+      algo-render(
         line-numbers: true,
         line-numbers-format: x => [#x],
         inset: 0.43em,

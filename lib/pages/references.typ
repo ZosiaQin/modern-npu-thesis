@@ -1,4 +1,4 @@
-#import "../gb7714-bilingual/lib.typ": gb7714-bibliography, format-authors
+#import "../deps.typ": gb7714-bibliography, format-authors
 
 #let is-other-entry(entry) = {
   let raw-type = lower(str(entry.raw-entry-type))
