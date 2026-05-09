@@ -11,7 +11,7 @@
 #import "pages/backmatter-page.typ": backmatter-page
 #import "gb7714-bilingual/lib.typ": init-gb7714, multicite
 #import "pages/references.typ": bilingual-bibliography
-#import "@preview/cap-able:0.1.0": capfig, capfig-style, capsubfig, captab, captab-style, captnote
+#import "cap-able/lib.typ": capfig, capfig-style, capsubfig, captab, captab-style, captnote
 #import "format.typ": body-format, heading-format
 #import "utils/chinese-number.typ": chinese-chapter-number
 #import "utils/cover-utils.typ": blind-review

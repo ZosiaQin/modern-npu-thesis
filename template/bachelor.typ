@@ -48,7 +48,7 @@
 
 === 多张图
 
-可以使用 `capsubfig()` 来创建多子图，支持子图标题、标签，以及总图标题和标签。下面是两列的两张图示例，以及两列的四张图示例。
+可以使用 `capsubfig()` 来创建多子图，支持子图标题、标签，以及总图标题和标签。下面是两列的两张图示例，以及两列的四张图示例。子图也可以直接引用，如@fig-sub1。
 
 #capsubfig(
   (
@@ -82,7 +82,7 @@
 可以使用 `placement` 参数来设置表格位置，支持 `none`、 `top`、`bottom` 和 `auto`。其中，`none` 是默认值，表示位于本来的位置；`auto` 只是 `top` 和 `bottom` 的简单增强版，会自动选择到顶部/底部。
 
 #captab(
-  caption: [表],
+  caption: [表标题],
   label: <timing-tlt>,
   placement: top,
 )[
@@ -92,7 +92,7 @@
 ]
 
 #captab(
-  caption: [复杂表示例：聚合物基复合材料的性能（captab 渲染）],
+  caption: [复杂表示例：聚合物基复合材料的性能],
   label: <composite-performance>,
   cols: (1.25fr, 1fr, 1fr, 1fr, 1fr),
   hlines: (
@@ -102,17 +102,17 @@
   | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
   | ^              | 纵向    | 横向 | 纵向      | 横向 |
   | 模量，GPa      | 181     | 10.3 | 38.6      | 8.3  |
-  | 压缩强度，MPa  | 1500    | 246  | 610       | 118  |
 ]
 
-可以通过 `breakable` 参数来设置表格是否允许分页，默认为 `false`。`continued-caption` 参数来设置分页后续页的标题显示，以及 `size` 参数来设置表格内文字的字号，默认为小五号。
+=== 续表示例
+
+可以通过 `breakable` 参数来设置表格是否允许分页，默认为 `false`。可以通过 `size` 参数来设置表格内文字的字号，默认为五号字体。
 
 #captab(
-  caption: [三线表],
+  caption: [表标题],
   label: <timing>,
   breakable: true,
-  continued-caption: true,
-  size: 字号.六号,
+  size: 字号.小五,
 )[
   | t   | 1    | 2    | 3    |
   | --- | ---- | ---- | ---- |

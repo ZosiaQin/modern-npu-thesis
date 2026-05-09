@@ -1,4 +1,4 @@
-#import "@preview/cap-able:0.1.0": cap-style
+#import "../cap-able/lib.typ": cap-style
 #import "@preview/i-figured:0.2.4"
 #import "style.typ": 字号
 

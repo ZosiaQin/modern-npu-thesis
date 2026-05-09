@@ -1,4 +1,4 @@
-#import "@preview/cap-able:0.1.0": cap-style, capfig-style, captab-style, set-table-width
+#import "../cap-able/lib.typ": cap-style, capfig-style, captab-style, set-table-width
 #import "@preview/algorithmic:1.0.7": style-algorithm
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": show-equation-handler
@@ -123,11 +123,12 @@
     body-size: caption-format.size,
     cell-inset: (x: 1em, y: if graduate { 0.55em } else { 0.7em }),
     middle-rule: 1pt,
-    caption-text: if graduate {(font: 字体.宋体)} else {(font: 字体.黑体)},
-    caption-below: if graduate {auto} else {10pt},
-    table-below: if graduate {leading} else {20pt},
-    caption-above: if graduate {auto} else {20pt},
-    breakable: false
+    caption-text: if graduate { (font: 字体.宋体) } else { (font: 字体.黑体) },
+    caption-below: if graduate { auto } else { 10pt },
+    table-below: if graduate { leading } else { 20pt },
+    caption-above: if graduate { auto } else { 20pt },
+    breakable: false,
+    continued-caption: true,
   )
   // 图片独有配置
   show: capfig-style.with(
@@ -135,10 +136,11 @@
     show-subcaption: true,
     show-subcaption-label: true,
     label-style: "（a）",
-    // subcaption-number-title-spacing: 0.3em,
+    subcaption-number-title-spacing: 0pt,
     caption-above: 0pt,
     figure-below: if graduate {auto} else {20pt},
     figure-above: if graduate {auto} else {20pt},
+    subref-style: "full"
   )
 
   it
