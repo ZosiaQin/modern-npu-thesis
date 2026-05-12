@@ -1,6 +1,6 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/cover-utils.typ": (
-  datetime-display, datetime-year-month, datetime-year-month-en, distribute, info-row, major-en-map, mask-value,
+  datetime-display, datetime-year-month, datetime-year-month-en, distribute, half-space, info-row, major-en-map, mask-value,
   title-en-map,
 )
 
@@ -52,7 +52,7 @@
       rows: 0.55cm,
       stroke: 0.5pt,
       inset: (x: 8pt, y: 3pt),
-      [#distribute[学校代码]], [10699],
+      [学校代码], [10699],
       [#distribute[分类号]], [#info.class-no],
       [#distribute[密级]], [公开],
       [#distribute[学号]], [#anonymous-text("student-id", info.student-id)],
@@ -89,19 +89,19 @@
 
   v(33pt)
 
-  let major-row-label = if track == "professional" { "专业领域" } else { "学科专业" }
+  let major-label = if track == "professional" { "专业领域" } else { "学科专业" }
 
   text(size: 字号.三号, weight: "bold")[
     #table(
       columns: (3.59cm, 9cm),
       rows: (1cm,),
-      ..info-row(distribute(width: 5.5em, major-row-label), info.major),
-      ..info-row([#distribute(width: 5.5em)[指导教师]], anonymous-text(
+      ..info-row(half-space(major-label), info.major),
+      ..info-row([#half-space("指导教师")], anonymous-text(
         "supervisor",
         info.supervisor.intersperse(" ").sum(),
       )),
-      ..info-row([#distribute(width: 5.5em)[培养单位]], info.department),
-      ..info-row([#distribute(width: 5.5em)[申请日期]], datetime-year-month(info.submit-date)),
+      ..info-row([#half-space("培养单位")], info.department),
+      ..info-row([#half-space("申请日期")], datetime-year-month(info.submit-date)),
     )
   ]
 
@@ -112,12 +112,12 @@
   pagebreak(weak: true, to: "odd")
   v(88pt)
   text(size: 字号.三号)[
-    #distribute(width: 8.5em)[西北工业大学]
+    #half-space("西北工业大学")
   ]
   v(10pt)
   let degree-label = if degree == "doctor" { "博士学位论文" } else { "硕士学位论文" }
   text(size: 字号.一号)[
-    #distribute(width: 8.5em)[#degree-label]
+    #half-space(degree-label)
   ]
   v(140pt)
   text(size: 字号.二号)[
@@ -128,8 +128,6 @@
       ..info-row([], [#info.title.at(1, default: "")]),
     )
   ]
-
-  let major-label = if track == "professional" { "专业领域" } else { "学科专业" }
 
   let author-name = info.author
   let supervisor-name = info.supervisor.at(0)
@@ -150,7 +148,7 @@
         rows: 1.2cm,
         ..info-row([#major-label:], info.major),
         ..info-row([#distribute[作者]:], anonymous-text("author", distribute(width: name-width, author-name))),
-        ..info-row([#distribute[指导教师]:], anonymous-text("supervisor", distribute(width: name-width, supervisor-name))),
+        ..info-row([指导教师:], anonymous-text("supervisor", distribute(width: name-width, supervisor-name))),
       )
     }
 

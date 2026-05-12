@@ -6,6 +6,43 @@
   body + linebreak(justify: true),
 )
 
+// 中文字符间插半角空格
+#let half-space(body) = {
+  let chars = body.clusters()
+  chars.filter(c => c != " ").intersperse(h(0.5em)).join()
+}
+
+// 中文字符间插全角空格
+#let full-space(body) = {
+  let chars = body.clusters()
+  chars.filter(c => c != " ").intersperse("\u{3000}").join()
+}
+
+// 页面标题映射：key => (本科中文, 研究生中文, 英文)
+#let _title-map = (
+  abstract: ("摘要", "摘要", "Abstract"),
+  abstract-en: ("ABSTRACT", "ABSTRACT", "ABSTRACT"),
+  outline: ("目录", "目录", "Contents"),
+  references: ("参考文献", "参考文献", "References"),
+  acknowledgement: ("致谢", "致谢", "Acknowledgements"),
+  appendix: ("附录", "附录", "Appendix"),
+  design-summary: ("毕业设计小结", none, "Design Summary"),
+  academic-achievements: (none, "在学期间取得的学术成果和参加科研情况", "Academic Achievements and Research Experience"),
+)
+
+// 统一页面标题：根据 key 返回对应标题，两字标题自动插空格
+#let page-title(key, graduate: false, english-writing: false) = {
+  let entry = _title-map.at(key)
+  let zh-title = if graduate { entry.at(1) } else { entry.at(0) }
+  if english-writing {
+    entry.at(2)
+  } else if zh-title != none and zh-title.clusters().len() == 2 {
+    if graduate { full-space(zh-title) } else { half-space(zh-title) }
+  } else {
+    zh-title
+  }
+}
+
 #let mask-value(body, anonymous: false) = {
   if anonymous { "        " } else { body }
 }

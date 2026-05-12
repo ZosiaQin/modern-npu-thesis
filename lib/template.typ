@@ -16,7 +16,7 @@
 #import "pages/references.typ": bilingual-bibliography
 #import "format.typ": body-format, heading-format, page-format
 #import "utils/chinese-number.typ": chinese-chapter-number
-#import "utils/cover-utils.typ": blind-review, distribute
+#import "utils/cover-utils.typ": blind-review, distribute, page-title
 #import "utils/style.typ": 字号
 
 #let default-bibliography(graduate) = {
@@ -160,7 +160,7 @@
           keyword-label: "关键词",
           keyword-sep: "，",
           keyword-indent: false,
-          outline-title: "摘 要",
+          outline-title: page-title("abstract", graduate: graduate),
           outlined: false,
           funding: none,
         )[#abstract]
@@ -193,15 +193,15 @@
     }
 
     #if graduate {
-      outline-page(title: if english-writing { "Contents" } else { "目　录" })
+      outline-page(title: page-title("outline", graduate: true, english-writing: english-writing))
     } else {
       outline-page(
-        title: if english-writing { "Contents" } else { "目 录" },
+        title: [*#page-title("outline", graduate: false, english-writing: english-writing)*],
         indent: (0pt, 24pt, 18pt),
         weight: ("bold", "regular", "regular"),
         fill: (repeat([#move(dy: -0.1em, text(size: 0.4em)[·])], gap: -0.1em),),
-        title-weight: "bold",
-        entry-spacing: (1.5em, 1em, 0.1em),
+        vspace: (1.5em, 1em),
+        gap: (-0.5em, 0.5em),
       )
     }
 
@@ -237,26 +237,22 @@
     }
 
     if acknowledgement != none {
-      backmatter-page(title: if english-writing { "Acknowledgements" } else { "致　谢" })[#acknowledgement]
+      backmatter-page(title: page-title("acknowledgement", graduate: true, english-writing: english-writing))[#acknowledgement]
     }
 
     if academic-achievements != none {
       backmatter-page(
-        title: if english-writing {
-          "Academic Achievements and Research Experience"
-        } else {
-          "在学期间取得的学术成果和参加科研情况"
-        },
+        title: page-title("academic-achievements", graduate: true, english-writing: english-writing),
       )[#academic-achievements]
     }
   } else {
     if acknowledgement != none {
-      backmatter-page(title: if english-writing { "Acknowledgements" } else { "致 谢" })[#acknowledgement]
+      backmatter-page(title: page-title("acknowledgement", graduate: false, english-writing: english-writing))[#acknowledgement]
     }
 
     if design_summary != none {
       backmatter-page(
-        title: if english-writing { "Design Summary" } else { "毕业设计小结" },
+        title: page-title("design-summary", english-writing: english-writing),
       )[#design_summary]
     }
 

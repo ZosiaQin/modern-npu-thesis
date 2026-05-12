@@ -18,3 +18,6 @@
 
 // cuti（中文伪粗体）
 #import "@preview/cuti:0.4.0": show-cn-fakebold
+
+// outrageous（目录条目排版）
+#import "@preview/outrageous:0.4.1"

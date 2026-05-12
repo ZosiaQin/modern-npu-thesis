@@ -1,4 +1,5 @@
 #import "../utils/custom-numbering.typ": with-numbering-format
+#import "../utils/cover-utils.typ": page-title
 
 // 附录布局
 #let appendix(
@@ -8,10 +9,10 @@
 ) = {
   let appendix-label = if english-writing {
     "Appendix "
-  } else if not graduate {
-    "附 录"
-  } else {
+  } else if graduate {
     "附录"
+  } else {
+    page-title("appendix", graduate: false)
   }
 
   set heading(numbering: (..nums) => {

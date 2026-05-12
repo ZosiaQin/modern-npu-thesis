@@ -1,4 +1,5 @@
 #import "../deps.typ": gb7714-bibliography, format-authors
+#import "../utils/cover-utils.typ": page-title
 
 #let is-other-entry(entry) = {
   let raw-type = lower(str(entry.raw-entry-type))
@@ -198,7 +199,7 @@
   full: false,
 ) = {
   if title == auto {
-    title = if english-writing { "References" } else { "参考文献" }
+    title = page-title("references", english-writing: english-writing)
   }
 
   heading(level: 1, numbering: none, outlined: true)[#title]
