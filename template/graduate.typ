@@ -90,10 +90,10 @@
 
 #capsubfig(
   (
-    (content: image("figures/example.jpg", width: 40%), subcaption: [第一个子图说明], label: <fig-sub3>),
-    (content: image("figures/example.jpg", width: 40%), subcaption: [第二个子图说明], label: <fig-sub4>),
-    (content: image("figures/example.jpg", width: 40%), subcaption: [第三个子图说明], label: <fig-sub5>),
-    (content: image("figures/example.jpg", width: 40%), subcaption: [第四个子图说明], label: <fig-sub6>),
+    (content: image("figures/example.jpg", width: 30%), subcaption: [第一个子图说明], label: <fig-sub3>),
+    (content: image("figures/example.jpg", width: 30%), subcaption: [第二个子图说明], label: <fig-sub4>),
+    (content: image("figures/example.jpg", width: 30%), subcaption: [第三个子图说明], label: <fig-sub5>),
+    (content: image("figures/example.jpg", width: 30%), subcaption: [第四个子图说明], label: <fig-sub6>),
   ),
   columns: 2,
   caption: [总图标题],
