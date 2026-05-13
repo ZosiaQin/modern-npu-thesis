@@ -75,6 +75,7 @@
   scan-declaration: none,
   design_summary: none,
   bibliography: none,
+  background: false,
   // 文档正文
   body,
 ) = {
@@ -155,7 +156,7 @@
           funding: funding,
         )[#abstract]
       } else {
-        abstract-page(
+        let abstract-content = abstract-page(
           keywords: keywords,
           keyword-label: "关键词",
           keyword-sep: "，",
@@ -164,6 +165,11 @@
           outlined: false,
           funding: none,
         )[#abstract]
+        if background {
+          page(background: image("../template/duibi/duibi.pdf", width: 100%, height: 100%))[#abstract-content]
+        } else {
+          abstract-content
+        }
       }
     }
     #if abstract-en != none {

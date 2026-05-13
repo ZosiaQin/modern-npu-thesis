@@ -16,3 +16,4 @@ dist/
 .typst/
 *.pdf
 !template/figures/*.pdf
+template/duibi/

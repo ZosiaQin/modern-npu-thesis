@@ -33,12 +33,9 @@
 
 #let bachelor-header-render() = {
   [
-    #v(1.5cm)
-    #set par(leading: 0pt, spacing: 0pt)
-    #pad(left: 110pt)[
-      #image("../assets/nwpu-header.png", width: 7.5cm)
-    ]
-    #v(0.04cm)
+    #set par(spacing: 4pt, first-line-indent: (amount: 6.1em, all: true))
+    #set text(size: zh(3), weight: "bold")
+    #box(width: 2.99cm, height: 0.61cm, move(dy: 0.1em, image("../assets/nwpu-name.png")))#h(0.2em)本科毕业设计（论文）
     #line(length: 100%, stroke: 0.8pt + black)
   ]
 }
