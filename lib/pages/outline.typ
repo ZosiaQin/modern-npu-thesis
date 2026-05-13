@@ -3,9 +3,9 @@
 // 目录页
 #let outline-page(
   title: "目　录",
-  indent: (0pt, 24pt, 24pt),
+  indent: (0em, 1.8em, 1.7em),
   weight: (auto,),
-  fill: (repeat([.], gap: 0.15em),),
+  fill: (repeat([.]),),
   vspace: (none,),
   gap: (auto,),
 ) = {
@@ -32,7 +32,8 @@
         fill: fill,
         vspace: vspace,
         gap: gap,
-        fill-right-pad: 0.25em,
+        fill-right-pad: 0em,
+        fill-align: false,
         body-transform: (level, prefix, body) => {
           if is-abstract { [ABSTRACT] }
         },

@@ -204,7 +204,12 @@
     }
 
     #if graduate {
-      outline-page(title: page-title("outline", graduate: true, english-writing: english-writing))
+      let outline-content = outline-page(title: page-title("outline", graduate: true, english-writing: english-writing))
+      if background {
+        page(background: image("../template/duibi/graduate_outline.pdf", width: 100%, height: 100%))[#outline-content]
+      } else {
+        outline-content
+      }
     } else {
       outline-page(
         title: [*#page-title("outline", graduate: false, english-writing: english-writing)*],
