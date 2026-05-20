@@ -1,0 +1,98 @@
+[4] 92.86% 高风险
+In a heterogeneous UAV swarm communication network, UAVs with different capabilities jointlyundertake coverage, forwarding, and data aggregation tasks. Unlike a homogeneous swarm, the UAVsmay differ in maximum speed, coverage radius, communication bandwidth, transmission power, cachecapacity, and energy capacity, so their roles in the same mission are not identical. Duringoperation, UAV-ground links provide task-area coverage, UAV-UAV links support aerial forwarding,and UAV- Sink links deliver aggregated data to the sink. Such networks are mainly used ininfrastructure-limited scenarios, including ad hoc communication, regional monitoring, andpost-disaster emergency communication.
+
+[5] 97.59% 高风险
+Dynamic routing planning for heterogeneous UAV swarms is not a simple path selection problem. UAVtrajectories change both ground coverage and link quality; link rates then affect the release ofcached data, while high-speed flight and high- power transmission consume more energy. Thesefactors propagate along the time horizon, making the problem high-dimensional, nonlinear,non-smooth, and strongly time-coupled. For this type of continuous optimization problem, ageneric metaheuristic algorithm may fail to form stable coverage and return links unless the taskstructure is used explicitly.
+
+[8] 98.11% 高风险
+L-SHADE 在 SHADE 成功历史参数记忆机制基础上加入线性种群规模缩减策略，能够在搜索前期保留探索能力，在后期降低计算开销并加快收敛。不过，原始 L-SHADE仍是通用连续优化算法，参数自适应主要依赖历史成功经验，并不直接使用UAV 通信网络中的覆盖状态。在动态覆盖路由问题中，覆盖状态既是目标函数中的惩罚项，也会影响地面数据到达、队列演化和后续通信性能。本文据此在 L-SHADE 中加入 UAV覆盖结构信息，使算法在覆盖构造、覆盖稳定和性能精修等阶段采用不同的搜索行为。
+
+[11] 91.98% 高风险
+UAV 路径规划、覆盖优化和通信资源分配通常包含复杂约束。元启发式算法不依赖严格函数形式，工程实现也较灵活，因而常用于这类问题。不同算法适合的任务并不相同。遗传算法（Genetic Algorithm，GA）通过选择、交叉和变异更新种群，更常用于路径顺序、节点访问和任务分配等离散问题，但参数敏感，收敛速度也可能限制解质量。粒子群算法（Particle Swarm Optimization, PSO）模拟群体搜索行为，程序结构较简单，参数设置较少，在静态函数优化中应用较多；但直接用于动态系统跟踪时，效果并不稳定。差分进化算法（Differential Evolution,DE）基于实数编码和种群差分扰动，控制参数较少，收敛速度较快，优化结果也较稳健。相较 GA 和 PSO ，DE更贴近 UAV 控制序列这类连续变量搜索任务，因此常用于 UAV 轨迹规划、功率控制和资源联合分配。
+
+[12] 94.99% 高风险
+DE 的理论改进主要集中在参数控制、差分策略、种群结构和混合优化上。L- SHADE是其中较有代表性的改进算法，它引入成功历史参数自适应和线性种群规模缩减。参数控制方面，L-SHADE利用成功试验个体中的 F 和 CR 更新历史记忆，新的参数由历史记忆引导生成，不再主要依赖人工设定；种群规模则随迭代推进逐步收缩，前期保留较大种群以维持搜索范围，后期减少种群规模以降低计算开销。在连续变量搜索和高维黑箱优化中， L-SHADE 的表现通常相对稳定。
+
+[14] 99.61% 高风险
+L-SHADE 主要沿用 SHADE提出的成功历史参数记忆机制，并引入线性种群规模缩减，用于平衡搜索开销和收敛效率。在 UAV资源配置等高维连续优化任务中，L-SHADE及其变体已有应用。不过，原始机制主要依赖适应度改进记录，并未显式利用 UAV覆盖状态。当覆盖结构尚未形成或已经开始退化时，算法很难及时调节搜索方向。
+
+[18] 98.34% 高风险
+本文研究的无人机通信网络由 UAV 节点、地面任务节点和 Sink 节点构成。 UAV在任务区域内移动，覆盖地面任务节点并转发数据；地面任务节点持续产生待回传数据；Sink节点是地面汇聚点，只接收 UAV 回传的数据。围绕这三类节点，系统中存在 UAV-任务节点链路、UAV-UAV链路和 UAV -Sink 链路。
+
+[27] 97.29% 高风险
+本文设定 UAV 飞行高度固定，并研究二维动态应急通信场景。任务区域设为边长 L 的正方形，记为 Ω = [0,L] × [0, L]，默认取 L = 1000 m。区域内包含K 个位置固定的地面任务节点、N 架异构 UAV，以及一个固定 Sink 节点 s。地面任务节点持续产生待传输数据，本文不区分业务优先级。Sink默认位于任务区域中心，只接收汇聚数据。
+
+[29] 95.01% 高风险
+系统运行时间离散为 T个时隙，记为 t = 0, 1, … , T — 1，每个时隙长度为 Δt。 UAV在任务过程中保持固定高度，仅在二维平面内运动。每架 UAV的控制量包括飞行速度、期望航向角和发射功率；若采用分段常量控制，则同一控制段内控制量保持不变。UAV运动需满足最大速度、最大加速度、最大转角、最大角速度、最小转弯半径和最小安全距离等约束。
+
+[34] 94.37% 高风险
+在固定飞行高度条件下，UAV 运动被建模为二维平面内的离散时间更新过程。对于任意 UAV i ∈ u，其在时隙t 的运动状态表示为
+
+[36] 94.38% 高风险
+控制变量 θi(g) 表示 UAV i 在控制段 g内的期望绝对航向角。期望航向与上一时隙实际航向之间的最短角差定义为
+
+[41] 95.02% 高风险
+在位置更新时，系统先计算候选位置 i(t+1)。若存在 j ≠ i，使得
+
+[44] 97.58% 高风险
+本节讨论 UAV-UAV 转发链路和 UAV-Sink 汇聚链路，统一记接收节点为j ∈ V = u ∪{S}。假设链路满足视距通信， 忽略同频干扰、多径衰落及 LoS/NLoS 随机切换。对于任意发射 UAV i ∈ u和接收节点 j ∈ V，i ≠ j，当 j ∈ u 时，接收节点位置为 pj(t)；当 j = S 时，接收节点位置为 ps。
+
+[51] 93.68% 高风险
+本文采用并行采集假设，即同一任务节点被多架 UAV 覆盖时，其数据可分别进入对应 UAV 的缓存队列。
+
+[58] 97.87% 高风险
+其中，λ0 、λ 1 和 λ2 分别为吞吐量、队列负载和能耗指标的权重系数。目标函数采用最小化形式，所以吞吐量项前取负号；队列负载和能量消耗属于代价项，对应系数取正号。
+
+[67] 97.59% 高风险
+其中，P 、R 、Z 、Q 和 E 分别表示任务周期内的 UAV位置序列、链路速率序列、覆盖状态序列、队列状态序列和能量状态序列； Φ(.)表示由运动、通信、覆盖、队列和能量模型共同构成的状态递推映射。
+
+[70] 94.37% 高风险
+L-SHADE 是一种基于差分进化的自适应连续优化算法，其核心机制包括current-to-pbest/1变异、二项交叉、成功历史参数自适应、外部档案和线性种群规模缩减。第 2章已对其基本原理进行了介绍，本节重点说明L-SHADE 在本文异构 UAV动态路由规划问题中的编码、评估与选择方式。
+
+[78] 96.50% 高风险
+L-SHADE 通过成功历史记忆机制自适应采样 Fi 和CRi，并通过线性种群规模缩减在搜索前期保持多样性、后期增强收敛能力。本文后续提出的 CSA机制不替代这一成功历史自适应过程，而是在其采样结果基础上，根据种群覆盖状态对p、F 和 CR进行状态相关控制。由此， L-SHADE 构成 CSA-L-SHADE 的基础连续搜索框架。
+
+[80] 91.98% 高风险
+连续控制变量的微小变化可能导致覆盖状态跳变，也可能因未跨越覆盖边界而对覆盖指标没有影响。这种非光滑特征会削弱 L-SHADE 成功历史参数反馈的稳定性，使 F 和 CR 的历史经验难以准确反映覆盖结构变化。
+
+[83] 95.57% 高风险
+设地面任务节点集合为 K = {1, 2, … , K}，任务节点 k 的位置为 qk。对于每个 CFI个体，先从任务节点中选取
+
+[85] 96.94% 高风险
+记当前已选目标集合为 C。在后续选择过程中，对于尚未被选中的任务节点，计算其到已选目标集合的最小距离，并选取该距离最大的节点作为新的覆盖目标：
+
+[87] 97.87% 高风险
+在目标分配阶段，CFI 按 UAV 顺序进行贪心匹配。设 Ci 表示分配 UAV i 时尚未使用的目标集合。若 Ci ≠ , 则 UAVi 被分配至距离其初始位置最近的未使用目标：
+
+[88] 97.29% 高风险
+因此，当 N &gt; K 时，前 K 架 UAV 可优先对应不同任务节点，剩余 UAV 则可复用已有覆盖目标。
+
+[90] 93.67% 高风险
+其中，std({qk }k∈k) 表示地面任务节点坐标在二维方向上的标准差向量。
+
+[97] 93.68% 高风险
+刻画当前种群覆盖水平、coverage-safe 个体扩散程度及近期覆盖变化趋势。
+
+[98] 95.59% 高风险
+状态转移由 gl 、rl 、Δgl 及稳定计数器 cstab 共同决定。本文采用如下阈值：
+
+[99] 91.93% 高风险
+其中，S4 仅在性能精修阶段发生覆盖退化时触发；若恢复后达到基本覆盖条件，则返回 S2，否则回退至 S1。
+
+[107] 97.60% 高风险
+除动态仿真评估外，算法还包含种群排序、pbest选择、变异交叉、边界修复、外部档案维护、成功历史记忆更新和线性种群缩减等操作。设第 l代种群规模为N pl，这些操作主要与 N pl 和个体维度 D 有关，通常低于完整时域仿真评估的开销。
+
+[109] 96.54% 高风险
+实验采用固定环境模式，即所有算法共享相同的任务节点分布、无人机初始位置及异构参数配置。实验环境随机种子设为 42，每种算法独立运行 5 次，最大函数评估次数设置为 30000。实验场景中，UAV 数量 N 为8，任务节点数量 K为 20；仿真时长 T 为 200 个时隙，时隙长度 △t 为 1 s；控制段长度 L 为 10个时隙，对应控制段数 S 为 20；UAV 固定飞行高度 H 为 100 m。
+
+[122] 99.52% 高风险
+为考察算法在任务负载变化时的表现，本文改变地面任务节点数量，并观察三种算法在覆盖率、能耗、队列负载和吞吐量上的变化。这个实验关注负载规模带来的结构变化，因此采用三种算法对比折线图，而不单独展开CSA-L-SHADE的参数敏感性分析。
+
+[125] 90.95% 高风险
+CSA-L-SHADE 则把覆盖状态引入迭代过程。实验中， CSA-L-SHADE 最终覆盖率达到 0.8943，覆盖违约度降至0.1076，吞吐量提升至 0.4641，队列负载和能耗分别降至 0.2839 和0.000391。这些数值共同指向一个判断：CSA 机制的作用不是单纯提高某一个指标，而是在覆盖、回传、队列和能耗之间维持更合适的搜索方向。尤其是在吞吐量提高而能耗没有增加的情况下，可以认为该算法并非依靠额外资源消耗换取结果。
+
+[137] 96.54% 高风险
+本文通信模型采用基于二维距离平方衰减的简化视距信道模型，其主要参数设置如表 B-1 所示。
+
+[138] 92.87% 高风险
+无人机运动过程中采用固定高度二维运动模型，并考虑速度、加速度、转角及安全距离等动力学约束，其相关参数如表 B-2 所示。
