@@ -26,34 +26,30 @@
   ),
   abstract: (
     content: [
-      异构无人机集群通信网络由能力不同的 UAV 共同完成覆盖、转发和汇聚任务。与同构系统相比，各 UAV 的最大速度、覆盖半径、通信带宽、发射功率、缓存容量和能量容量并不相同，在同一任务中承担的角色也会有所区别。集群工作时，UAV–地面节点链路负责覆盖任务区域，UAV–UAV 链路承担空中转发，UAV–Sink 链路完成数据汇聚。这类网络常见于临时通信、区域监测和灾后应急通信等基础设施受限的场景。
+      异构无人机集群通信网络由能力不同的 UAV 共同完成覆盖、转发和汇聚任务。各 UAV 在最大速度、覆盖半径、通信带宽、发射功率、缓存容量和能量容量上存在差异，在同一任务中承担的角色也不同。集群工作时，UAV–地面节点链路负责区域覆盖，UAV–UAV 链路承担空中转发，UAV–Sink 链路完成数据汇聚。这类网络常见于临时通信、区域监测和灾后应急通信等基础设施受限场景。
 
-      异构 UAV 集群的动态路由规划不是单纯的路径选择。UAV 飞行轨迹会改变地面覆盖范围和链路传输质量，链路速率又会影响缓存队列的泄放；高速飞行和高功率发射还会加快能量消耗。这些因素沿时间序列不断传递，问题因此具有高维、非线性、非光滑和强时序耦合特征。对这类连续优化问题，通用元启发式算法如果不利用任务结构，往往难以稳定形成覆盖与回传能力。本文据此研究异构无人机集群通信网络的动态路由规划方法。
+      本文面向灾后应急通信中地面基础设施受损、任务节点持续产生数据、网络需快速重组的场景，研究异构 UAV 集群通信网络的动态路由规划。这里的路由规划不是固定路径或单一下一跳选择，而是以速度、航向角和发射功率为控制变量，把 UAV 运动、地面覆盖、链路速率和队列状态放在同一时域中优化。轨迹变化影响覆盖范围和链路质量，链路速率决定队列泄放，飞行速度和发射功率又关系到能耗，使问题具有高维、非线性、非光滑和强时序耦合特征。因此，优化过程需优先保证覆盖与回传能力，再综合考虑吞吐量、队列负载和能量消耗；若通用元启发式算法不利用任务结构，往往难以获得稳定解。
 
-      本文关注灾后应急通信中较常见的一类情形：地面通信基础设施受损，任务节点持续产生数据，网络需要快速重组。在该场景下，路由规划不能等同于传统网络中的固定路径选择或单一下一跳决策，而要和 UAV 运动控制、覆盖关系、链路速率、队列状态一起建模。本文将 UAV 的速度、航向角和发射功率作为联合优化对象，使无人机集群在移动过程中维持地面覆盖和数据回传。换言之，本文所说的路由规划，本质上是面向异构 UAV 控制序列的动态优化问题，优化时优先考虑覆盖与回传，再兼顾系统吞吐量、队列负载和能量消耗。
+      在模型构建上，本文以固定高度二维应急通信场景为基础，设定多架异构 UAV、若干地面任务节点和一个固定 Sink 节点。UAV 覆盖任务节点后产生数据到达量，数据再经 UAV-UAV 链路和 UAV-Sink 链路转发、汇聚。本文把运动约束、无线链路速率、覆盖关系、队列演化、功能性回传能力和能量消耗纳入动态模型，并用归一化吞吐量、队列负载、能耗、覆盖违约和连通性违约构造综合目标函数，将问题转化为面向异构 UAV 控制序列的连续优化问题。
 
-      模型部分从固定高度二维应急通信场景写起。系统包含多架异构 UAV、若干地面任务节点和一个固定 Sink 节点；UAV 覆盖任务节点后产生数据到达量，再经 UAV-UAV 链路和 UAV-Sink 链路完成转发与汇聚。围绕这一过程，本文把运动约束、无线链路速率、覆盖关系、队列演化、功能性回传能力和能量消耗放入同一动态模型，并用归一化吞吐量、队列负载、能耗、覆盖违约和连通性违约构造综合目标函数。
+      在算法设计上，本文针对原始 L-SHADE 的两个不足进行改进：随机初始化没有利用任务节点空间信息，搜索早期容易覆盖不足；参数自适应主要依赖历史成功经验，缺少对 UAV 覆盖状态的显式感知，覆盖尚未稳定时可能过早转向性能优化。为此，本文提出覆盖状态感知 L-SHADE 算法，在初始化阶段引入覆盖导向个体，并在迭代阶段根据种群覆盖状态约束参数变化，使搜索过程更贴合覆盖构造、覆盖保持和性能优化需求。
 
-      算法设计则从原始 L-SHADE 的两个短板切入：随机初始化没有使用任务节点空间信息，搜索早期容易覆盖不足；参数自适应主要依赖历史成功经验，缺少对 UAV 覆盖状态的显式感知，覆盖尚未稳定时可能过早转向性能优化。为此，本文提出覆盖状态感知 L-SHADE 算法。该算法保留 L-SHADE 的连续优化框架，在初始化阶段引入覆盖导向个体，在迭代阶段用种群覆盖状态约束参数变化。
-
-      固定异构仿真环境下，原始 L-SHADE、覆盖优先初始化 L-SHADE 和覆盖状态感知 L-SHADE 的对比结果差异较明显。相较原始 L-SHADE，覆盖状态感知 L-SHADE 的平均覆盖率提高约 8.09%，归一化覆盖违约降低约 37.64%，吞吐量提高约 64.25%，队列负载降低约 19.64%。从收敛过程看，覆盖优先初始化主要缓解初始种群覆盖不足，覆盖状态感知参数控制则在中后期减少已有覆盖结构被差分扰动破坏的情况。
+      在实验验证上，本文在固定异构仿真环境下比较算法。结果表明，相较原始 L-SHADE，覆盖状态感知 L-SHADE 的平均覆盖率提高约 8.09%，归一化覆盖违约降低约 37.64%，吞吐量提高约 64.25%，队列负载降低约 19.64%。从收敛过程看，覆盖优先初始化主要缓解初始种群覆盖不足，覆盖状态感知参数控制则在中后期减少已有覆盖结构被差分扰动破坏的情况，说明将覆盖状态显式纳入搜索过程有助于提升动态路由规划效果。
     ],
     keywords: ("异构无人机集群", "动态路由规划", "覆盖状态感知", "L-SHADE", "应急通信"),
   ),
   abstract-en: (
     content: [
-      The heterogeneous unmanned aerial vehicle (UAV) swarm communication network is jointly accomplished by UAVs with different capabilities for coverage, forwarding and convergence tasks. Compared with isomorphic systems, the maximum speed, coverage radius, communication bandwidth, transmission power, cache capacity and energy capacity of each UAV are not the same, and the roles they play in the same task will also be different. When the cluster is working, the UAV-ground node link is responsible for covering the task area, the UAV-UAV link undertakes aerial forwarding, and the UAV-Sink link completes data aggregation. This type of network is commonly found in scenarios where infrastructure is restricted, such as temporary communication, regional monitoring, and post-disaster emergency communication.
+      The heterogeneous unmanned aerial vehicle (UAV) cluster communication network is jointly accomplished by UAVs with different capabilities for coverage, forwarding and convergence tasks. Each UAV has differences in maximum speed, coverage radius, communication bandwidth, transmission power, cache capacity and energy capacity. They also play different roles in the same task. During cluster operation, the UAV-ground node link is responsible for regional coverage, the UAV-UAV link undertakes air forwarding, and the UAV-Sink link completes data convergence. Such networks are commonly found in scenarios with limited infrastructure such as temporary communication, regional monitoring and post-disaster emergency communication.
 
-      Dynamic route planning for heterogeneous UAV clusters is not a pure path selection. UAV flight trajectory will change the ground coverage and link transmission quality, and the link rate will affect the buffer queue drain. High-speed flights and high-power launches also speed up energy consumption. These factors are continuously transmitted along the time series, so the problem has the characteristics of high dimension, nonlinear, non-smooth and strong time series coupling. For such continuous optimization problems, general metaheuristics are often difficult to stably form coverage and backhaul capabilities if they do not take advantage of task structure. Based on this, this paper studies the dynamic route planning method of heterogeneous UAV swarm communication network.
+      This paper focuses on scenarios in post-disaster emergency communication where ground infrastructure is damaged, task nodes continuously generate data, and the network needs to be rapidly reorganized. It studies the dynamic routing planning of heterogeneous UAV cluster communication networks. The routing planning here is not a fixed path or a single next-hop selection; instead, it uses speed, heading angle, and transmission power as control variables to optimize the UAV movement, ground coverage, link rate, and queue status within the same time domain. Trajectory changes affect the coverage range and link quality, link rate determines queue discharge, flight speed and transmission power are related to energy consumption, making the problem have high-dimensional, nonlinear, non-smooth, and strong time-series coupling characteristics. Therefore, the optimization process needs to prioritize ensuring coverage and backhaul capabilities, and then consider throughput, queue load, and energy consumption comprehensively; if general meta-heuristic algorithms do not utilize the task structure, they often fail to obtain stable solutions.
 
-      This paper focuses on one of the more common scenarios in post-disaster emergency communications: ground communication infrastructure is damaged, mission nodes continue to generate data, and the network needs to be reorganized quickly. In this scenario, routing planning cannot be equated with fixed path selection or single next-hop decision in traditional networks, but should be modeled together with UAV motion control, coverage relationship, link rate, and queue state. In this paper, the speed, heading Angle and transmit power of Uavs are used as joint optimization objects to maintain ground coverage and data return during the movement of the UAV swarm. In other words, the routing planning referred to in this paper is essentially a dynamic optimization problem for heterogeneous UAV control sequences. In the optimization, the coverage and backhaul are prioritized, and the system throughput, queue load and energy consumption are also taken into account.
+      In terms of model construction, this paper is based on a fixed-height two-dimensional emergency communication scenario, setting multiple heterogeneous UAVs, several ground task nodes, and a fixed Sink node. After the UAVs cover the task nodes, data generation occurs, and the data is then forwarded and aggregated through UAV-UAV links and UAV-Sink links. This paper incorporates motion constraints, wireless link rates, coverage relationships, queue evolution, functional return transmission capabilities, and energy consumption into the dynamic model, and constructs a comprehensive objective function using normalized throughput, queue load, energy consumption, coverage failure, and connectivity failure. The problem is transformed into a continuous optimization problem for the control sequence of heterogeneous UAVs.
 
-      The model part starts from a fixed-height 2D emergency communication scenario. The system consists of multiple heterogeneous Uavs, several ground mission nodes and a fixed Sink node. After the UAV covers the task node, the data arrival is generated, and then the data is forwarded and aggregated through the UAV-UAV link and the UAV-sink link. Focusing on this process, we put motion constraint, wireless link rate, coverage relationship, queue evolution, functional backhaul capacity and energy consumption into the same dynamic model, and construct a comprehensive objective function by using normalized throughput, queue load, energy consumption, coverage violation and connectivity violation.
+      In terms of algorithm design, this paper improves the two shortcomings of the original L-SHADE: the random initialization does not utilize the spatial information of the task nodes, and the search is prone to over-covering in the early stage; the parameter adaptation mainly relies on historical successful experiences, lacking explicit perception of the UAV coverage status, and may prematurely shift to performance optimization when the coverage is not yet stable. To address these issues, this paper proposes the coverage state-aware L-SHADE algorithm. In the initialization stage, a coverage-oriented individual is introduced, and in the iterative stage, the parameters change is constrained by the population coverage status, making the search process more in line with the requirements of coverage construction, coverage maintenance, and performance optimization.
 
-      The algorithm design starts from the two shortcomings of the original L-SHADE: random initialization does not use the spatial information of task nodes, and the early search is easy to cover insufficient. Parameter adaptation mainly relies on historical successful experience, lacks explicit perception of UAV coverage status, and may turn to performance optimization prematurely when the coverage is not stable. To this end, this paper proposes a coverage-state-aware L-SHADE algorithm. The algorithm retained the continuous optimization framework of L-SHADE, introduced cover-oriented individuals in the initialization phase, and constrained parameter changes with population coverage status in the iteration phase.
+      In terms of experimental verification, this paper compares algorithms in a fixed heterogeneous simulation environment. The results show that compared with the original L-SHADE, the average coverage rate of the coverage state-aware L-SHADE is increased by approximately 8.09%, the normalized coverage failure rate is reduced by approximately 37.64%, the throughput is increased by approximately 64.25%, and the queue load is reduced by approximately 19.64%. From the convergence process, the coverage priority initialization mainly alleviates the insufficient coverage of the initial population, while the coverage state-aware parameter control reduces the situation where the existing coverage structure is damaged by differential perturbation in the middle and later stages. This indicates that explicitly incorporating the coverage state into the search process is helpful for improving the effect of dynamic routing planning.
 
-      In the fixed heterogeneous simulation environment, the comparison results of the original L-SHADE, the coverage-first initialized L-SHADE, and the coverage-state-aware L-SHADE are significantly different. Compared with the original L-SHADE, the average coverage rate of the coverage-state-aware L-SHADE is increased by about 8.09%, the normalized coverage violation is reduced by about 37.64%, the throughput is increased by about 64.25%, and the queue load is reduced by about 19.64%. From the perspective of the convergence process, the coverage priority initialization mainly alleviates the insufficient coverage of the initial population, and the coverage state aware parameter control reduces the damage of the existing coverage structure by differential disturbance in the middle and late stages.
-      
     ],
     keywords: ("Heterogeneous UAV Swarm", "Dynamic Route Planning", "Coverage State Awareness", "L-SHADE", "Emergency Communication"),
   ),
@@ -345,7 +341,17 @@
     这里 $S_1$ 对应覆盖探索，$S_2$ 对应覆盖改进，$S_3$ 对应覆盖稳定，$S_4$ 对应覆盖恢复。
   ],
   acknowledgement: [
-    致谢内容……
+    又是一年夏，大学四年始于处暑而将终于夏至。四年来欢喜与苦痛交织，迷茫与释然并存。辗转反侧的夜晚见证我对人生新阶段的困惑探究，虽然过程曲折，但穿插其中的幸福碎片也足以慰藉。
+
+    感谢陈进朝老师的指导，您严谨的学术态度、敏锐的洞察力和无私的指导让我受益匪浅。未来的学术旅程充满挑战，但相信在您的引领下，我会面对困难、思考问题、不断提升自己。
+
+    感谢家人，始终支持和相信我的一切，愿意做我坚实的依靠。亲人的爱像空气和水分，是生命里离不开的部分，在异乡它就化作春季吹来的东风，带来故土的气息和水汽，猝不及防被思念侵染全身心。谢谢你们给我足以扎根的爱，也默许我长出向往自由的枝桠，我们是森林里相互依偎的枝叶，平凡却幸福，永远给予彼此荫蔽和温暖的阳光。想念每分每秒相处的好天气，微风拂过的午后，夜晚一起看的电视，和每次回家扑到你们怀里。我将作为一个健康、独立、充满生命力的个体对家庭之爱给予最美好的回应。
+
+    感谢我的朋友们，每个人都是闪闪发光的星子，光芒照在彼此身上则愈发耀眼，你们是我探索这个世界的过程中收获的最大的宝藏。何其有幸能在青春年华结伴同游，穿梭大街小巷，挑战人生的新奇体验，探寻这个世界的五光十色。全世界的水都会重逢，北冰洋与尼罗河会在湿云中交融，我们也会在某个节点会合，继续分享彼此的故事和梦想，愿我们都能在未来的道路上继续闪耀。
+
+    感谢李佳艺同学，相识那年我们才16岁，如今已走过长长的七年时光，每每与你相聚，我常感觉时间和记忆宛如一场轮回：我们并肩走在路上，诉说不在彼此身边时发生的故事，一如高中晚自习放学的路上不绝的私语；旅行时为对方购买手信纪念品，一如高中时把情绪和秘密写在纸条交换。又一次站在分叉点上，祝你永远勇敢明媚，如飞鸟自由。
+
+    感谢过去的自己，我不等待戈多，我会坚定的推动西西弗斯的石头
   ],
   design-summary: [
     本文围绕异构无人机集群通信网络动态路由规划问题，建立了包含 UAV 运动控制、无线通信、地面任务节点覆盖、数据队列、功能性回传能力和能量消耗的动态优化模型，并在 L-SHADE 基础上提出覆盖状态感知 L-SHADE 算法。覆盖优先初始化用于缓解随机初始化带来的低覆盖冷启动问题，覆盖状态感知参数控制则根据种群覆盖状态调整后续搜索行为。固定环境实验中，覆盖状态感知 L-SHADE 相较原始 L-SHADE 和覆盖优先初始化 L-SHADE 在综合目标值、覆盖率、覆盖违约、吞吐量、队列负载和能耗等指标上表现更稳。对异构 UAV 动态覆盖路由问题而言，把覆盖状态显式纳入搜索过程，比单纯依赖通用参数自适应更贴近任务结构。
@@ -439,92 +445,95 @@ L-SHADE 沿用 SHADE 的成功历史参数记忆机制@6900380，并通过线性
 这一问题可以看成“轨迹控制—覆盖服务—链路回传—队列稳定”的联合过程。UAV 的运动控制改变覆盖关系和链路距离，覆盖关系决定地面任务数据是否进入 UAV 队列，链路速率影响队列泄放，队列状态再反馈到系统性能评价。动态路由规划的重点不是找到一条固定路径，而是让 UAV 网络在整个时域内维持服务和回传能力。
 
 据此，优化变量设为 UAV 分段控制序列。一个候选解对应一组完整控制方案，包括各 UAV 在不同控制段内的速度、航向角和发射功率。控制序列输入动态仿真后，模型返回覆盖率、吞吐量、队列负载、能耗和违约指标。动态路由规划由此转成高维连续优化问题，L-SHADE 及其改进算法也有了使用前提。
-== 差分进化算法与 L-SHADE
+== 差分进化算法
+=== 基础概念
 DE 是基于实数编码的进化算法，常用于连续变量优化问题@ZNXT201704001。算法从随机初始种群出发，通过变异、交叉和选择更新个体。差分变异利用种群中个体之间的差分向量生成新候选解，交叉操作决定新旧个体如何组合，选择操作保留表现更好的个体。DE 不需要目标函数梯度，因此可以处理非线性、不可导和黑箱优化场景。
 
 缩放因子 $F$、交叉概率 $"CR"$ 和种群规模会直接影响 DE 的搜索行为。$F$ 决定差分变异强度，取值较高时搜索范围更大，但也容易带来震荡；取值较低时更利于局部细化，却可能收缩过早。$"CR"$ 控制交叉更新范围，较高值会推动更多维度变化，较低值会保留更多原个体信息。许多 DE 改进工作都从这些参数的自动调整入手。
-
+=== 差分进化算法的改进
 SHADE（Success-History based Adaptive Differential Evolution）@6900380 在 DE 中加入成功历史经验记忆。简单说，若某次变异和交叉产生的参数带来更好的试验个体，相关参数就会被存入历史集合，并在后续迭代中参与新参数生成。L-SHADE（Linear Population Size Reduction Success-History based Adaptive DE）@LI2022350 又加入线性种群规模缩减（LPSR），让种群规模随迭代逐步变小。前期保留较大种群，用来维持搜索范围；后期减少个体数量，用来降低计算开销并加快收敛。算法迭代中，DE/current-to-pbest/1 变异策略利用较优个体和差分向量共同生成搜索方向，外部存档则保存被淘汰个体，用来补充变异向量来源。
 
 选择 L-SHADE 的主要原因，是 UAV 动态路由规划可以自然写成高维连续控制向量，而目标值又依赖完整仿真，解析梯度很难直接取得。问题也随之出现：原始 L-SHADE 的初始化、变异和参数控制都偏通用，并不会主动读取 UAV 覆盖状态。要让它服务于动态覆盖路由，还需要把任务节点分布、覆盖结构和回传状态引入初始化与参数控制环节。
+
+=== 面向动态路由规划的 L-SHADE 求解框架
+
+将 L-SHADE 用于本文问题时，首先需要把 UAV 控制过程写成个体编码。一个个体对应完整任务周期内所有 UAV 的分段控制序列。UAV $i$ 在控制段 $g$ 的控制向量为
+
+$
+bold(u)_i(g)
+=
+[
+  hat(v)_i(g),
+  hat(theta)_i(g),
+  P_i^"tx"(g)
+]^top.
+$
+
+因此，候选解可表示为由所有 UAV、所有控制段控制量拼接而成的连续向量：
+
+$
+bold(x) in RR^D,
+quad
+D = 3 N G.
+$
+
+其中，$N$ 为 UAV 数量，$G$ 为控制段数量。这样编码后，轨迹控制和发射功率控制进入同一个连续搜索空间，后续差分变异、交叉和选择都围绕该向量展开。
+
+对于任意候选解 $bold(x)$，算法先将其解码为完整时域动作序列，再输入动态仿真模型。仿真结束后得到覆盖违约、回传能力违约、综合性能目标和总目标等评价量，可概括为
+
+$
+bold(C)(bold(x))
+=
+(
+  V_"cov"^"norm",
+  V_"con"^"norm",
+  J_"perf",
+  J_"total"
+).
+$
+
+普通 L-SHADE 通常直接比较单一目标值。本文问题中，覆盖和回传能力具有更高优先级，因此后续选择操作采用层级判优：先比较 $V_"cov"^"norm"$，再比较 $V_"con"^"norm"$，二者相近时再比较 $J_"perf"$ 和 $J_"total"$。这一规则使搜索过程先压低覆盖违约和回传能力违约，再优化吞吐、队列和能耗等综合性能。
+
+变异阶段采用 current-to-pbest/1 策略，变异向量为
+
+$
+bold(v)_i
+=
+bold(x)_i
++
+F_i (bold(x)_"pbest" - bold(x)_i)
++
+F_i (bold(x)_(r_1) - bold(x)_(r_2)).
+$
+
+其中，$bold(x)_"pbest"$ 从当前种群前 $p$ 比例优秀个体中随机选取，$F_i$ 为缩放因子，$bold(x)_(r_2)$ 可来自当前种群或外部档案。随后，变异向量经二项交叉形成试验个体，并按速度、航向角和发射功率的取值范围进行边界修复。
+
+在参数生成上，L-SHADE 从成功历史记忆中采样 $F_i$ 和 $"CR"_i$；在种群规模上，它按线性缩减规则从较大的初始种群逐步过渡到较小种群。本文后续提出的覆盖状态感知参数控制并不替换这些步骤，而是在参数采样后读取种群覆盖状态，再对 $p$、$F$ 和 $"CR"$ 做状态相关约束。也就是说，覆盖状态感知 L-SHADE 的连续搜索主体仍是 L-SHADE，新增部分用于判断当前更应重视覆盖构造、覆盖保持还是性能细化。
 
 == 章节小结
 
 本章主要为后续建模和算法设计铺垫概念基础。先说明空中 UAV、地面任务节点和 Sink 节点各自承担的功能，再把动态路由规划中需要观察的网络状态落到覆盖、连通和功能性回传能力三个方面。本文讨论的路由问题以UAV 控制序列为优化对象，同时处理速度控制、航向调整和功率分配，而非固定拓扑上的路径选择。UAV 一旦移动，网络空间结构、无线链路质量、任务节点覆盖情况和队列回传过程都会随之变化，因此后续模型必须同时描述位置演化和数据流动。
 
-算法部分介绍了差分进化及 L-SHADE 的基本思想。L-SHADE 适合处理连续控制变量，也不要求目标函数具有解析梯度，这正与实验的动态仿真评价方式相匹配。不过，L-SHADE 主要根据适应度反馈推进搜索，对任务节点分布和覆盖状态没有直接感知。这揭示后续工作的重点：在模型建立中，把 UAV 运动、覆盖、通信、队列和能耗之间的耦合关系梳理清晰；算法在原有基础上，需要加入面向覆盖路由的引导信息。
+算法部分介绍了差分进化及 L-SHADE 的基本思想，并给出其面向本文动态路由规划问题的编码、仿真评估和层级判优方式。L-SHADE 适合处理连续控制变量，也不要求目标函数具有解析梯度，这正与实验的动态仿真评价方式相匹配。不过，L-SHADE 主要根据适应度反馈推进搜索，对任务节点分布和覆盖状态没有直接感知。这揭示后续工作的重点：在模型建立中，把 UAV 运动、覆盖、通信、队列和能耗之间的耦合关系梳理清晰；算法在原有基础上，需要加入面向覆盖路由的引导信息。
 
 = 异构无人机集群通信网络动态路由规划模型
 
-本章给出异构无人机集群通信网络动态路由规划问题的数学模型。模型面向固定高度二维应急通信场景，从系统节点、任务区域和基本假设写起，再描述 UAV 运动、无线通信、地面节点覆盖、数据队列与连通性表征、能量消耗等子模型。章末把这些模型合并到综合目标函数和约束描述中，将 UAV 的速度、航向角和发射功率联合控制转化为后续算法可处理的连续优化问题。
+本章给出异构无人机集群通信网络动态路由规划问题的数学模型。先说明应急通信场景、节点组成、时间划分和控制变量，再依次构建运动、无线通信、覆盖、队列与连通、能量消耗以及综合评价模型，最后把上述模型整理为后续算法可处理的连续优化问题。
 
-== 系统场景与基本假设
-本文不考虑 UAV 高度变化，而将应急通信场景投影到二维平面中。本文用正方形区域表示任务范围。其边长为 $L$，区域坐标为 $Omega = [0, L] times [0, L]$，实验取值为 $L = 1000 "m"$。任务区域中设置$K$ 个地面任务节点，其位置保持不变。同时，区域内包含$N$架异构 UAV 和一个固定 Sink 节点 $s$。各地面节点持续产生回传数据。模型暂不设置业务优先级，使分析重点集中在覆盖建立和数据回传过程上。Sink 节点设置在任务区域中心，功能限定为接收汇聚数据。
+== 场景描述与变量说明
+本文不考虑 UAV 高度变化，而将应急通信场景投影到二维平面中。任务区域记为 $Omega = [0, L] times [0, L]$，其中 $L$ 为正方形区域边长。区域内包含 $N$ 架异构 UAV、$K$ 个地面任务节点和一个固定 Sink 节点 $s$。UAV 节点集合记为 $cal(U) = brace.l 1, 2, dots, N brace.r$，地面任务节点集合记为 $cal(K) = brace.l 1, 2, dots, K brace.r$，通信节点集合记为 $cal(V) = cal(U) union brace.l s brace.r$。地面任务节点位置固定，第 $k$ 个节点的位置写作 $bold(q)_k = [x_k^"g", y_k^"g"]^top$；Sink 位置写作 $bold(p)_s = [x_s, y_s]^top$，其功能限定为接收汇聚数据。
 
-系统数据流从地面任务节点开始。UAV 完成覆盖与采集后，数据通过 UAV–UAV 链路中继，并最终经 UAV–Sink 链路汇聚到 Sink。UAV 个体能力并不一致。差异主要体现在最大速度、覆盖半径、通信带宽、最大发射功率、缓存容量和能量容量上。由此，各 UAV 在覆盖、巡航、中继和回传任务中的适配角色也不同。
+系统数据流从地面任务节点开始。当地面任务节点进入 UAV 有效覆盖范围后，该节点产生的数据进入对应 UAV 缓存队列；随后数据经 UAV–UAV 链路中继，最终通过 UAV–Sink 链路汇聚到 Sink。UAV 个体能力并不一致，差异体现在最大速度、覆盖半径、通信带宽、最大发射功率、缓存容量和能量容量等方面。后续模型在实际用到这些能力边界时再给出相应符号，避免在正文开头集中堆放参数表。
 
-时间轴按时隙展开，$t = 0, 1, dots, T - 1$，每个时隙长度为 $Delta t$。UAV 不调整高度，只在水平平面内移动。控制量包括飞行速度、期望航向角和发射功率；采用分段常量控制后，同一控制段内保持同一组控制量。真正执行时，这组控制量还会受到速度、加速度、转角、角速度、转弯半径以及 UAV 间安全距离的限制。
-
-当地面任务节点进入 UAV 有效覆盖范围后，该节点产生的数据进入对应 UAV 缓存队列。之后，数据经 UAV 间链路逐跳转发，最终通过 UAV-Sink 链路到达 Sink。本文所称动态路由规划，是在 UAV 位置、链路状态和队列状态持续变化的条件下，联合规划 UAV 运动控制与传输资源，使网络形成面向 Sink 的多跳数据传输过程。
-
-为降低模型复杂度，本文采用如下基本假设：任务区域为二维正方形区域，地面任务节点位置固定；各地面任务节点数据产生率相同，不区分业务优先级；UAV 保持固定飞行高度，仅在二维平面内运动；UAV 与地面任务节点之间为视距通信，信道模型采用距离衰减形式；每架 UAV 有有限缓存，未转发数据暂存于本地队列；Sink 为固定地面汇聚节点，只接收数据，不参与转发；UAV 能耗由飞行能耗和通信发射能耗组成；UAV 之间保持不小于给定安全距离；任务区域给出地面节点、Sink 和 UAV 初始位置，UAV 可行行为由运动学、通信、能量和安全距离约束共同限定。
-
-== 核心符号与变量定义
-
-正文中只保留后续建模、算法编码和复杂度分析反复使用的核心符号，避免符号表打断模型推导。完整参数、中间变量和派生量统一放在附录 A。
-
-=== 规模参数与索引
-
-#align(center)[表 3-1 规模参数与索引说明]
-
-#three-line-table(
-  columns: (auto, 1fr, auto),
-  table.header([符号], [含义], [单位]),
-  [$cal(U) = brace.l 1, 2, dots, N brace.r$], [UAV 节点集合], [-],
-  [$cal(K) = brace.l 1, 2, dots, K brace.r$], [地面任务节点集合], [-],
-  [$s$], [Sink 节点], [-],
-  [$cal(V) = cal(U) union brace.l s brace.r$], [通信节点集合], [-],
-  [$cal(T) = brace.l 0, 1, dots, T - 1 brace.r$], [离散时隙集合], [-],
-  [$cal(G) = brace.l 0, 1, dots, G - 1 brace.r$], [控制段集合], [-],
-  [$N$], [UAV 数量], [-],
-  [$K$], [地面任务节点数量], [-],
-  [$T$], [总时隙数], [-],
-  [$L_c$], [单个控制段包含的时隙数], [-],
-  [$G$], [控制段总数], [-],
-  [$D$], [单个候选解维度], [-],
-  [$i, j$], [UAV 或通信节点索引], [-],
-  [$k$], [地面任务节点索引], [-],
-  [$t$], [时隙索引], [-],
-  [$g$], [控制段索引], [-],
-)
-
-控制段总数为
+时间轴按离散时隙展开，时隙集合为 $cal(T) = brace.l 0, 1, dots, T - 1 brace.r$，每个时隙长度为 $Delta t$。为降低优化维度，本文采用分段常量控制：每 $L_c$ 个时隙组成一个控制段，控制段集合为 $cal(G) = brace.l 0, 1, dots, G - 1 brace.r$，其中
 
 $
 G = ceil(T / L_c).
 $
 
-每架 UAV 在每个控制段内包含期望速度、期望航向角和发射功率 3 个控制量，因此单个候选解维度为
+第 $g$ 个控制段对应的时隙集合记为 $cal(T)_g$，即从第 $g L_c$ 个时隙到第 $min((g + 1) L_c, T) - 1$ 个时隙。在同一控制段内，UAV 使用同一组期望控制量；真正执行时，这组控制量还会受到速度、加速度、转角、角速度、转弯半径以及 UAV 间安全距离的限制。
 
-$
-D = 3 N G.
-$
-
-=== 场景输入与优化变量
-
-#align(center)[表 3-2 场景输入参数]
-
-#three-line-table(
-  columns: (auto, 1fr, auto),
-  table.header([符号], [含义], [单位]),
-  [$L$], [正方形任务区域边长], [m],
-  [$Delta t$], [单个时隙长度], [s],
-  [$bold(q)_k = [x_k^"g", y_k^"g"]^top$], [地面任务节点 $k$ 的位置], [m],
-  [$bold(p)_s = [x_s, y_s]^top$], [Sink 节点位置], [m],
-  [$bold(p)_i(0)$], [UAV $i$ 的初始位置], [m],
-)
-
-本文以控制段为单位优化 UAV 控制量。对于任意 $i in cal(U)$ 和 $g in cal(G)$，定义
+本文以 UAV 分段控制序列作为优化对象。对于任意 UAV $i in cal(U)$ 和控制段 $g in cal(G)$，控制向量定义为
 
 $
 bold(u)_i(g) =
@@ -535,7 +544,7 @@ bold(u)_i(g) =
 ].
 $
 
-其中 $hat(v)_i(g)$ 为期望飞行速度，$hat(theta)_i(g)$ 为期望航向角，$P_i^"tx"(g)$ 为发射功率。整体优化变量为
+其中，$hat(v)_i(g)$ 为期望飞行速度，$hat(theta)_i(g)$ 为期望航向角，$P_i^"tx"(g)$ 为发射功率。整体控制序列记为
 
 $
 bold(U) =
@@ -547,60 +556,15 @@ brace.l
 brace.r.
 $
 
-控制变量满足
+由于每架 UAV 在每个控制段内包含 3 个连续控制量，单个候选解维度为 $D = 3 N G$。本文所称动态路由规划，不是协议层逐包下一跳选择，而是在 UAV 位置、链路状态和队列状态持续变化的条件下联合规划运动控制与传输资源，使网络在任务周期内维持覆盖并形成面向 Sink 的多跳数据回传过程。
 
-$
-0 <= hat(v)_i(g) <= v_i^"max",
-$
+为降低模型复杂度，本文作如下设定：任务区域为二维正方形区域，地面任务节点位置固定；各地面任务节点数据产生率相同，不区分业务优先级；UAV 保持固定飞行高度，仅在二维平面内运动；UAV 与地面任务节点之间为视距通信，信道模型采用距离衰减形式；每架 UAV 有有限缓存，未转发数据暂存于本地队列；Sink 为固定地面汇聚节点，只接收数据，不参与转发；UAV 能耗由飞行能耗和通信发射能耗组成；UAV 之间保持不小于给定安全距离。完整符号、参数和中间变量说明见附录 A。
 
-$
-0 <= hat(theta)_i(g) < 2 pi,
-$
+== 动态路由规划模型构建
 
-$
-0 <= P_i^"tx"(g) <= P_i^"max".
-$
+本节围绕 UAV 控制序列进入仿真后的状态演化过程展开。模型依次描述 UAV 运动、无线传输、地面节点覆盖、数据队列与功能性连通、能量消耗以及综合评价指标。这样处理后，一个候选控制序列可以被完整仿真并转化为覆盖率、吞吐量、队列负载、能耗和违约指标。
 
-=== 关键模型参数
-
-#align(center)[表 3-3 关键模型参数]
-
-#three-line-table(
-  columns: (auto, 1fr, auto),
-  table.header([符号], [含义], [单位]),
-  [$v_i^"max"$], [UAV $i$ 的最大飞行速度], [m/s],
-  [$P_i^"max"$], [UAV $i$ 的最大发射功率], [W],
-  [$R_i^"cov"$], [UAV $i$ 的覆盖半径], [m],
-  [$B_i$], [UAV $i$ 的通信带宽], [Hz],
-  [$Q_i^"max"$], [UAV $i$ 的最大缓存容量], [bit],
-  [$E_i^"max"$], [UAV $i$ 的最大能量容量], [J],
-  [$d_"safe"$], [UAV 间最小安全距离], [m],
-  [$epsilon_"con"$], [最小数据泄放比例系数], [-],
-  [$lambda_0, lambda_1, lambda_2, lambda_3, lambda_4$], [综合目标函数权重], [-],
-)
-
-其中，不同 UAV 可具有不同的 $v_i^"max"$、$P_i^"max"$、$R_i^"cov"$、$B_i$、$Q_i^"max"$ 和 $E_i^"max"$，用于描述 UAV 集群的异构性。
-
-=== 主要状态量与评价输出
-
-#align(center)[表 3-4 主要状态量与评价输出]
-
-#three-line-table(
-  columns: (auto, 1fr, auto),
-  table.header([符号], [含义], [单位]),
-  [$bold(p)_i(t)$], [UAV $i$ 在时隙 $t$ 的二维位置], [m],
-  [$v_i(t)$], [UAV $i$ 在时隙 $t$ 的实际执行速度], [m/s],
-  [$phi_i(t)$], [UAV $i$ 在时隙 $t$ 的实际执行航向角], [rad],
-  [$Q_i(t)$], [UAV $i$ 在时隙 $t$ 的缓存队列长度], [bit],
-  [$E_i(t)$], [UAV $i$ 在时隙 $t$ 的剩余能量], [J],
-
-  [$J_"perf"$], [通信性能评价项], [-],
-  [$J_"total"$], [综合目标函数值], [-],
-)
-
-上述评价输出量由完整任务周期仿真得到，用于个体排序、层级判优、覆盖状态估计和最优解输出。
-
-== 无人机运动模型
+=== 无人机运动模型
 
 高度固定后，运动递推只发生在水平平面内。对 UAV $i$ 而言，时隙 $t$ 的状态向量记为
 
@@ -765,7 +729,7 @@ $
 
 速度、航向和位置经过约束修正后，模型确定 UAV 状态量。具体包括位置  $bold(p)_i(t)$、速度$v_i(t)$和航向角 $phi_i(t)$。上述状态量将继续用于通信距离计算、覆盖判定和飞行能耗评估。
 
-== 无线通信模型
+=== 无线通信模型
 
 数据回传有两条可能路径：先转发给其他 UAV，或直接传给 Sink。为减少重复记号，接收端统一写成 $j in cal(V) = cal(U) union brace.l s brace.r$。当 $j in cal(U)$ 时，对应 UAV-UAV 转发链路；当 $j = s$ 时，对应 UAV-Sink 汇聚链路。链路假设为视距通信，暂不考虑同频干扰、多径衰落和 LoS/NLoS 随机切换。若接收端是 UAV，其位置为 $bold(p)_j(t)$；若接收端是 Sink，则位置为固定的 $bold(p)_s$。
 
@@ -845,7 +809,7 @@ $
 
 其中，$j in cal(U)$ 对应 UAV-UAV 转发速率，$j = s$ 对应 UAV-Sink 汇聚速率。后续队列模型基于 $bold(R)(t)$ 计算 UAV 间等效转发流量和 Sink 侧数据泄放能力。
 
-== 地面节点覆盖模型
+=== 地面节点覆盖模型
 
 为刻画 UAV 对地面任务节点的数据采集条件，定义时隙 $t$ 内 UAV $i in cal(U)$ 与地面任务节点 $k in cal(K)$ 的二维距离为
 
@@ -937,7 +901,7 @@ $
 
 本文不将任意时隙全覆盖作为硬约束，而以 $V_"cov"^"norm"$ 量化覆盖不足。该指标将进入综合目标函数，并用于第 4 章算法层级判优和覆盖状态感知参数控制。
 
-== 数据队列与连通性表征模型
+=== 数据队列与连通性表征模型
 
 数据从地面节点进入 UAV 后，还需要沿链路继续向 Sink 泄放。这里用链路速率驱动 UAV 缓存队列更新；所谓连通性，也指缓存数据能否被持续送回 Sink 的功能性能力，而不是静态图上的全连通。
 
@@ -959,7 +923,7 @@ $
 
 若一个任务节点同时被多架 UAV 覆盖，则按并行采集处理，该节点产生的数据可进入对应多架 UAV 的队列。
 
-*等效转发流量。* 基于第 3.4 节得到的链路速率 $r_(i j)(t)$，定义 UAV $i$ 在时隙 $t$ 的等效转发流入速率和流出速率分别为
+*等效转发流量。* 基于第 3.2.2 节得到的链路速率 $r_(i j)(t)$，定义 UAV $i$ 在时隙 $t$ 的等效转发流入速率和流出速率分别为
 
 $
 r_i^"in"(t)
@@ -1080,7 +1044,7 @@ $
 
 数据队列模型由覆盖驱动的数据到达、链路速率驱动的等效转发和 Sink 数据泄放能力构成。其中，$Q_i(t)$ 用于刻画 UAV 缓存状态，$Q_"sys"(t)$ 用于刻画系统负载，$V_"con"^"norm"$ 用于后续综合目标函数与算法层级判优。
 
-== 无人机能量消耗模型
+=== 无人机能量消耗模型
 
 UAV 的能量消耗由飞行能耗和通信发射能耗构成。对于任意 UAV $i in cal(U)$，其在时隙 $t$ 的飞行功率定义为
 
@@ -1189,7 +1153,7 @@ $
 
 能量部分由飞行功率、通信发射功率和剩余能量递推组成，归一化后的 $E_"norm"$ 用于后续目标函数中的能耗评价。
 
-== 综合性能指标与优化目标函数
+=== 综合性能指标与优化目标函数
 
 前文已经给出 UAV 运动、无线通信、地面节点覆盖、数据队列与连通性表征、能量消耗等模型。为了比较不同 UAV 控制方案，本节把 Sink 汇聚能力、系统队列负载、能量消耗、覆盖违约和连通性违约放入同一评价框架。Sink 汇聚能力越强，数据回传越充分；队列积压、能量消耗、覆盖不足和回传能力不足越低，方案代价越小。按这个思路，异构 UAV 动态路由规划被写成综合代价最小化问题。
 
@@ -1301,9 +1265,9 @@ $
 
 按照这一顺序比较后，覆盖状态和回传能力较好的候选解会先被保留下来；只有两者差距不大时，才继续比较吞吐量、队列负载和能耗。这个顺序对应应急通信中的基本取舍：先保证可覆盖、可回传，再讨论通信性能的细化。
 
-== 动态路由规划问题描述
+== 优化问题描述
 
-在前述系统模型基础上，本文将异构无人机集群通信网络动态路由规划写成面向控制序列的优化问题。这里的动态路由规划不是协议层面的显式下一跳选择，也不是数据包级路径优化；它是在 UAV 运动、链路速率和数据队列不断变化的条件下，联合优化 UAV 运动控制与发射功率，使任务周期内的数据持续汇聚到 Sink。
+在前述系统模型基础上，将异构无人机集群通信网络动态路由规划写成面向控制序列的优化问题。这里的动态路由规划不是协议层面的显式下一跳选择，也不是数据包级路径优化；它是在 UAV 运动、链路速率和数据队列不断变化的条件下，联合优化 UAV 运动控制与发射功率，使任务周期内的数据持续汇聚到 Sink。
 
 === 优化变量与目标函数
 
@@ -1332,7 +1296,7 @@ brace.l
 brace.r.
 $
 
-给定控制序列 $bold(U)$ 后，第 3.3 至第 3.7 节的模型会依次推出 UAV 位置、实际速度、航向、覆盖状态、链路速率、队列状态和剩余能量。再由这些状态量计算 $R_"norm"$、$Q_"norm"$、$E_"norm"$、$V_"cov"^"norm"$ 和 $V_"con"^"norm"$，即可得到 $J_"total"(bold(U))$。优化目标就是在可行控制序列中寻找综合代价最小的一组：
+给定控制序列 $bold(U)$ 后，第 3.2.1 至第 3.2.5 节的模型会依次推出 UAV 位置、实际速度、航向、覆盖状态、链路速率、队列状态和剩余能量。再由这些状态量计算 $R_"norm"$、$Q_"norm"$、$E_"norm"$、$V_"cov"^"norm"$ 和 $V_"con"^"norm"$，即可得到 $J_"total"(bold(U))$。优化目标就是在可行控制序列中寻找综合代价最小的一组：
 
 $
 min_(bold(U))
@@ -1372,13 +1336,13 @@ brace.l
 brace.r.
 $
 
-（C2）运动与安全约束。控制序列进入仿真执行过程后，UAV 的实际速度、航向和位置由第 3.3 节的运动模型递推得到。实际运动过程需满足最大速度、最大加速度、最大转角、最大角速度和最小转弯半径等约束；当候选位置导致 UAV 间距离小于 $d_"safe"$ 时，系统通过位置修正机制保持安全距离。
+（C2）运动与安全约束。控制序列进入仿真执行过程后，UAV 的实际速度、航向和位置由第 3.2.1 节的运动模型递推得到。实际运动过程需满足最大速度、最大加速度、最大转角、最大角速度和最小转弯半径等约束；当候选位置导致 UAV 间距离小于 $d_"safe"$ 时，系统通过位置修正机制保持安全距离。
 
-（C3）通信、覆盖与队列约束。对于任意可行控制序列，链路速率由第 3.4 节的无线通信模型计算，地面节点覆盖状态由第 3.5 节的覆盖模型判定，队列状态由第 3.6 节的数据到达、UAV 间转发和 Sink 泄放过程共同递推。UAV 缓存队列需保持在其容量范围内，即 $0 <= Q_i(t) <= Q_i^"max"$。
+（C3）通信、覆盖与队列约束。对于任意可行控制序列，链路速率由第 3.2.2 节的无线通信模型计算，地面节点覆盖状态由第 3.2.3 节的覆盖模型判定，队列状态由第 3.2.4 节的数据到达、UAV 间转发和 Sink 泄放过程共同递推。UAV 缓存队列需保持在其容量范围内，即 $0 <= Q_i(t) <= Q_i^"max"$。
 
-（C4）能量约束。UAV 剩余能量由第 3.7 节的能量模型递推得到，飞行功率和通信发射功率共同决定能量消耗。任意时隙内剩余能量需保持在 $[0, E_i^"max"]$ 范围内。覆盖不足和回传能力不足不作为硬约束直接强制满足，而是通过 $V_"cov"^"norm"$ 和 $V_"con"^"norm"$ 进入目标函数及后续层级判优过程。
+（C4）能量约束。UAV 剩余能量由第 3.2.5 节的能量模型递推得到，飞行功率和通信发射功率共同决定能量消耗。任意时隙内剩余能量需保持在 $[0, E_i^"max"]$ 范围内。覆盖不足和回传能力不足不作为硬约束直接强制满足，而是通过 $V_"cov"^"norm"$ 和 $V_"con"^"norm"$ 进入目标函数及后续层级判优过程。
 
-为简化问题表示，本文将由第 3.3 至第 3.7 节共同构成的状态递推过程记为
+为简化问题表示，本文将由第 3.2.1 至第 3.2.5 节共同构成的状态递推过程记为
 
 $
 (
@@ -1392,7 +1356,7 @@ $
 Phi(bold(U)).
 $
 
-这里的 $bold(P)$ 记录 UAV 位置随时间的变化，$bold(R)$ 记录链路速率，$bold(Z)$、$bold(Q)$ 与 $bold(E)$ 分别对应覆盖状态、队列状态和剩余能量序列。映射 $Phi(dot)$ 不是额外模型，而是第 3.3 至第 3.7 节中运动、通信、覆盖、队列和能量递推关系的合写。
+这里的 $bold(P)$ 记录 UAV 位置随时间的变化，$bold(R)$ 记录链路速率，$bold(Z)$、$bold(Q)$ 与 $bold(E)$ 分别对应覆盖状态、队列状态和剩余能量序列。映射 $Phi(dot)$ 不是额外模型，而是第 3.2.1 至第 3.2.5 节中运动、通信、覆盖、队列和能量递推关系的合写。
 
 整理上述目标与约束后，本文的动态路由规划问题可表示为
 
@@ -1435,7 +1399,7 @@ $
 Phi(bold(U)).
 $
 
-其中，$cal(P)$ 表示本文构建的异构 UAV 集群动态路由规划优化问题。第一组约束对应控制变量边界约束（C1），第二组约束对应队列容量和剩余能量范围约束（C3）与（C4），第三组约束要求系统状态满足第 3.3 至第 3.7 节定义的运动、通信、覆盖、队列和能量动态递推关系。安全距离约束包含在运动模型及其位置修正机制中，覆盖不足和回传能力不足则通过目标函数中的违约项及层级判优过程处理。
+其中，$cal(P)$ 表示本文构建的异构 UAV 集群动态路由规划优化问题。第一组约束对应控制变量边界约束（C1），第二组约束对应队列容量和剩余能量范围约束（C3）与（C4），第三组约束要求系统状态满足第 3.2.1 至第 3.2.5 节定义的运动、通信、覆盖、队列和能量动态递推关系。安全距离约束包含在运动模型及其位置修正机制中，覆盖不足和回传能力不足则通过目标函数中的违约项及层级判优过程处理。
 
 === 问题性质分析
 
@@ -1479,68 +1443,11 @@ $
 
 综合目标函数将吞吐量、队列负载、能量消耗、覆盖违约和连通性违约均纳入评价体系。与此同时，分层判优规则保留了应急通信中的实际取舍：先看覆盖和回传是否成立，再比较吞吐、队列和能耗等综合性能。由此得到的问题并不容易直接求解。控制变量维度高，目标和约束中又包含非线性、非光滑和跨时隙递推关系，传统精确优化方法很难完整处理这些因素。因此，第 4 章转向覆盖状态感知 L-SHADE，不只是算法选择上的替换，也是由模型结构自然引出的求解需求。
 
-= 覆盖状态感知 L-SHADE 路由优化算法
+= 基于覆盖状态感知机制的 L-SHADE 路由优化算法
 
-第 3 章已经把路由规划写成控制序列优化问题，本章转向求解算法。原始 L-SHADE 可以处理连续控制变量，但它不知道当前种群是否已经形成有效覆盖结构，也无法区分覆盖构造、覆盖保持和性能精修这些阶段。因此，本章先给出 L-SHADE 在本文问题中的编码、解码、评估和选择方式，再引入覆盖优先初始化与覆盖状态感知参数控制，最后整理覆盖状态感知 L-SHADE 的流程和复杂度。
+第 3 章已经把路由规划写成控制序列优化问题，第 2 章也说明了 L-SHADE 在本文问题中的编码、仿真评估和选择方式。本章在此基础上分析原始 L-SHADE 的不足，并围绕这些不足给出两项改进：覆盖优先初始化用于处理初始种群缺少任务节点空间信息的问题，覆盖状态感知参数控制用于处理迭代过程中覆盖阶段不可见、覆盖结构易被扰动破坏的问题。随后，本章整理覆盖状态感知 L-SHADE 的完整流程和复杂度。
 
-== L-SHADE 求解框架
-
-第 2 章已介绍 L-SHADE 的一般机制。本节只说明它在本文问题中的落地方式：控制序列怎样编码为个体，个体怎样进入动态仿真，仿真后的评价向量又怎样参与选择。
-
-一个个体对应完整任务周期内所有 UAV 的分段控制序列。UAV $i$ 在控制段 $g$ 的控制向量写作
-
-$
-bold(u)_i(g)
-=
-[
-  hat(v)_i(g),
-  hat(theta)_i(g),
-  P_i^"tx"(g)
-]^top.
-$
-
-因此，候选解可表示为由所有 UAV、所有控制段控制量拼接而成的连续向量：
-
-$
-bold(x) in RR^D,
-quad
-D = 3 N G.
-$
-
-$N$ 表示 UAV 数量，$G$ 表示控制段数量。这样编码后，轨迹控制和发射功率控制都进入同一个连续搜索空间。
-
-对于任意候选解 $bold(x)$，算法先将其解码为完整时域动作序列，并输入第 3 章建立的动态仿真模型。仿真结束后得到个体评价向量：
-
-$
-bold(C)(bold(x))
-=
-(
-  V_"cov"^"norm",
-  V_"con"^"norm",
-  J_"perf",
-  J_"total"
-).
-$
-
-普通 L-SHADE 通常直接比较单一目标值。本文改用覆盖与回传能力优先的层级判优规则：先比较 $V_"cov"^"norm"$，再比较 $V_"con"^"norm"$，在二者相近时比较 $J_"perf"$ 和 $J_"total"$。该规则让搜索过程先压低覆盖违约和回传能力违约，再优化由吞吐、队列和能耗组成的综合性能。
-
-变异阶段使用 current-to-pbest/1 策略，变异向量为
-
-$
-bold(v)_i
-=
-bold(x)_i
-+
-F_i (bold(x)_"pbest" - bold(x)_i)
-+
-F_i (bold(x)_(r_1) - bold(x)_(r_2)).
-$
-
-其中，$bold(x)_"pbest"$ 从当前种群前 $p$ 比例优秀个体中随机选取，$F_i$ 为缩放因子，$bold(x)_(r_2)$ 可来自当前种群或外部档案。随后，变异向量经二项交叉形成试验个体，并按第 3 章定义的速度、航向角和发射功率范围进行边界修复。
-
-在参数生成上，L-SHADE 仍从成功历史记忆中采样 $F_i$ 和 $C R_i$；在种群规模上，它按线性缩减规则从较大的初始种群逐步过渡到较小种群。本文提出的覆盖状态感知参数控制机制并不替换这些步骤。它只在参数采样之后读取种群覆盖状态，再对 $p$、$F$ 和 $C R$ 做状态相关约束。换句话说，覆盖状态感知 L-SHADE 的连续搜索主体仍是 L-SHADE，新增部分负责告诉算法当前应更重视覆盖构造、覆盖保持还是性能细化。
-
-==  L-SHADE 不足
+== 原始 L-SHADE 在本文问题中的不足
 
 原始 L-SHADE 具有较强的连续优化能力，但本文研究的异构 UAV 动态覆盖路由问题并不是一般黑箱连续优化问题。候选解由多架 UAV 在多个控制段内的速度、航向角和发射功率组成，目标值由 UAV 轨迹、地面覆盖、链路速率、队列演化和能量消耗共同决定。覆盖状态在这里尤其敏感：它既是综合目标函数中的惩罚项，也是后续数据到达、队列更新和 Sink 回传能力评价的基础。若算法不能在搜索过程中形成并维持覆盖结构，后续吞吐量、队列负载和能耗优化都会受到限制。
 
@@ -1558,15 +1465,15 @@ bb(I)(
 ).
 $
 
-在这个阈值附近，连续控制变量的小幅变化可能让任务节点突然从未覆盖变为已覆盖，也可能因为没有跨过覆盖边界而几乎不改变评价值。成功历史参数记录到的只是试验个体是否变好，很难分辨这种变化来自真实搜索方向，还是来自覆盖边界上的跳变。因此，$F$ 和 $C R$ 的历史经验在本文问题中会带有一定噪声。
+在这个阈值附近，连续控制变量的小幅变化可能让任务节点突然从未覆盖变为已覆盖，也可能因为没有跨过覆盖边界而几乎不改变评价值。成功历史参数记录到的只是试验个体是否变好，很难分辨这种变化来自真实搜索方向，还是来自覆盖边界上的跳变。因此，$F$ 和 $"CR"$ 的历史经验在本文问题中会带有一定噪声。
 
 参数控制同样不能忽略覆盖状态。本文问题中，搜索早期需要较强探索以构造覆盖结构；覆盖初步形成后，需要降低破坏性扰动以维持覆盖；覆盖稳定后，才适合继续优化吞吐量、队列负载和能耗。若覆盖发生退化，算法还需要重新加强覆盖恢复能力。原始 L-SHADE 主要依赖历史成功参数进行自适应，缺少对上述覆盖阶段的显式判断，容易在覆盖尚未稳定时过早转向性能优化，或在覆盖退化后缺少恢复机制。
 
-基于上述分析，本文保留 L-SHADE 的连续搜索框架，但在两个位置加入问题结构信息：覆盖优先初始化机制用于改善初始种群的覆盖质量，覆盖状态感知参数控制机制用于根据种群覆盖状态动态调节 $p$、$F$ 和 $C R$。前者处理搜索入口问题，后者处理搜索过程中的覆盖状态适配问题。
+基于上述分析，本文不直接改写 L-SHADE 的差分变异主体，而是在搜索入口和参数控制两个位置加入问题结构信息。第一，针对随机初始化缺少任务节点空间信息、初始覆盖水平偏低的问题，设计覆盖优先初始化机制，使部分初始个体先接近覆盖可行区域。第二，针对历史参数自适应不能区分覆盖构造、覆盖保持和性能精修阶段的问题，设计覆盖状态感知参数控制机制，根据种群覆盖状态动态调节 $p$、$F$ 和 $"CR"$。前者解决“从哪里开始搜”的问题，后者解决“搜索过程中如何保护和恢复覆盖结构”的问题。
 
 == 覆盖优先初始化机制
 
-随机初始化容易把 UAV 带向与任务节点无关的区域，搜索一开始就可能处在低覆盖状态。为降低这种冷启动代价，覆盖状态感知 L-SHADE 在初始种群中加入覆盖优先初始化机制。该机制利用地面任务节点分布生成一部分覆盖导向个体，但它只改变初始入口，不干预后续变异、交叉、选择、外部档案和成功历史记忆更新。
+覆盖优先初始化对应上一节提出的第一类不足，即原始随机初始化没有利用任务节点空间分布，容易让搜索从低覆盖区域开始。为降低这种冷启动代价，覆盖状态感知 L-SHADE 在初始种群中加入覆盖优先初始化机制。该机制利用地面任务节点分布生成一部分覆盖导向个体，使初始种群更早接近服务区域；它只改变初始入口，不干预后续变异、交叉、选择、外部档案和成功历史记忆更新。
 
 生成覆盖导向初始个体时，先从任务节点中抽取若干覆盖引导点。记任务节点集合为 $cal(K) = brace.l 1, 2, dots, K brace.r$，节点 $k$ 的位置为 $bold(q)_k$，引导点数量取
 
@@ -1820,7 +1727,7 @@ $
 
 == 覆盖状态感知参数控制机制
 
-覆盖优先初始化改善了初始种群的覆盖质量，但在后续差分进化过程中，种群仍可能出现覆盖退化或过早转向性能优化。为此，本文在覆盖优先初始化 L-SHADE 的基础上引入覆盖状态感知参数控制机制。该机制根据种群覆盖状态动态约束 $p$、$F$ 和 $"CR"$，使算法在覆盖构造、覆盖稳定、性能精修和覆盖恢复阶段采用不同搜索尺度。
+覆盖状态感知参数控制对应上一节提出的第二类不足，即原始 L-SHADE 的参数自适应只记录适应度改进，不能判断当前覆盖结构处于构造、稳定、精修还是退化状态。覆盖优先初始化改善了初始入口，但在后续差分进化过程中，种群仍可能出现覆盖退化或过早转向性能优化。为此，本文在覆盖优先初始化 L-SHADE 的基础上引入覆盖状态感知参数控制机制，根据种群覆盖状态动态约束 $p$、$F$ 和 $"CR"$，使算法在不同覆盖阶段采用不同搜索尺度。
 
 === 覆盖状态指标构造
 
